@@ -13,18 +13,8 @@
 
 package distinct
 
-import (
-	"github.com/juju/errors"
-	"github.com/chrislusf/gleam/sql/util/codec"
-	"github.com/chrislusf/gleam/sql/util/types"
-)
-
 // CreateDistinctChecker creates a new distinct checker.
-func CreateDistinctChecker() *Checker {
-	return &Checker{
-		existingKeys: make(map[string]bool),
-	}
-}
+func CreateDistinctChecker() *Checker { _ = "STUB: not implemented"; return nil }
 
 // Checker stores existing keys and checks if given data is distinct.
 type Checker struct {
@@ -33,15 +23,6 @@ type Checker struct {
 
 // Check checks if values is distinct.
 func (d *Checker) Check(values []interface{}) (bool, error) {
-	bs, err := codec.EncodeValue([]byte{}, types.MakeDatums(values...)...)
-	if err != nil {
-		return false, errors.Trace(err)
-	}
-	key := string(bs)
-	_, ok := d.existingKeys[key]
-	if ok {
-		return false, nil
-	}
-	d.existingKeys[key] = true
-	return true, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }

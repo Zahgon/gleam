@@ -36,15 +36,7 @@ type Context interface {
 
 type basicCtxType int
 
-func (t basicCtxType) String() string {
-	switch t {
-	case QueryString:
-		return "query_string"
-	case Initing:
-		return "initing"
-	}
-	return "unknown"
-}
+func (t basicCtxType) String() string { _ = "STUB: not implemented"; return "" }
 
 // Context keys.
 const (

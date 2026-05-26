@@ -4,7 +4,6 @@ import (
 	"io"
 
 	"github.com/chrislusf/gleam/pb"
-	"github.com/chrislusf/gleam/util"
 )
 
 func init() {
@@ -24,50 +23,25 @@ type LocalLimit struct {
 	offset int
 }
 
-func NewLocalLimit(n int, offset int) *LocalLimit {
-	return &LocalLimit{n, offset}
-}
+func NewLocalLimit(n int, offset int) *LocalLimit { _ = "STUB: not implemented"; return nil }
 
-func (b *LocalLimit) Name(prefix string) string {
-	return prefix + ".LocalLimit"
-}
+func (b *LocalLimit) Name(prefix string) string { _ = "STUB: not implemented"; return "" }
 
 func (b *LocalLimit) Function() func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-	return func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-		return DoLocalLimit(readers[0], writers[0], b.n, b.offset, stats)
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (b *LocalLimit) SerializeToCommand() *pb.Instruction {
-	return &pb.Instruction{
-		LocalLimit: &pb.Instruction_LocalLimit{
-			N:      int32(b.n),
-			Offset: int32(b.offset),
-		},
-	}
-}
+func (b *LocalLimit) SerializeToCommand() *pb.Instruction { _ = "STUB: not implemented"; return nil }
 
 func (b *LocalLimit) GetMemoryCostInMB(partitionSize int64) int64 {
-	return 5
+	_ = "STUB: not implemented"
+
+	// DoLocalLimit streamingly get the n items starting from offset
+	return 0
 }
 
-// DoLocalLimit streamingly get the n items starting from offset
 func DoLocalLimit(reader io.Reader, writer io.Writer, n int, offset int, stats *pb.InstructionStat) error {
-
-	return util.ProcessRow(reader, nil, func(row *util.Row) error {
-		stats.InputCounter++
-
-		if offset > 0 {
-			offset--
-		} else {
-			if n > 0 {
-				row.WriteTo(writer)
-				stats.OutputCounter++
-			}
-			n--
-		}
-
-		return nil
-	})
-
+	_ = "STUB: not implemented"
+	return nil
 }

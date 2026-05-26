@@ -13,14 +13,6 @@
 
 package types
 
-import (
-	"math"
-	"strconv"
-	"strings"
-
-	"github.com/juju/errors"
-)
-
 const (
 	// UnspecifiedFsp is the unspecified fractional seconds part.
 	UnspecifiedFsp int = -1
@@ -33,64 +25,24 @@ const (
 	DefaultFsp int = 0
 )
 
-func checkFsp(fsp int) (int, error) {
-	if fsp == UnspecifiedFsp {
-		return DefaultFsp, nil
-	}
-	if fsp < MinFsp || fsp > MaxFsp {
-		return DefaultFsp, errors.Errorf("Invalid fsp %d", fsp)
-	}
-	return fsp, nil
-}
+func checkFsp(fsp int) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // parseFrac parses the input string according to fsp, returns the microsecond,
 // and also a bool value to indice overflow. eg:
 // "999" fsp=2 will overflow.
 func parseFrac(s string, fsp int) (v int, overflow bool, err error) {
-	if len(s) == 0 {
-		return 0, false, nil
-	}
-
-	fsp, err = checkFsp(fsp)
-	if err != nil {
-		return 0, false, errors.Trace(err)
-	}
-
-	if fsp >= len(s) {
-		tmp, e := strconv.ParseInt(s, 10, 64)
-		if e != nil {
-			return 0, false, errors.Trace(e)
-		}
-		v = int(float64(tmp) * math.Pow10(MaxFsp-len(s)))
-		return
-	}
-
-	// Round when fsp < string length.
-	tmp, e := strconv.ParseInt(s[:fsp+1], 10, 64)
-	if e != nil {
-		return 0, false, errors.Trace(e)
-	}
-	tmp = (tmp + 5) / 10
-
-	if float64(tmp) >= math.Pow10(fsp) {
-		// overflow
-		return 0, true, nil
-	}
-
-	// Get the final frac, with 6 digit number
-	//  1236 round 3 -> 124 -> 124000
-	//  0312 round 2 -> 3 -> 30000
-	//  999 round 2 -> 100 -> overflow
-	v = int(float64(tmp) * math.Pow10(MaxFsp-fsp))
-	return
+	_ = "STUB: not implemented"
+	return 0, false, nil
 }
+
+// Round when fsp < string length.
+
+// overflow
+
+// Get the final frac, with 6 digit number
+//  1236 round 3 -> 124 -> 124000
+//  0312 round 2 -> 3 -> 30000
+//  999 round 2 -> 100 -> overflow
 
 // alignFrac is used to generate alignment frac, like `100` -> `100000`
-func alignFrac(s string, fsp int) string {
-	sl := len(s)
-	if sl < fsp {
-		return s + strings.Repeat("0", fsp-sl)
-	}
-
-	return s
-}
+func alignFrac(s string, fsp int) string { _ = "STUB: not implemented"; return "" }

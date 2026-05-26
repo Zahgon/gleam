@@ -19,7 +19,6 @@ import (
 	"github.com/chrislusf/gleam/sql/infoschema"
 	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/terror"
-	"github.com/juju/errors"
 )
 
 // AllowCartesianProduct means whether tidb allows cartesian join without equal conditions.
@@ -28,63 +27,17 @@ var AllowCartesianProduct = true
 // Optimize does optimization and creates a Plan.
 // The node must be prepared first.
 func Optimize(ctx context.Context, node ast.Node, is infoschema.InfoSchema) (Plan, error) {
+	_ = "STUB: not implemented"
 	// We have to infer type again because after parameter is set, the expression type may change.
-	if err := InferType(ctx.GetSessionVars().StmtCtx, node); err != nil {
-		return nil, errors.Trace(err)
-	}
-	allocator := new(idAllocator)
-	builder := &planBuilder{
-		ctx:       ctx,
-		is:        is,
-		colMapper: make(map[*ast.ColumnNameExpr]int),
-		allocator: allocator}
-	p := builder.build(node)
-	if builder.err != nil {
-		return nil, errors.Trace(builder.err)
-	}
-	if logic, ok := p.(LogicalPlan); ok {
-		return doOptimize(logic, ctx, allocator)
-	}
-	return p, nil
+	return *new(Plan), nil
 }
 
 func doOptimize(logic LogicalPlan, ctx context.Context, allocator *idAllocator) (PhysicalPlan, error) {
-	var err error
-	logic = decorrelate(logic)
-	_, logic, err = logic.PredicatePushDown(nil)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	solver := &aggPushDownSolver{
-		ctx:   ctx,
-		alloc: allocator,
-	}
-	solver.aggPushDown(logic)
-	logic.PruneColumns(logic.GetSchema().Columns)
-	logic.ResolveIndicesAndCorCols()
-	if !AllowCartesianProduct && existsCartesianProduct(logic) {
-		return nil, errors.Trace(ErrCartesianProductUnsupported)
-	}
-	logic.buildKeyInfo()
-	info, err := logic.convert2PhysicalPlan(&requiredProperty{})
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	pp := info.p
-	return pp, nil
+	_ = "STUB: not implemented"
+	return *new(PhysicalPlan), nil
 }
 
-func existsCartesianProduct(p LogicalPlan) bool {
-	if join, ok := p.(*Join); ok && len(join.EqualConditions) == 0 {
-		return join.JoinType == InnerJoin || join.JoinType == LeftOuterJoin || join.JoinType == RightOuterJoin
-	}
-	for _, child := range p.GetChildren() {
-		if existsCartesianProduct(child.(LogicalPlan)) {
-			return true
-		}
-	}
-	return false
-}
+func existsCartesianProduct(p LogicalPlan) bool { _ = "STUB: not implemented"; return false }
 
 // Optimizer error codes.
 const (

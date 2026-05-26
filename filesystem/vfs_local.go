@@ -1,74 +1,28 @@
 package filesystem
 
 import (
-	"io/ioutil"
-	"log"
 	"os"
-	"strings"
 )
 
 type LocalFileSystem struct {
 }
 
-func (fs *LocalFileSystem) Accept(fl *FileLocation) bool {
-	for _, prefix := range []string{
-		"hdfs://",
-		"s3://",
-		"gs://",
-	} {
-		if strings.HasPrefix(fl.Location, prefix) {
-			return false
-		}
-	}
-	return true
-}
+func (fs *LocalFileSystem) Accept(fl *FileLocation) bool { _ = "STUB: not implemented"; return false }
 
 func (fs *LocalFileSystem) Open(fl *FileLocation) (VirtualFile, error) {
-	osFile, err := os.Open(fl.Location)
-	return &VirtualFileLocal{osFile}, err
+	_ = "STUB: not implemented"
+	return *new(VirtualFile), nil
 }
 
 func (fs *LocalFileSystem) List(fl *FileLocation) (fileLocations []*FileLocation, err error) {
-	files, err := ioutil.ReadDir(fl.Location)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, file := range files {
-		fileLocations = append(fileLocations, &FileLocation{fl.Location + "/" + file.Name()})
-	}
-	return
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (fs *LocalFileSystem) IsDir(fl *FileLocation) bool {
-	f, err := os.Open(fl.Location)
-	if err != nil {
-		log.Println(err)
-		return false
-	}
-	defer f.Close()
-	fi, err := f.Stat()
-	if err != nil {
-		log.Println(err)
-		return false
-	}
-	switch mode := fi.Mode(); {
-	case mode.IsDir():
-		return true
-	case mode.IsRegular():
-		return false
-	}
-	return false
-}
+func (fs *LocalFileSystem) IsDir(fl *FileLocation) bool { _ = "STUB: not implemented"; return false }
 
 type VirtualFileLocal struct {
 	*os.File
 }
 
-func (vf *VirtualFileLocal) Size() int64 {
-	fileInfo, err := vf.File.Stat()
-	if err != nil {
-		return 0
-	}
-	return fileInfo.Size()
-}
+func (vf *VirtualFileLocal) Size() int64 { _ = "STUB: not implemented"; return 0 }

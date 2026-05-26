@@ -3,10 +3,9 @@ package parquet
 import (
 	"github.com/chrislusf/gleam/filesystem"
 	"github.com/chrislusf/gleam/util"
-	. "github.com/xitongsys/parquet-go/source"
 	. "github.com/xitongsys/parquet-go/reader"
+	. "github.com/xitongsys/parquet-go/source"
 	. "github.com/xitongsys/parquet-go/types"
-	"io"
 )
 
 type PqFile struct {
@@ -15,33 +14,25 @@ type PqFile struct {
 }
 
 func (self *PqFile) Create(name string) (ParquetFile, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(ParquetFile), nil
 }
 
 func (self *PqFile) Open(name string) (ParquetFile, error) {
-	if name == "" {
-		name = self.FileName
-	}
-	vf, err := filesystem.Open(name)
-	if err != nil {
-		return nil, err
-	}
-	res := &PqFile{
-		VF:       vf,
-		FileName: name,
-	}
-	return res, nil
+	_ = "STUB: not implemented"
+	return *new(ParquetFile), nil
 }
+
 func (self *PqFile) Seek(offset int64, pos int) (int64, error) {
-	return self.VF.Seek(offset, pos)
-}
-func (self *PqFile) Read(b []byte) (n int, err error) {
-	return self.VF.Read(b)
-}
-func (self *PqFile) Write(b []byte) (n int, err error) {
+	_ = "STUB: not implemented"
 	return 0, nil
 }
-func (self *PqFile) Close() error { return nil }
+
+func (self *PqFile) Read(b []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
+
+func (self *PqFile) Write(b []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
+
+func (self *PqFile) Close() error { _ = "STUB: not implemented"; return nil }
 
 type ParquetFileReader struct {
 	pqReader *ParquetReader
@@ -50,31 +41,16 @@ type ParquetFileReader struct {
 }
 
 func New(reader filesystem.VirtualFile, fileName string) *ParquetFileReader {
-	parquetFileReader := new(ParquetFileReader)
-	var pqFile ParquetFile = &PqFile{}
-	pqFile, _ = pqFile.Open(fileName)
-	parquetFileReader.pqReader, _ = NewParquetColumnReader(pqFile, 1)
-	parquetFileReader.NumRows = int(parquetFileReader.pqReader.GetNumRows())
-	return parquetFileReader
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (self *ParquetFileReader) ReadHeader() (fieldNames []string, err error) {
-	return self.pqReader.SchemaHandler.ValueColumns, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (self *ParquetFileReader) Read() (row *util.Row, err error) {
-	if self.Cursor >= self.NumRows {
-		return nil, io.EOF
-	}
-	objects := make([]interface{}, 0)
-	for _, fieldName := range self.pqReader.SchemaHandler.ValueColumns {
-		schemaIndex := self.pqReader.SchemaHandler.MapIndex[fieldName]
-		values, _, _, _ := self.pqReader.ReadColumnByPath(fieldName, 1)
-		objects = append(objects, ParquetTypeToGoType(values[0],
-			self.pqReader.SchemaHandler.SchemaElements[schemaIndex].Type,
-			self.pqReader.SchemaHandler.SchemaElements[schemaIndex].ConvertedType,
-		))
-	}
-	self.Cursor++
-	return util.NewRow(util.Now(), objects...), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

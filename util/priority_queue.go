@@ -1,7 +1,6 @@
 package util
 
 import (
-	"container/heap"
 	"sync"
 )
 
@@ -21,62 +20,24 @@ type PriorityQueue struct {
 }
 
 func NewPriorityQueue(lessFunc func(a, b interface{}) bool) *PriorityQueue {
-	pq := &PriorityQueue{}
-	pq.items = make([]*Item, 0)
-	pq.lessFunc = lessFunc
-	heap.Init(pq)
-	return pq
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (pq *PriorityQueue) Enqueue(x interface{}, sourceId int) {
-	heap.Push(pq, &Item{value: x, sourceId: sourceId})
-}
+func (pq *PriorityQueue) Enqueue(x interface{}, sourceId int) { _ = "STUB: not implemented"; return }
 
-func (pq *PriorityQueue) Dequeue() (interface{}, int) {
-	item := heap.Pop(pq).(*Item)
-	return item.value, item.sourceId
-}
+func (pq *PriorityQueue) Dequeue() (interface{}, int) { _ = "STUB: not implemented"; return nil, 0 }
 
-func (pq *PriorityQueue) Top() interface{} {
-	return pq.items[0].value
-}
+func (pq *PriorityQueue) Top() interface{} { _ = "STUB: not implemented"; return nil }
 
-func (pq *PriorityQueue) Len() int {
-	pq.lock.RLock()
-	defer pq.lock.RUnlock()
-	return len(pq.items)
-}
+func (pq *PriorityQueue) Len() int { _ = "STUB: not implemented"; return 0 }
 
-func (pq *PriorityQueue) Less(i, j int) bool {
-	pq.lock.RLock()
-	defer pq.lock.RUnlock()
-	return pq.lessFunc(pq.items[i].value, pq.items[j].value)
-}
+func (pq *PriorityQueue) Less(i, j int) bool { _ = "STUB: not implemented"; return false }
 
-func (pq *PriorityQueue) Swap(i, j int) {
-	pq.lock.Lock()
-	defer pq.lock.Unlock()
-	pq.items[i], pq.items[j] = pq.items[j], pq.items[i]
-	pq.items[i].index = i
-	pq.items[j].index = j
-}
+func (pq *PriorityQueue) Swap(i, j int) { _ = "STUB: not implemented"; return }
 
-func (pq *PriorityQueue) Push(x interface{}) {
-	pq.lock.Lock()
-	defer pq.lock.Unlock()
-	n := len(pq.items)
-	item := x.(*Item)
-	item.index = n
-	pq.items = append(pq.items, item)
-}
+func (pq *PriorityQueue) Push(x interface{}) { _ = "STUB: not implemented"; return }
 
-func (pq *PriorityQueue) Pop() interface{} {
-	pq.lock.Lock()
-	defer pq.lock.Unlock()
-	old := pq.items
-	n := len(old)
-	item := old[n-1]
-	item.index = -1 // for safety
-	pq.items = old[0 : n-1]
-	return item
-}
+func (pq *PriorityQueue) Pop() interface{} { _ = "STUB: not implemented"; return nil }
+
+// for safety

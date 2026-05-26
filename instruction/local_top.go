@@ -1,7 +1,6 @@
 package instruction
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/chrislusf/gleam/pb"
@@ -25,75 +24,32 @@ type LocalTop struct {
 	orderBys []OrderBy
 }
 
-func NewLocalTop(n int, orderBys []OrderBy) *LocalTop {
-	return &LocalTop{n, orderBys}
-}
+func NewLocalTop(n int, orderBys []OrderBy) *LocalTop { _ = "STUB: not implemented"; return nil }
 
-func (b *LocalTop) Name(prefix string) string {
-	return prefix + ".LocalTop"
-}
+func (b *LocalTop) Name(prefix string) string { _ = "STUB: not implemented"; return "" }
 
 func (b *LocalTop) Function() func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-	return func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-		return DoLocalTop(readers[0], writers[0], b.n, b.orderBys, stats)
-	}
-}
-
-func (b *LocalTop) SerializeToCommand() *pb.Instruction {
-	return &pb.Instruction{
-		LocalTop: &pb.Instruction_LocalTop{
-			N:        int32(b.n),
-			OrderBys: getOrderBys(b.orderBys),
-		},
-	}
-}
-
-func (b *LocalTop) GetMemoryCostInMB(partitionSize int64) int64 {
-	return 5
-}
-
-// DoLocalTop streamingly compare and get the top n items
-func DoLocalTop(reader io.Reader, writer io.Writer, n int, orderBys []OrderBy, stats *pb.InstructionStat) error {
-
-	pq := newMinQueueOfPairs(orderBys)
-
-	err := util.ProcessRow(reader, nil, func(row *util.Row) error {
-		stats.InputCounter++
-
-		if pq.Len() >= n {
-			if lessThan(orderBys, pq.Top().(*util.Row), row) {
-				pq.Dequeue()
-				pq.Enqueue(row, 0)
-			}
-		} else {
-			pq.Enqueue(row, 0)
-
-		}
-		return nil
-	})
-	if err != nil {
-		fmt.Printf("Top>Failed to process input data:%v\n", err)
-		return err
-	}
-
-	// read data out of the priority queue
-	length := pq.Len()
-	itemsToReverse := make([]*util.Row, length)
-	for i := 0; i < length; i++ {
-		entry, _ := pq.Dequeue()
-		itemsToReverse[i] = entry.(*util.Row)
-	}
-	for i := length - 1; i >= 0; i-- {
-		itemsToReverse[i].WriteTo(writer)
-		stats.OutputCounter++
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+func (b *LocalTop) SerializeToCommand() *pb.Instruction { _ = "STUB: not implemented"; return nil }
+
+func (b *LocalTop) GetMemoryCostInMB(partitionSize int64) int64 {
+	_ = "STUB: not implemented"
+
+	// DoLocalTop streamingly compare and get the top n items
+	return 0
+}
+
+func DoLocalTop(reader io.Reader, writer io.Writer, n int, orderBys []OrderBy, stats *pb.InstructionStat) error {
+	_ = "STUB: not implemented"
+	return nil
+}
+
+// read data out of the priority queue
+
 func newMinQueueOfPairs(orderBys []OrderBy) *util.PriorityQueue {
-	return util.NewPriorityQueue(func(a, b interface{}) bool {
-		x, y := a.(*util.Row), b.(*util.Row)
-		return lessThan(orderBys, x, y)
-	})
+	_ = "STUB: not implemented"
+	return nil
 }

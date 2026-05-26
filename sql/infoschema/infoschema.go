@@ -84,89 +84,44 @@ type infoSchema struct {
 }
 
 func NewInfoSchema(schemaName string, tbList []*model.TableInfo) InfoSchema {
-	result := &infoSchema{}
-	result.schemaMap = make(map[string]*schemaTables)
-	dbInfo := &model.DBInfo{Name: model.NewCIStr(schemaName), Tables: tbList}
-	tableNames := &schemaTables{
-		dbInfo: dbInfo,
-		tables: make(map[string]table.Table),
-	}
-	result.schemaMap[schemaName] = tableNames
-	for _, tb := range tbList {
-		tbl := table.MockTableFromMeta(tb)
-		tableNames.tables[tb.Name.L] = tbl
-	}
-	return result
+	_ = "STUB: not implemented"
+	return *new(InfoSchema)
 }
 
 var _ InfoSchema = (*infoSchema)(nil)
 
 func (is *infoSchema) SchemaByName(schema model.CIStr) (val *model.DBInfo, ok bool) {
-	tableNames, ok := is.schemaMap[schema.L]
-	if !ok {
-		return
-	}
-	return tableNames.dbInfo, true
+	_ = "STUB: not implemented"
+	return nil, false
 }
 
-func (is *infoSchema) SchemaMetaVersion() int64 {
-	return is.schemaMetaVersion
-}
+func (is *infoSchema) SchemaMetaVersion() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (is *infoSchema) SchemaExists(schema model.CIStr) bool {
-	_, ok := is.schemaMap[schema.L]
-	return ok
-}
-
-func (is *infoSchema) TableByName(schema, table model.CIStr) (t table.Table, err error) {
-	if tbNames, ok := is.schemaMap[schema.L]; ok {
-		if t, ok = tbNames.tables[table.L]; ok {
-			return
-		}
-	}
-	return nil, ErrTableNotExists.GenByArgs(schema, table)
-}
-
-func (is *infoSchema) TableExists(schema, table model.CIStr) bool {
-	if tbNames, ok := is.schemaMap[schema.L]; ok {
-		if _, ok = tbNames.tables[table.L]; ok {
-			return true
-		}
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
-func (is *infoSchema) AllSchemaNames() (names []string) {
-	for _, v := range is.schemaMap {
-		names = append(names, v.dbInfo.Name.O)
-	}
-	return
+func (is *infoSchema) TableByName(schema, table model.CIStr) (t table.Table, err error) {
+	_ = "STUB: not implemented"
+	return *new(table.Table), nil
 }
 
-func (is *infoSchema) AllSchemas() (schemas []*model.DBInfo) {
-	for _, v := range is.schemaMap {
-		schemas = append(schemas, v.dbInfo)
-	}
-	return
+func (is *infoSchema) TableExists(schema, table model.CIStr) bool {
+	_ = "STUB: not implemented"
+	return false
 }
+
+func (is *infoSchema) AllSchemaNames() (names []string) { _ = "STUB: not implemented"; return nil }
+
+func (is *infoSchema) AllSchemas() (schemas []*model.DBInfo) { _ = "STUB: not implemented"; return nil }
 
 func (is *infoSchema) SchemaTables(schema model.CIStr) (tables []table.Table) {
-	schemaTables, ok := is.schemaMap[schema.L]
-	if !ok {
-		return
-	}
-	for _, tbl := range schemaTables.tables {
-		tables = append(tables, tbl)
-	}
-	return
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (is *infoSchema) Clone() (result []*model.DBInfo) {
-	for _, v := range is.schemaMap {
-		result = append(result, v.dbInfo.Clone())
-	}
-	return
-}
+func (is *infoSchema) Clone() (result []*model.DBInfo) { _ = "STUB: not implemented"; return nil }
 
 // Schema error codes.
 const (

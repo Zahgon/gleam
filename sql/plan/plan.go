@@ -14,15 +14,10 @@
 package plan
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
 
 	"github.com/chrislusf/gleam/sql/context"
 	"github.com/chrislusf/gleam/sql/expression"
-	"github.com/chrislusf/gleam/sql/util/codec"
-	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 const (
@@ -119,7 +114,8 @@ type columnProp struct {
 }
 
 func (c *columnProp) equal(nc *columnProp, ctx context.Context) bool {
-	return c.col.Equal(nc.col, ctx) && c.desc == nc.desc
+	_ = "STUB: not implemented"
+	return false
 }
 
 type requiredProperty struct {
@@ -129,15 +125,7 @@ type requiredProperty struct {
 }
 
 // getHashKey encodes a requiredProperty to a unique hash code.
-func (p *requiredProperty) getHashKey() ([]byte, error) {
-	datums := make([]types.Datum, 0, len(p.props)*3+1)
-	datums = append(datums, types.NewDatum(p.sortKeyLen))
-	for _, c := range p.props {
-		datums = append(datums, types.NewDatum(c.desc), types.NewDatum(c.col.FromID), types.NewDatum(c.col.Index))
-	}
-	bytes, err := codec.EncodeValue(nil, datums...)
-	return bytes, errors.Trace(err)
-}
+func (p *requiredProperty) getHashKey() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type physicalPlanInfo struct {
 	p     PhysicalPlan
@@ -198,118 +186,50 @@ type baseLogicalPlan struct {
 }
 
 func (p *baseLogicalPlan) getPlanInfo(prop *requiredProperty) (*physicalPlanInfo, error) {
-	key, err := prop.getHashKey()
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	return p.planMap[string(key)], nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (p *baseLogicalPlan) convert2PhysicalPlan(prop *requiredProperty) (*physicalPlanInfo, error) {
-	info, err := p.getPlanInfo(prop)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	if info != nil {
-		return info, nil
-	}
-	if len(p.children) == 0 {
-		return &physicalPlanInfo{p: p.self.(PhysicalPlan)}, nil
-	}
-	child := p.children[0].(LogicalPlan)
-	info, err = child.convert2PhysicalPlan(prop)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	return info, p.storePlanInfo(prop, info)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (p *baseLogicalPlan) storePlanInfo(prop *requiredProperty, info *physicalPlanInfo) error {
-	key, err := prop.getHashKey()
-	if err != nil {
-		return errors.Trace(err)
-	}
-	newInfo := *info // copy it
-	p.planMap[string(key)] = &newInfo
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (p *baseLogicalPlan) buildKeyInfo() {
-	for _, child := range p.GetChildren() {
-		child.(LogicalPlan).buildKeyInfo()
-	}
-	if len(p.children) == 1 {
-		switch p.self.(type) {
-		case *Exists, *Aggregation, *Projection, *Trim:
-			p.schema.Keys = nil
-		case *SelectLock:
-			p.schema.Keys = p.children[0].GetSchema().Keys
-		default:
-			p.schema.Keys = p.children[0].GetSchema().Clone().Keys
-		}
-	} else {
-		p.schema.Keys = nil
-	}
-}
+// copy it
+
+func (p *baseLogicalPlan) buildKeyInfo() { _ = "STUB: not implemented"; return }
 
 func newBaseLogicalPlan(tp string, a *idAllocator) baseLogicalPlan {
-	return baseLogicalPlan{
-		planMap: make(map[string]*physicalPlanInfo),
-		basePlan: basePlan{
-			tp:        tp,
-			allocator: a,
-		},
-	}
+	_ = "STUB: not implemented"
+	return *new(baseLogicalPlan)
 }
 
 // PredicatePushDown implements LogicalPlan interface.
 func (p *baseLogicalPlan) PredicatePushDown(predicates []expression.Expression) ([]expression.Expression, LogicalPlan, error) {
-	if len(p.GetChildren()) == 0 {
-		return predicates, p.self, nil
-	}
-	child := p.GetChildByIndex(0).(LogicalPlan)
-	rest, _, err := child.PredicatePushDown(predicates)
-	if err != nil {
-		return nil, nil, errors.Trace(err)
-	}
-	if len(rest) > 0 {
-		err = addSelection(p, child, rest, p.allocator)
-		if err != nil {
-			return nil, nil, errors.Trace(err)
-		}
-	}
-	return nil, p.self, nil
+	_ = "STUB: not implemented"
+	return nil, *new(LogicalPlan), nil
 }
 
 func (p *basePlan) extractCorrelatedCols() []*expression.CorrelatedColumn {
-	var corCols []*expression.CorrelatedColumn
-	for _, child := range p.children {
-		corCols = append(corCols, child.extractCorrelatedCols()...)
-	}
-	return corCols
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ResolveIndicesAndCorCols implements LogicalPlan interface.
-func (p *baseLogicalPlan) ResolveIndicesAndCorCols() {
-	for _, child := range p.children {
-		child.(LogicalPlan).ResolveIndicesAndCorCols()
-	}
-}
+func (p *baseLogicalPlan) ResolveIndicesAndCorCols() { _ = "STUB: not implemented"; return }
 
 // PruneColumns implements LogicalPlan interface.
 func (p *baseLogicalPlan) PruneColumns(parentUsedCols []*expression.Column) {
-	if len(p.children) == 0 {
-		return
-	}
-	child := p.GetChildByIndex(0).(LogicalPlan)
-	child.PruneColumns(parentUsedCols)
-	p.SetSchema(child.GetSchema())
+	_ = "STUB: not implemented"
+	return
 }
 
-func (p *basePlan) initIDAndContext(ctx context.Context) {
-	p.id = p.tp + p.allocator.allocID()
-	p.ctx = ctx
-}
+func (p *basePlan) initIDAndContext(ctx context.Context) { _ = "STUB: not implemented"; return }
 
 // basePlan implements base Plan interface.
 // Should be used as embedded struct in Plan implementations.
@@ -327,115 +247,83 @@ type basePlan struct {
 }
 
 // MarshalJSON implements json.Marshaler interface.
-func (p *basePlan) MarshalJSON() ([]byte, error) {
-	children := make([]string, 0, len(p.children))
-	for _, child := range p.children {
-		children = append(children, child.GetID())
-	}
-	childrenStrs, err := json.Marshal(children)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	buffer := bytes.NewBufferString("{")
-	buffer.WriteString(fmt.Sprintf("\"children\": %s", childrenStrs))
-	buffer.WriteString("}")
-	return buffer.Bytes(), nil
-}
+func (p *basePlan) MarshalJSON() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // IsCorrelated implements Plan IsCorrelated interface.
-func (p *basePlan) IsCorrelated() bool {
-	return p.correlated
-}
+func (p *basePlan) IsCorrelated() bool { _ = "STUB: not implemented"; return false }
 
-func (p *basePlan) SetCorrelated() {
-	for _, child := range p.children {
-		p.correlated = p.correlated || child.IsCorrelated()
-	}
-}
+func (p *basePlan) SetCorrelated() { _ = "STUB: not implemented"; return }
 
 // GetID implements Plan GetID interface.
 func (p *basePlan) GetID() string {
-	return p.id
+	_ = "STUB: not implemented"
+
+	// SetSchema implements Plan SetSchema interface.
+	return ""
 }
 
-// SetSchema implements Plan SetSchema interface.
 func (p *basePlan) SetSchema(schema expression.Schema) {
-	p.schema = schema
+	_ = "STUB: not implemented"
+
+	// GetSchema implements Plan GetSchema interface.
+	return
 }
 
-// GetSchema implements Plan GetSchema interface.
 func (p *basePlan) GetSchema() expression.Schema {
-	return p.schema
+	_ = "STUB: not implemented"
+
+	// AddParent implements Plan AddParent interface.
+	return *new(expression.Schema)
 }
 
-// AddParent implements Plan AddParent interface.
-func (p *basePlan) AddParent(parent Plan) {
-	p.parents = append(p.parents, parent)
-}
+func (p *basePlan) AddParent(parent Plan) { _ = "STUB: not implemented"; return }
 
 // AddChild implements Plan AddChild interface.
-func (p *basePlan) AddChild(child Plan) {
-	p.children = append(p.children, child)
-}
+func (p *basePlan) AddChild(child Plan) { _ = "STUB: not implemented"; return }
 
 // ReplaceParent means replace a parent for another one.
-func (p *basePlan) ReplaceParent(parent, newPar Plan) error {
-	for i, par := range p.parents {
-		if par.GetID() == parent.GetID() {
-			p.parents[i] = newPar
-			return nil
-		}
-	}
-	return SystemInternalErrorType.Gen("ReplaceParent Failed!")
-}
+func (p *basePlan) ReplaceParent(parent, newPar Plan) error { _ = "STUB: not implemented"; return nil }
 
 // ReplaceChild means replace a child with another one.
-func (p *basePlan) ReplaceChild(child, newChild Plan) error {
-	for i, ch := range p.children {
-		if ch.GetID() == child.GetID() {
-			p.children[i] = newChild
-			return nil
-		}
-	}
-	return SystemInternalErrorType.Gen("ReplaceChildren Failed!")
-}
+func (p *basePlan) ReplaceChild(child, newChild Plan) error { _ = "STUB: not implemented"; return nil }
 
 // GetParentByIndex implements Plan GetParentByIndex interface.
 func (p *basePlan) GetParentByIndex(index int) (parent Plan) {
-	if index < len(p.parents) && index >= 0 {
-		return p.parents[index]
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(Plan)
 }
 
 // GetChildByIndex implements Plan GetChildByIndex interface.
 func (p *basePlan) GetChildByIndex(index int) (parent Plan) {
-	if index < len(p.children) && index >= 0 {
-		return p.children[index]
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(Plan)
 }
 
 // GetParents implements Plan GetParents interface.
 func (p *basePlan) GetParents() []Plan {
-	return p.parents
+	_ = "STUB: not implemented"
+
+	// GetChildren implements Plan GetChildren interface.
+	return nil
 }
 
-// GetChildren implements Plan GetChildren interface.
 func (p *basePlan) GetChildren() []Plan {
-	return p.children
+	_ = "STUB: not implemented"
+
+	// RemoveAllParents implements Plan RemoveAllParents interface.
+	return nil
 }
 
-// RemoveAllParents implements Plan RemoveAllParents interface.
 func (p *basePlan) SetParents(pars ...Plan) {
-	p.parents = pars
+	_ = "STUB: not implemented"
+
+	// RemoveAllParents implements Plan RemoveAllParents interface.
+	return
 }
 
-// RemoveAllParents implements Plan RemoveAllParents interface.
-func (p *basePlan) SetChildren(children ...Plan) {
-	p.children = children
-}
+func (p *basePlan) SetChildren(children ...Plan) { _ = "STUB: not implemented"; return }
 
 func (p *basePlan) context() context.Context {
-	return p.ctx
+	_ = "STUB: not implemented"
+	return *new(context.Context)
 }

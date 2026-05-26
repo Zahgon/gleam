@@ -19,9 +19,7 @@ package expression
 
 import (
 	"github.com/chrislusf/gleam/sql/context"
-	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 var (
@@ -45,12 +43,8 @@ type databaseFunctionClass struct {
 }
 
 func (c *databaseFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinDatabaseSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinDatabaseSig struct {
@@ -58,21 +52,14 @@ type builtinDatabaseSig struct {
 }
 
 func (b *builtinDatabaseSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinDatabase(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/information-functions.html
 func builtinDatabase(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	currentDB := ctx.GetSessionVars().CurrentDB
-	if currentDB == "" {
-		return d, nil
-	}
-	d.SetString(currentDB)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type foundRowsFunctionClass struct {
@@ -80,12 +67,8 @@ type foundRowsFunctionClass struct {
 }
 
 func (c *foundRowsFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinFoundRowsSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinFoundRowsSig struct {
@@ -93,21 +76,13 @@ type builtinFoundRowsSig struct {
 }
 
 func (b *builtinFoundRowsSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinFoundRows(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func builtinFoundRows(arg []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	data := ctx.GetSessionVars()
-	if data == nil {
-		return d, errors.Errorf("Missing session variable when evalue builtin")
-	}
-
-	d.SetUint64(data.StmtCtx.FoundRows())
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type currentUserFunctionClass struct {
@@ -115,12 +90,8 @@ type currentUserFunctionClass struct {
 }
 
 func (c *currentUserFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinCurrentUserSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinCurrentUserSig struct {
@@ -128,23 +99,15 @@ type builtinCurrentUserSig struct {
 }
 
 func (b *builtinCurrentUserSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinCurrentUser(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/information-functions.html#function_current-user
 // TODO: The value of CURRENT_USER() can differ from the value of USER(). We will finish this after we support grant tables.
 func builtinCurrentUser(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	data := ctx.GetSessionVars()
-	if data == nil {
-		return d, errors.Errorf("Missing session variable when evalue builtin")
-	}
-
-	d.SetString(data.User)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type userFunctionClass struct {
@@ -152,12 +115,8 @@ type userFunctionClass struct {
 }
 
 func (c *userFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinUserSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinUserSig struct {
@@ -165,21 +124,13 @@ type builtinUserSig struct {
 }
 
 func (b *builtinUserSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinUser(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func builtinUser(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	data := ctx.GetSessionVars()
-	if data == nil {
-		return d, errors.Errorf("Missing session variable when evalue builtin")
-	}
-
-	d.SetString(data.User)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type versionFunctionClass struct {
@@ -187,12 +138,8 @@ type versionFunctionClass struct {
 }
 
 func (c *versionFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinVersionSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinVersionSig struct {
@@ -200,14 +147,11 @@ type builtinVersionSig struct {
 }
 
 func (b *builtinVersionSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinVersion(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func builtinVersion(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	d.SetString(mysql.ServerVersion)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }

@@ -13,10 +13,6 @@
 
 package variable
 
-import (
-	"github.com/juju/errors"
-)
-
 var statisticsList []Statistics
 var globalStatusScopes = make(map[string]ScopeFlag)
 
@@ -38,25 +34,7 @@ type Statistics interface {
 }
 
 // RegisterStatistics registers statistics.
-func RegisterStatistics(s Statistics) {
-	statisticsList = append(statisticsList, s)
-}
+func RegisterStatistics(s Statistics) { _ = "STUB: not implemented"; return }
 
 // GetStatusVars gets registered statistics status variables.
-func GetStatusVars() (map[string]*StatusVal, error) {
-	statusVars := make(map[string]*StatusVal)
-
-	for _, statistics := range statisticsList {
-		vals, err := statistics.Stats()
-		if err != nil {
-			return nil, errors.Trace(err)
-		}
-
-		for name, val := range vals {
-			scope := statistics.GetScope(name)
-			statusVars[name] = &StatusVal{Value: val, Scope: scope}
-		}
-	}
-
-	return statusVars, nil
-}
+func GetStatusVars() (map[string]*StatusVal, error) { _ = "STUB: not implemented"; return nil, nil }

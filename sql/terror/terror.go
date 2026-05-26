@@ -14,14 +14,7 @@
 package terror
 
 import (
-	"encoding/json"
-	"fmt"
-	"log"
-	"runtime"
-	"strconv"
-
 	"github.com/chrislusf/gleam/sql/mysql"
-	"github.com/juju/errors"
 )
 
 // Common base error instances.
@@ -80,74 +73,17 @@ const (
 )
 
 // String implements fmt.Stringer interface.
-func (ec ErrClass) String() string {
-	switch ec {
-	case ClassAutoid:
-		return "autoid"
-	case ClassDDL:
-		return "ddl"
-	case ClassDomain:
-		return "domain"
-	case ClassExecutor:
-		return "executor"
-	case ClassExpression:
-		return "expression"
-	case ClassInspectkv:
-		return "inspectkv"
-	case ClassMeta:
-		return "meta"
-	case ClassKV:
-		return "kv"
-	case ClassOptimizer:
-		return "optimizer"
-	case ClassParser:
-		return "parser"
-	case ClassPerfSchema:
-		return "perfschema"
-	case ClassPrivilege:
-		return "privilege"
-	case ClassSchema:
-		return "schema"
-	case ClassServer:
-		return "server"
-	case ClassStructure:
-		return "structure"
-	case ClassVariable:
-		return "variable"
-	case ClassTable:
-		return "table"
-	case ClassTypes:
-		return "types"
-	}
-	return strconv.Itoa(int(ec))
-}
+func (ec ErrClass) String() string { _ = "STUB: not implemented"; return "" }
 
 // EqualClass returns true if err is *Error with the same class.
-func (ec ErrClass) EqualClass(err error) bool {
-	e := errors.Cause(err)
-	if e == nil {
-		return false
-	}
-	if te, ok := e.(*Error); ok {
-		return te.class == ec
-	}
-	return false
-}
+func (ec ErrClass) EqualClass(err error) bool { _ = "STUB: not implemented"; return false }
 
 // NotEqualClass returns true if err is not *Error with the same class.
-func (ec ErrClass) NotEqualClass(err error) bool {
-	return !ec.EqualClass(err)
-}
+func (ec ErrClass) NotEqualClass(err error) bool { _ = "STUB: not implemented"; return false }
 
 // New creates an *Error with an error code and an error message.
 // Usually used to create base *Error.
-func (ec ErrClass) New(code ErrCode, message string) *Error {
-	return &Error{
-		class:   ec,
-		code:    code,
-		message: message,
-	}
-}
+func (ec ErrClass) New(code ErrCode, message string) *Error { _ = "STUB: not implemented"; return nil }
 
 // Error implements error interface and adds integer Class and Code, so
 // errors with different message can be compared.
@@ -162,125 +98,66 @@ type Error struct {
 
 // Class returns ErrClass
 func (e *Error) Class() ErrClass {
-	return e.class
+	_ = "STUB: not implemented"
+
+	// Code returns ErrCode
+	return *new(ErrClass)
 }
 
-// Code returns ErrCode
 func (e *Error) Code() ErrCode {
-	return e.code
+	_ = "STUB: not implemented"
+
+	// MarshalJSON implements json.Marshaler interface.
+	return *new(ErrCode)
 }
 
-// MarshalJSON implements json.Marshaler interface.
-func (e *Error) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Class ErrClass `json:"class"`
-		Code  ErrCode  `json:"code"`
-		Msg   string   `json:"message"`
-	}{
-		Class: e.class,
-		Code:  e.code,
-		Msg:   e.getMsg(),
-	})
-}
+func (e *Error) MarshalJSON() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UnmarshalJSON implements json.Unmarshaler interface.
-func (e *Error) UnmarshalJSON(data []byte) error {
-	err := &struct {
-		Class ErrClass `json:"class"`
-		Code  ErrCode  `json:"code"`
-		Msg   string   `json:"message"`
-	}{}
-
-	if err := json.Unmarshal(data, &err); err != nil {
-		return errors.Trace(err)
-	}
-
-	e.class = err.Class
-	e.code = err.Code
-	e.message = err.Msg
-	return nil
-}
+func (e *Error) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Location returns the location where the error is created,
 // implements juju/errors locationer interface.
 func (e *Error) Location() (file string, line int) {
-	return e.file, e.line
+	_ = "STUB: not implemented"
+	return "",
+
+		// Error implements error interface.
+		0
 }
 
-// Error implements error interface.
-func (e *Error) Error() string {
-	return fmt.Sprintf("[%s:%d]%s", e.class, e.code, e.getMsg())
-}
+func (e *Error) Error() string { _ = "STUB: not implemented"; return "" }
 
-func (e *Error) getMsg() string {
-	if len(e.args) > 0 {
-		return fmt.Sprintf(e.message, e.args...)
-	}
-	return e.message
-}
+func (e *Error) getMsg() string { _ = "STUB: not implemented"; return "" }
 
 // Gen generates a new *Error with the same class and code, and a new formatted message.
 func (e *Error) Gen(format string, args ...interface{}) *Error {
-	err := *e
-	err.message = format
-	err.args = args
-	_, err.file, err.line, _ = runtime.Caller(1)
-	return &err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GenByArgs generates a new *Error with the same class and code, and new arguments.
-func (e *Error) GenByArgs(args ...interface{}) *Error {
-	err := *e
-	err.args = args
-	_, err.file, err.line, _ = runtime.Caller(1)
-	return &err
-}
+func (e *Error) GenByArgs(args ...interface{}) *Error { _ = "STUB: not implemented"; return nil }
 
 // FastGen generates a new *Error with the same class and code, and a new formatted message.
 // This will not call runtime.Caller to get file and line.
 func (e *Error) FastGen(format string, args ...interface{}) *Error {
-	err := *e
-	err.message = format
-	err.args = args
-	return &err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Equal checks if err is equal to e.
-func (e *Error) Equal(err error) bool {
-	originErr := errors.Cause(err)
-	if originErr == nil {
-		return false
-	}
-	inErr, ok := originErr.(*Error)
-	return ok && e.class == inErr.class && e.code == inErr.code
-}
+func (e *Error) Equal(err error) bool { _ = "STUB: not implemented"; return false }
 
 // NotEqual checks if err is not equal to e.
-func (e *Error) NotEqual(err error) bool {
-	return !e.Equal(err)
-}
+func (e *Error) NotEqual(err error) bool { _ = "STUB: not implemented"; return false }
 
 // ToSQLError convert Error to mysql.SQLError.
-func (e *Error) ToSQLError() *mysql.SQLError {
-	code := e.getMySQLErrorCode()
-	return mysql.NewErrf(code, e.getMsg())
-}
+func (e *Error) ToSQLError() *mysql.SQLError { _ = "STUB: not implemented"; return nil }
 
 var defaultMySQLErrorCode uint16
 
-func (e *Error) getMySQLErrorCode() uint16 {
-	codeMap, ok := ErrClassToMySQLCodes[e.class]
-	if !ok {
-		log.Printf("Unknown error class: %v", e.class)
-		return defaultMySQLErrorCode
-	}
-	code, ok := codeMap[e.code]
-	if !ok {
-		log.Printf("Unknown error class: %v code: %v", e.class, e.code)
-		return defaultMySQLErrorCode
-	}
-	return code
-}
+func (e *Error) getMySQLErrorCode() uint16 { _ = "STUB: not implemented"; return 0 }
 
 var (
 	// ErrClassToMySQLCodes is the map of ErrClass to code-map.
@@ -293,28 +170,7 @@ func init() {
 }
 
 // ErrorEqual returns a boolean indicating whether err1 is equal to err2.
-func ErrorEqual(err1, err2 error) bool {
-	e1 := errors.Cause(err1)
-	e2 := errors.Cause(err2)
-
-	if e1 == e2 {
-		return true
-	}
-
-	if e1 == nil || e2 == nil {
-		return e1 == e2
-	}
-
-	te1, ok1 := e1.(*Error)
-	te2, ok2 := e2.(*Error)
-	if ok1 && ok2 {
-		return te1.class == te2.class && te1.code == te2.code
-	}
-
-	return e1.Error() == e2.Error()
-}
+func ErrorEqual(err1, err2 error) bool { _ = "STUB: not implemented"; return false }
 
 // ErrorNotEqual returns a boolean indicating whether err1 isn't equal to err2.
-func ErrorNotEqual(err1, err2 error) bool {
-	return !ErrorEqual(err1, err2)
-}
+func ErrorNotEqual(err1, err2 error) bool { _ = "STUB: not implemented"; return false }

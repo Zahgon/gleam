@@ -3,7 +3,6 @@ package store
 
 import (
 	"io"
-	"path"
 	"time"
 )
 
@@ -24,37 +23,28 @@ type LocalFileDataStore struct {
 }
 
 func NewLocalFileDataStore(dir, name string) (ds *LocalFileDataStore) {
-	ds = &LocalFileDataStore{
-		dir:  dir,
-		name: name,
-		store: &SingleFileStore{
-			Filename: path.Join(dir, name+".dat"),
-		},
-		lastWriteAt: time.Now(),
-	}
-	ds.store.init()
-	return
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (ds *LocalFileDataStore) Write(data []byte) (int, error) {
-	count, err := ds.store.Write(data)
-	ds.lastWriteAt = time.Now()
-	return count, err
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func (ds *LocalFileDataStore) ReadAt(data []byte, offset int64) (int, error) {
-	ds.lastReadAt = time.Now()
-	return ds.store.ReadAt(data, offset)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
-func (ds *LocalFileDataStore) Destroy() {
-	ds.store.Destroy()
-}
+func (ds *LocalFileDataStore) Destroy() { _ = "STUB: not implemented"; return }
 
 func (ds *LocalFileDataStore) LastWriteAt() time.Time {
-	return ds.lastWriteAt
+	_ = "STUB: not implemented"
+	return *new(time.Time)
 }
 
 func (ds *LocalFileDataStore) LastReadAt() time.Time {
-	return ds.lastReadAt
+	_ = "STUB: not implemented"
+	return *new(time.Time)
 }

@@ -26,10 +26,4 @@ type Script interface {
 	Limit(n int, offset int)
 }
 
-func (c *Command) ToOsExecCommand() *exec.Cmd {
-	command := exec.Command(
-		c.Path, c.Args...,
-	)
-	command.Env = c.Env
-	return command
-}
+func (c *Command) ToOsExecCommand() *exec.Cmd { _ = "STUB: not implemented"; return nil }

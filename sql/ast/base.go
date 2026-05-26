@@ -23,43 +23,59 @@ type node struct {
 
 // SetText implements Node interface.
 func (n *node) SetText(text string) {
-	n.text = text
+	_ = "STUB: not implemented"
+
+	// Text implements Node interface.
+	return
 }
 
-// Text implements Node interface.
 func (n *node) Text() string {
-	return n.text
+	_ = "STUB: not implemented"
+
+	// stmtNode implements StmtNode interface.
+	// Statement implementations should embed it in.
+	return ""
 }
 
-// stmtNode implements StmtNode interface.
-// Statement implementations should embed it in.
 type stmtNode struct {
 	node
 }
 
 // statement implements StmtNode interface.
-func (sn *stmtNode) statement() {}
+func (sn *stmtNode) statement() {
+	_ = "STUB: not implemented"
 
-// ddlNode implements DDLNode interface.
-// DDL implementations should embed it in.
+	// ddlNode implements DDLNode interface.
+	// DDL implementations should embed it in.
+	return
+}
+
 type ddlNode struct {
 	stmtNode
 }
 
 // ddlStatement implements DDLNode interface.
-func (dn *ddlNode) ddlStatement() {}
+func (dn *ddlNode) ddlStatement() {
+	_ = "STUB: not implemented"
 
-// dmlNode is the struct implements DMLNode interface.
-// DML implementations should embed it in.
+	// dmlNode is the struct implements DMLNode interface.
+	// DML implementations should embed it in.
+	return
+}
+
 type dmlNode struct {
 	stmtNode
 }
 
 // dmlStatement implements DMLNode interface.
-func (dn *dmlNode) dmlStatement() {}
+func (dn *dmlNode) dmlStatement() {
+	_ = "STUB: not implemented"
 
-// expressionNode is the struct implements Expression interface.
-// Expression implementations should embed it in.
+	// expressionNode is the struct implements Expression interface.
+	// Expression implementations should embed it in.
+	return
+}
+
 type exprNode struct {
 	node
 	types.Datum
@@ -69,51 +85,55 @@ type exprNode struct {
 
 // SetDatum implements ExprNode interface.
 func (en *exprNode) SetDatum(datum types.Datum) {
-	en.Datum = datum
+	_ = "STUB: not implemented"
+
+	// GetDatum implements ExprNode interface.
+	return
 }
 
-// GetDatum implements ExprNode interface.
 func (en *exprNode) GetDatum() *types.Datum {
-	return &en.Datum
+	_ = "STUB: not implemented"
+
+	// SetType implements ExprNode interface.
+	return nil
 }
 
-// SetType implements ExprNode interface.
 func (en *exprNode) SetType(tp *types.FieldType) {
-	en.Type = *tp
+	_ = "STUB: not implemented"
+
+	// GetType implements ExprNode interface.
+	return
 }
 
-// GetType implements ExprNode interface.
 func (en *exprNode) GetType() *types.FieldType {
-	return &en.Type
+	_ = "STUB: not implemented"
+
+	// SetFlag implements ExprNode interface.
+	return nil
 }
 
-// SetFlag implements ExprNode interface.
 func (en *exprNode) SetFlag(flag uint64) {
-	en.flag = flag
+	_ = "STUB: not implemented"
+
+	// GetFlag implements ExprNode interface.
+	return
 }
 
-// GetFlag implements ExprNode interface.
-func (en *exprNode) GetFlag() uint64 {
-	return en.flag
-}
+func (en *exprNode) GetFlag() uint64 { _ = "STUB: not implemented"; return 0 }
 
 type funcNode struct {
 	exprNode
 }
 
 // FunctionExpression implements FunctionNode interface.
-func (fn *funcNode) functionExpression() {}
+func (fn *funcNode) functionExpression() { _ = "STUB: not implemented"; return }
 
 type resultSetNode struct {
 	resultFields []*ResultField
 }
 
 // GetResultFields implements ResultSetNode interface.
-func (rs *resultSetNode) GetResultFields() []*ResultField {
-	return rs.resultFields
-}
+func (rs *resultSetNode) GetResultFields() []*ResultField { _ = "STUB: not implemented"; return nil }
 
 // GetResultFields implements ResultSetNode interface.
-func (rs *resultSetNode) SetResultFields(rfs []*ResultField) {
-	rs.resultFields = rfs
-}
+func (rs *resultSetNode) SetResultFields(rfs []*ResultField) { _ = "STUB: not implemented"; return }

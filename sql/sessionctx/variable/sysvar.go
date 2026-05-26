@@ -14,8 +14,6 @@
 package variable
 
 import (
-	"strings"
-
 	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/terror"
 )
@@ -48,10 +46,7 @@ type SysVar struct {
 var SysVars map[string]*SysVar
 
 // GetSysVar returns sys var info for name as key.
-func GetSysVar(name string) *SysVar {
-	name = strings.ToLower(name)
-	return SysVars[name]
-}
+func GetSysVar(name string) *SysVar { _ = "STUB: not implemented"; return nil }
 
 // Variable error codes.
 const (

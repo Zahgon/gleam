@@ -18,37 +18,15 @@ package mysql
 // or column value is calculated from an expression.
 // For example: "select count(*) from t;", the column type is int64 and Flen in ResultField will be 21.
 // See https://dev.mysql.com/doc/refman/5.7/en/storage-requirements.html
-func GetDefaultFieldLength(tp byte) int {
-	switch tp {
-	case TypeTiny:
-		return 4
-	case TypeShort:
-		return 6
-	case TypeInt24:
-		return 9
-	case TypeLong:
-		return 11
-	case TypeLonglong:
-		return 21
-	case TypeDecimal, TypeNewDecimal:
-		// See https://dev.mysql.com/doc/refman/5.7/en/fixed-point-types.html
-		return 10
-	case TypeBit, TypeBlob:
-		return -1
-	default:
-		//TODO: Add more types.
-		return -1
-	}
-}
+func GetDefaultFieldLength(tp byte) int { _ = "STUB: not implemented"; return 0 }
+
+// See https://dev.mysql.com/doc/refman/5.7/en/fixed-point-types.html
+
+//TODO: Add more types.
 
 // GetDefaultDecimal returns the default decimal length for column.
-func GetDefaultDecimal(tp byte) int {
-	switch tp {
-	case TypeDecimal, TypeNewDecimal:
-		// See https://dev.mysql.com/doc/refman/5.7/en/fixed-point-types.html
-		return 0
-	default:
-		//TODO: Add more types.
-		return -1
-	}
-}
+func GetDefaultDecimal(tp byte) int { _ = "STUB: not implemented"; return 0 }
+
+// See https://dev.mysql.com/doc/refman/5.7/en/fixed-point-types.html
+
+//TODO: Add more types.

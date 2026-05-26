@@ -13,73 +13,19 @@
 
 package plan
 
-import (
-	"github.com/chrislusf/gleam/sql/expression"
-	"github.com/chrislusf/gleam/sql/util/types"
-)
-
 // extractCorColumnsBySchema only extracts the correlated columns that match the outer plan's schema.
 // e.g. If the correlated columns from inner plan are [t1.a, t2.a, t3.a] and outer plan's schema is [t2.a, t2.b, t2.c],
 // only [t2.a] is treated as this apply's correlated column.
-func (a *Apply) extractCorColumnsBySchema() {
-	schema := a.children[0].GetSchema()
-	corCols := a.children[1].(LogicalPlan).extractCorrelatedCols()
-	resultCorCols := make([]*expression.CorrelatedColumn, schema.Len())
-	for _, corCol := range corCols {
-		idx := schema.GetColumnIndex(&corCol.Column)
-		if idx != -1 {
-			if resultCorCols[idx] == nil {
-				resultCorCols[idx] = &expression.CorrelatedColumn{
-					Column: *schema.Columns[idx],
-					Data:   new(types.Datum),
-				}
-			}
-			corCol.Data = resultCorCols[idx].Data
-		}
-	}
-	// Shrink slice. e.g. [col1, nil, col2, nil] will be changed to [col1, col2].
-	length := 0
-	for _, col := range resultCorCols {
-		if col != nil {
-			resultCorCols[length] = col
-			length++
-		}
-	}
-	a.corCols = resultCorCols[:length]
-}
+func (a *Apply) extractCorColumnsBySchema() { _ = "STUB: not implemented"; return }
+
+// Shrink slice. e.g. [col1, nil, col2, nil] will be changed to [col1, col2].
 
 // decorrelate function tries to convert apply plan to join plan.
-func decorrelate(p LogicalPlan) LogicalPlan {
-	if apply, ok := p.(*Apply); ok {
-		outerPlan := apply.children[0]
-		innerPlan := apply.children[1].(LogicalPlan)
-		apply.extractCorColumnsBySchema()
-		if len(apply.corCols) == 0 {
-			// If the inner plan is non-correlated, the apply will be simplified to join.
-			join := &apply.Join
-			innerPlan.SetParents(join)
-			outerPlan.SetParents(join)
-			p = join
-		} else if sel, ok := innerPlan.(*Selection); ok {
-			// If the inner plan is a selection, we add this condition to join predicates.
-			// Notice that no matter what kind of join is, it's always right.
-			newConds := make([]expression.Expression, 0, len(sel.Conditions))
-			for _, cond := range sel.Conditions {
-				newConds = append(newConds, cond.Decorrelate(outerPlan.GetSchema()))
-			}
-			apply.attachOnConds(newConds)
-			innerPlan = sel.children[0].(LogicalPlan)
-			apply.SetChildren(outerPlan, innerPlan)
-			innerPlan.SetParents(apply)
-			return decorrelate(p)
-		}
-		// TODO: Deal with aggregation and projection.
-	}
-	newChildren := make([]Plan, 0, len(p.GetChildren()))
-	for _, child := range p.GetChildren() {
-		newChildren = append(newChildren, decorrelate(child.(LogicalPlan)))
-		child.SetParents(p)
-	}
-	p.SetChildren(newChildren...)
-	return p
-}
+func decorrelate(p LogicalPlan) LogicalPlan { _ = "STUB: not implemented"; return *new(LogicalPlan) }
+
+// If the inner plan is non-correlated, the apply will be simplified to join.
+
+// If the inner plan is a selection, we add this condition to join predicates.
+// Notice that no matter what kind of join is, it's always right.
+
+// TODO: Deal with aggregation and projection.

@@ -2,7 +2,6 @@ package executor
 
 import (
 	"regexp"
-	"strings"
 
 	"github.com/chrislusf/gleam/flow"
 	"github.com/chrislusf/gleam/sql/context"
@@ -19,59 +18,42 @@ type ProjectionExec struct {
 
 // Schema implements the Executor Schema interface.
 func (e *ProjectionExec) Schema() expression.Schema {
-	return e.schema
+	_ = "STUB: not implemented"
+
+	// Next implements the Executor Next interface.
+	return *new(expression.Schema)
 }
 
-// Next implements the Executor Next interface.
 func (e *ProjectionExec) Exec() *flow.Dataset {
-	d := e.Src.Exec()
+	_ = "STUB: not implemented"
 
 	// fmt.Printf("=================\n")
 	// fmt.Printf("context: %+v\n", e.ctx)
-
-	var inputs []string
-	for _, col := range e.Src.Schema().Columns {
-		// fmt.Printf("input: %s TblName:%s DBName:%s FromID:%s %d\n", col, col.TblName, col.DBName, col.FromID, col.Position)
-		inputs = append(inputs, col.ColName.String())
-	}
-
-	/*
-		for _, col := range e.Schema().Columns {
-			fmt.Printf("output:%s TblName:%s DBName:%s FromID:%s %d\n", col, col.TblName, col.DBName, col.FromID, col.Position)
-		}
-	*/
-
-	var outputs []string
-	for _, expr := range e.exprs {
-		// fmt.Printf("expression: %s %+v\n", expr.String(), reflect.TypeOf(expr))
-		outputs = append(outputs, expr.String())
-	}
-
-	inputParams := removeTableName(strings.Join(inputs, ","))
-	outputParams := removeTableName(strings.Join(outputs, ","))
-
-	if inputParams == outputParams {
-		return d
-	}
-
-	/*
-			sqlText := fmt.Sprintf(`
-		        function(%s)
-		          return %s
-		        end
-		    `, inputParams, outputParams)
-	*/
-
-	// println(sqlText)
-
-	// ret := d.Map("map", sqlText)
-	ret := d
-
-	return ret
+	return nil
 }
+
+// fmt.Printf("input: %s TblName:%s DBName:%s FromID:%s %d\n", col, col.TblName, col.DBName, col.FromID, col.Position)
+
+/*
+	for _, col := range e.Schema().Columns {
+		fmt.Printf("output:%s TblName:%s DBName:%s FromID:%s %d\n", col, col.TblName, col.DBName, col.FromID, col.Position)
+	}
+*/
+
+// fmt.Printf("expression: %s %+v\n", expr.String(), reflect.TypeOf(expr))
+
+/*
+		sqlText := fmt.Sprintf(`
+	        function(%s)
+	          return %s
+	        end
+	    `, inputParams, outputParams)
+*/
+
+// println(sqlText)
+
+// ret := d.Map("map", sqlText)
 
 var re = regexp.MustCompile(`([a-z]+\w*\.)(\w+)`)
 
-func removeTableName(sqlText string) string {
-	return re.ReplaceAllString(sqlText, "$2")
-}
+func removeTableName(sqlText string) string { _ = "STUB: not implemented"; return "" }

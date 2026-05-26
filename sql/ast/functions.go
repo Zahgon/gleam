@@ -196,19 +196,8 @@ type FuncCallExpr struct {
 
 // Accept implements Node interface.
 func (n *FuncCallExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*FuncCallExpr)
-	for i, val := range n.Args {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Args[i] = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // CastFunctionType is the type for cast function.
@@ -235,17 +224,8 @@ type FuncCastExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *FuncCastExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*FuncCastExpr)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // TrimDirectionType is the type for trim direction.
@@ -308,17 +288,6 @@ type AggregateFuncExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *AggregateFuncExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*AggregateFuncExpr)
-	for i, val := range n.Args {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Args[i] = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }

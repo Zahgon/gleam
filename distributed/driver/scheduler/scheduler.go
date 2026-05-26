@@ -2,8 +2,6 @@
 package scheduler
 
 import (
-	"os"
-	"os/user"
 	"sync"
 	"time"
 
@@ -43,19 +41,4 @@ type Option struct {
 	IsProfiling  bool
 }
 
-func New(leader string, option *Option) *Scheduler {
-	if currentUser, err := user.Current(); err == nil {
-		option.Username = currentUser.Username
-	}
-	option.Hostname, _ = os.Hostname()
-
-	s := &Scheduler{
-		Master:       leader,
-		EventChan:    make(chan interface{}),
-		Market:       market.NewMarket(),
-		shardLocator: NewDatasetShardLocator(),
-		Option:       option,
-	}
-	s.Market.SetScoreFunction(s.Score).SetFetchFunction(s.Fetch)
-	return s
-}
+func New(leader string, option *Option) *Scheduler { _ = "STUB: not implemented"; return nil }

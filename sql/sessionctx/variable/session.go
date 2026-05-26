@@ -17,7 +17,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/terror"
 )
 
@@ -41,35 +40,22 @@ type RetryInfo struct {
 }
 
 // Clean does some clean work.
-func (r *RetryInfo) Clean() {
-	r.currRetryOff = 0
-	if len(r.autoIncrementIDs) > 0 {
-		r.autoIncrementIDs = r.autoIncrementIDs[:0]
-	}
-	if len(r.DroppedPreparedStmtIDs) > 0 {
-		r.DroppedPreparedStmtIDs = r.DroppedPreparedStmtIDs[:0]
-	}
-}
+func (r *RetryInfo) Clean() { _ = "STUB: not implemented"; return }
 
 // AddAutoIncrementID adds id to AutoIncrementIDs.
-func (r *RetryInfo) AddAutoIncrementID(id int64) {
-	r.autoIncrementIDs = append(r.autoIncrementIDs, id)
-}
+func (r *RetryInfo) AddAutoIncrementID(id int64) { _ = "STUB: not implemented"; return }
 
 // ResetOffset resets the current retry offset.
 func (r *RetryInfo) ResetOffset() {
-	r.currRetryOff = 0
+	_ = "STUB: not implemented"
+
+	// GetCurrAutoIncrementID gets current AutoIncrementID.
+	return
 }
 
-// GetCurrAutoIncrementID gets current AutoIncrementID.
 func (r *RetryInfo) GetCurrAutoIncrementID() (int64, error) {
-	if r.currRetryOff >= len(r.autoIncrementIDs) {
-		return 0, errCantGetValidID
-	}
-	id := r.autoIncrementIDs[r.currRetryOff]
-	r.currRetryOff++
-
-	return id, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // TransactionContext is used to store variables that has transaction scope.
@@ -123,16 +109,7 @@ type SessionVars struct {
 }
 
 // NewSessionVars creates a session vars object.
-func NewSessionVars() *SessionVars {
-	return &SessionVars{
-		Users:         make(map[string]string),
-		Systems:       make(map[string]string),
-		TxnCtx:        &TransactionContext{},
-		StrictSQLMode: true,
-		Status:        mysql.ServerStatusAutocommit,
-		StmtCtx:       new(StatementContext),
-	}
-}
+func NewSessionVars() *SessionVars { _ = "STUB: not implemented"; return nil }
 
 const (
 	characterSetConnection = "character_set_connection"
@@ -149,36 +126,23 @@ const (
 // have their own collation, which has a higher collation precedence.
 // See https://dev.mysql.com/doc/refman/5.7/en/charset-connection.html
 func (s *SessionVars) GetCharsetInfo() (charset, collation string) {
-	charset = s.Systems[characterSetConnection]
-	collation = s.Systems[collationConnection]
-	return
+	_ = "STUB: not implemented"
+	return "", ""
 }
 
 // SetStatusFlag sets the session server status variable.
 // If on is ture sets the flag in session status,
 // otherwise removes the flag.
-func (s *SessionVars) SetStatusFlag(flag uint16, on bool) {
-	if on {
-		s.Status |= flag
-		return
-	}
-	s.Status &= (^flag)
-}
+func (s *SessionVars) SetStatusFlag(flag uint16, on bool) { _ = "STUB: not implemented"; return }
 
 // GetStatusFlag gets the session server status variable, returns true if it is on.
-func (s *SessionVars) GetStatusFlag(flag uint16) bool {
-	return s.Status&flag > 0
-}
+func (s *SessionVars) GetStatusFlag(flag uint16) bool { _ = "STUB: not implemented"; return false }
 
 // InTxn returns if the session is in transaction.
-func (s *SessionVars) InTxn() bool {
-	return s.GetStatusFlag(mysql.ServerStatusInTrans)
-}
+func (s *SessionVars) InTxn() bool { _ = "STUB: not implemented"; return false }
 
 // IsAutocommit returns if the session is set to autocommit.
-func (s *SessionVars) IsAutocommit() bool {
-	return s.GetStatusFlag(mysql.ServerStatusAutocommit)
-}
+func (s *SessionVars) IsAutocommit() bool { _ = "STUB: not implemented"; return false }
 
 // special session variables.
 const (
@@ -207,54 +171,22 @@ type StatementContext struct {
 }
 
 // AddAffectedRows adds affected rows.
-func (sc *StatementContext) AddAffectedRows(rows uint64) {
-	sc.mu.Lock()
-	sc.mu.affectedRows += rows
-	sc.mu.Unlock()
-}
+func (sc *StatementContext) AddAffectedRows(rows uint64) { _ = "STUB: not implemented"; return }
 
 // AffectedRows gets affected rows.
-func (sc *StatementContext) AffectedRows() uint64 {
-	sc.mu.Lock()
-	rows := sc.mu.affectedRows
-	sc.mu.Unlock()
-	return rows
-}
+func (sc *StatementContext) AffectedRows() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // FoundRows gets found rows.
-func (sc *StatementContext) FoundRows() uint64 {
-	sc.mu.Lock()
-	rows := sc.mu.foundRows
-	sc.mu.Unlock()
-	return rows
-}
+func (sc *StatementContext) FoundRows() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // AddFoundRows adds found rows.
-func (sc *StatementContext) AddFoundRows(rows uint64) {
-	sc.mu.Lock()
-	sc.mu.foundRows += rows
-	sc.mu.Unlock()
-}
+func (sc *StatementContext) AddFoundRows(rows uint64) { _ = "STUB: not implemented"; return }
 
 // GetWarnings gets warnings.
-func (sc *StatementContext) GetWarnings() []error {
-	sc.mu.Lock()
-	warns := make([]error, len(sc.mu.warnings))
-	copy(warns, sc.mu.warnings)
-	sc.mu.Unlock()
-	return warns
-}
+func (sc *StatementContext) GetWarnings() []error { _ = "STUB: not implemented"; return nil }
 
 // SetWarnings sets warnings.
-func (sc *StatementContext) SetWarnings(warns []error) {
-	sc.mu.Lock()
-	sc.mu.warnings = warns
-	sc.mu.Unlock()
-}
+func (sc *StatementContext) SetWarnings(warns []error) { _ = "STUB: not implemented"; return }
 
 // AppendWarning appends a warning.
-func (sc *StatementContext) AppendWarning(warn error) {
-	sc.mu.Lock()
-	sc.mu.warnings = append(sc.mu.warnings, warn)
-	sc.mu.Unlock()
-}
+func (sc *StatementContext) AppendWarning(warn error) { _ = "STUB: not implemented"; return }

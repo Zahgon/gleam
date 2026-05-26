@@ -14,8 +14,6 @@
 package model
 
 import (
-	"strings"
-
 	"github.com/chrislusf/gleam/sql/util/types"
 )
 
@@ -29,10 +27,7 @@ type ColumnInfo struct {
 }
 
 // Clone clones ColumnInfo.
-func (c *ColumnInfo) Clone() *ColumnInfo {
-	nc := *c
-	return &nc
-}
+func (c *ColumnInfo) Clone() *ColumnInfo { _ = "STUB: not implemented"; return nil }
 
 // TableInfo provides meta data describing a DB table.
 type TableInfo struct {
@@ -43,21 +38,7 @@ type TableInfo struct {
 }
 
 // Clone clones TableInfo.
-func (t *TableInfo) Clone() *TableInfo {
-	nt := *t
-	nt.Columns = make([]*ColumnInfo, len(t.Columns))
-	nt.Indices = make([]*IndexInfo, len(t.Indices))
-
-	for i := range t.Columns {
-		nt.Columns[i] = t.Columns[i].Clone()
-	}
-
-	for i := range t.Indices {
-		nt.Indices[i] = t.Indices[i].Clone()
-	}
-
-	return &nt
-}
+func (t *TableInfo) Clone() *TableInfo { _ = "STUB: not implemented"; return nil }
 
 // IndexColumn provides index column info.
 type IndexColumn struct {
@@ -65,24 +46,13 @@ type IndexColumn struct {
 }
 
 // Clone clones IndexColumn.
-func (i *IndexColumn) Clone() *IndexColumn {
-	ni := *i
-	return &ni
-}
+func (i *IndexColumn) Clone() *IndexColumn { _ = "STUB: not implemented"; return nil }
 
 // IndexType is the type of index
 type IndexType int
 
 // String implements Stringer interface.
-func (t IndexType) String() string {
-	switch t {
-	case IndexTypeBtree:
-		return "BTREE"
-	case IndexTypeHash:
-		return "HASH"
-	}
-	return ""
-}
+func (t IndexType) String() string { _ = "STUB: not implemented"; return "" }
 
 // IndexTypes
 const (
@@ -104,14 +74,7 @@ type IndexInfo struct {
 }
 
 // Clone clones IndexInfo.
-func (index *IndexInfo) Clone() *IndexInfo {
-	ni := *index
-	ni.Columns = make([]*IndexColumn, len(index.Columns))
-	for i := range index.Columns {
-		ni.Columns[i] = index.Columns[i].Clone()
-	}
-	return &ni
-}
+func (index *IndexInfo) Clone() *IndexInfo { _ = "STUB: not implemented"; return nil }
 
 // DBInfo provides meta data describing a DB.
 type DBInfo struct {
@@ -120,14 +83,7 @@ type DBInfo struct {
 }
 
 // Clone clones DBInfo.
-func (db *DBInfo) Clone() *DBInfo {
-	newInfo := *db
-	newInfo.Tables = make([]*TableInfo, len(db.Tables))
-	for i := range db.Tables {
-		newInfo.Tables[i] = db.Tables[i].Clone()
-	}
-	return &newInfo
-}
+func (db *DBInfo) Clone() *DBInfo { _ = "STUB: not implemented"; return nil }
 
 // CIStr is case insensitive string.
 type CIStr struct {
@@ -137,12 +93,10 @@ type CIStr struct {
 
 // String implements fmt.Stringer interface.
 func (cis CIStr) String() string {
-	return cis.O
+	_ = "STUB: not implemented"
+
+	// NewCIStr creates a new CIStr.
+	return ""
 }
 
-// NewCIStr creates a new CIStr.
-func NewCIStr(s string) (cs CIStr) {
-	cs.O = s
-	cs.L = strings.ToLower(s)
-	return
-}
+func NewCIStr(s string) (cs CIStr) { _ = "STUB: not implemented"; return *new(CIStr) }

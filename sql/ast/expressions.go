@@ -55,24 +55,12 @@ type ValueExpr struct {
 }
 
 // NewValueExpr creates a ValueExpr with value, and sets default field type.
-func NewValueExpr(value interface{}) *ValueExpr {
-	if ve, ok := value.(*ValueExpr); ok {
-		return ve
-	}
-	ve := &ValueExpr{}
-	ve.SetValue(value)
-	types.DefaultTypeForValue(value, &ve.Type)
-	return ve
-}
+func NewValueExpr(value interface{}) *ValueExpr { _ = "STUB: not implemented"; return nil }
 
 // Accept implements Node interface.
 func (n *ValueExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ValueExpr)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // BetweenExpr is for "between and" or "not between and" expression.
@@ -90,31 +78,8 @@ type BetweenExpr struct {
 
 // Accept implements Node interface.
 func (n *BetweenExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-
-	n = newNode.(*BetweenExpr)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-
-	node, ok = n.Left.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Left = node.(ExprNode)
-
-	node, ok = n.Right.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Right = node.(ExprNode)
-
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // BinaryOperationExpr is for binary operation like `1 + 1`, `1 - 1`, etc.
@@ -130,25 +95,8 @@ type BinaryOperationExpr struct {
 
 // Accept implements Node interface.
 func (n *BinaryOperationExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-
-	n = newNode.(*BinaryOperationExpr)
-	node, ok := n.L.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.L = node.(ExprNode)
-
-	node, ok = n.R.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.R = node.(ExprNode)
-
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // WhenClause is the when clause in Case expression for "when condition then result".
@@ -162,24 +110,8 @@ type WhenClause struct {
 
 // Accept implements Node Accept interface.
 func (n *WhenClause) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-
-	n = newNode.(*WhenClause)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-
-	node, ok = n.Result.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Result = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // CaseExpr is the case expression.
@@ -195,34 +127,8 @@ type CaseExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *CaseExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-
-	n = newNode.(*CaseExpr)
-	if n.Value != nil {
-		node, ok := n.Value.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Value = node.(ExprNode)
-	}
-	for i, val := range n.WhenClauses {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.WhenClauses[i] = node.(*WhenClause)
-	}
-	if n.ElseClause != nil {
-		node, ok := n.ElseClause.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.ElseClause = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // SubqueryExec represents a subquery executor interface.
@@ -253,31 +159,15 @@ type SubqueryExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *SubqueryExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*SubqueryExpr)
-	if n.SubqueryExec != nil {
-		return v.Leave(n)
-	}
-	node, ok := n.Query.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Query = node.(ResultSetNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // SetResultFields implements ResultSetNode interface.
-func (n *SubqueryExpr) SetResultFields(rfs []*ResultField) {
-	n.Query.SetResultFields(rfs)
-}
+func (n *SubqueryExpr) SetResultFields(rfs []*ResultField) { _ = "STUB: not implemented"; return }
 
 // GetResultFields implements ResultSetNode interface.
-func (n *SubqueryExpr) GetResultFields() []*ResultField {
-	return n.Query.GetResultFields()
-}
+func (n *SubqueryExpr) GetResultFields() []*ResultField { _ = "STUB: not implemented"; return nil }
 
 // CompareSubqueryExpr is the expression for "expr cmp (select ...)".
 // See https://dev.mysql.com/doc/refman/5.7/en/comparisons-using-subqueries.html
@@ -297,22 +187,8 @@ type CompareSubqueryExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *CompareSubqueryExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*CompareSubqueryExpr)
-	node, ok := n.L.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.L = node.(ExprNode)
-	node, ok = n.R.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.R = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ColumnName represents column name.
@@ -325,12 +201,8 @@ type ColumnName struct {
 
 // Accept implements Node Accept interface.
 func (n *ColumnName) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ColumnName)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ColumnNameExpr represents a column name expression.
@@ -347,17 +219,8 @@ type ColumnNameExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *ColumnNameExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ColumnNameExpr)
-	node, ok := n.Name.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Name = node.(*ColumnName)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DefaultExpr is the default expression using default value for a column.
@@ -369,19 +232,8 @@ type DefaultExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *DefaultExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DefaultExpr)
-	if n.Name != nil {
-		node, ok := n.Name.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Name = node.(*ColumnName)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ExistsSubqueryExpr is the expression for "exists (select ...)".
@@ -394,17 +246,8 @@ type ExistsSubqueryExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *ExistsSubqueryExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ExistsSubqueryExpr)
-	node, ok := n.Sel.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Sel = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // PatternInExpr is the expression for in operator, like "expr in (1, 2, 3)" or "expr in (select c from t)".
@@ -422,31 +265,8 @@ type PatternInExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *PatternInExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*PatternInExpr)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-	for i, val := range n.List {
-		node, ok = val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.List[i] = node.(ExprNode)
-	}
-	if n.Sel != nil {
-		node, ok = n.Sel.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Sel = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // IsNullExpr is the expression for null check.
@@ -460,17 +280,8 @@ type IsNullExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *IsNullExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*IsNullExpr)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // IsTruthExpr is the expression for true/false check.
@@ -486,17 +297,8 @@ type IsTruthExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *IsTruthExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*IsTruthExpr)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // PatternLikeExpr is the expression for like operator, e.g, expr like "%123%"
@@ -517,26 +319,8 @@ type PatternLikeExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *PatternLikeExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*PatternLikeExpr)
-	if n.Expr != nil {
-		node, ok := n.Expr.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Expr = node.(ExprNode)
-	}
-	if n.Pattern != nil {
-		node, ok := n.Pattern.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Pattern = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ParamMarkerExpr expression holds a place for another expression.
@@ -548,12 +332,8 @@ type ParamMarkerExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *ParamMarkerExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ParamMarkerExpr)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ParenthesesExpr is the parentheses expression.
@@ -565,19 +345,8 @@ type ParenthesesExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *ParenthesesExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ParenthesesExpr)
-	if n.Expr != nil {
-		node, ok := n.Expr.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Expr = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // PositionExpr is the expression for order by and group by position.
@@ -593,12 +362,8 @@ type PositionExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *PositionExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*PositionExpr)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // PatternRegexpExpr is the pattern expression for pattern match.
@@ -619,22 +384,8 @@ type PatternRegexpExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *PatternRegexpExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*PatternRegexpExpr)
-	node, ok := n.Expr.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Expr = node.(ExprNode)
-	node, ok = n.Pattern.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Pattern = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // RowExpr is the expression for row constructor.
@@ -647,19 +398,8 @@ type RowExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *RowExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*RowExpr)
-	for i, val := range n.Values {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Values[i] = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // UnaryOperationExpr is the expression for unary operator.
@@ -673,17 +413,8 @@ type UnaryOperationExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *UnaryOperationExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*UnaryOperationExpr)
-	node, ok := n.V.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.V = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ValuesExpr is the expression used in INSERT VALUES.
@@ -695,17 +426,8 @@ type ValuesExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *ValuesExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ValuesExpr)
-	node, ok := n.Column.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Column = node.(*ColumnNameExpr)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // VariableExpr is the expression for variable.
@@ -723,19 +445,6 @@ type VariableExpr struct {
 
 // Accept implements Node Accept interface.
 func (n *VariableExpr) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*VariableExpr)
-	if n.Value == nil {
-		return v.Leave(n)
-	}
-
-	node, ok := n.Value.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Value = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }

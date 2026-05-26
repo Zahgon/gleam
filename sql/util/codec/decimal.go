@@ -14,47 +14,14 @@
 package codec
 
 import (
-	"log"
-
 	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // EncodeDecimal encodes a decimal d into a byte slice which can be sorted lexicographically later.
-func EncodeDecimal(b []byte, d types.Datum) []byte {
-	dec := d.GetMysqlDecimal()
-	precision := d.Length()
-	frac := d.Frac()
-	if precision == 0 {
-		precision, frac = dec.PrecisionAndFrac()
-	}
-	b = append(b, byte(precision), byte(frac))
-	bin, err := dec.ToBin(precision, frac)
-	if err != nil {
-		log.Printf("should not happen, precision %d, frac %d %v", precision, frac, err)
-		return b
-	}
-	b = append(b, bin...)
-	return b
-}
+func EncodeDecimal(b []byte, d types.Datum) []byte { _ = "STUB: not implemented"; return nil }
 
 // DecodeDecimal decodes bytes to decimal.
 func DecodeDecimal(b []byte) ([]byte, types.Datum, error) {
-	var d types.Datum
-	if len(b) < 3 {
-		return b, d, errors.New("insufficient bytes to decode value")
-	}
-	precision := int(b[0])
-	frac := int(b[1])
-	b = b[2:]
-	dec := new(types.MyDecimal)
-	binSize, err := dec.FromBin(b, precision, frac)
-	b = b[binSize:]
-	if err != nil {
-		return b, d, errors.Trace(err)
-	}
-	d.SetLength(precision)
-	d.SetFrac(frac)
-	d.SetMysqlDecimal(dec)
-	return b, d, nil
+	_ = "STUB: not implemented"
+	return nil, *new(types.Datum), nil
 }

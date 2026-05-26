@@ -1,7 +1,6 @@
 package scheduler
 
 import (
-	"bytes"
 	"sync"
 
 	"github.com/chrislusf/gleam/flow"
@@ -15,82 +14,40 @@ type DatasetShardLocator struct {
 	waitForAllInputs          *sync.Cond
 }
 
-func NewDatasetShardLocator() *DatasetShardLocator {
-	l := &DatasetShardLocator{
-		datasetShard2Location: make(map[string]pb.DataLocation),
-	}
-	l.waitForAllInputs = sync.NewCond(l)
-	return l
-}
+func NewDatasetShardLocator() *DatasetShardLocator { _ = "STUB: not implemented"; return nil }
 
 func (l *DatasetShardLocator) GetShardLocation(shardName string) (pb.DataLocation, bool) {
-	l.datasetShard2LocationLock.Lock()
-	defer l.datasetShard2LocationLock.Unlock()
-
-	loc, hasValue := l.datasetShard2Location[shardName]
-	return loc, hasValue
+	_ = "STUB: not implemented"
+	return *new(pb.DataLocation), false
 }
 
 func (l *DatasetShardLocator) SetShardLocation(name string, location pb.DataLocation) {
-	l.Lock()
-	defer l.Unlock()
-
-	l.datasetShard2LocationLock.Lock()
-	defer l.datasetShard2LocationLock.Unlock()
-	// fmt.Printf("shard %s is at %s\n", name, location.URL())
-	l.datasetShard2Location[name] = location
-	l.waitForAllInputs.Broadcast()
+	_ = "STUB: not implemented"
+	return
 }
+
+// fmt.Printf("shard %s is at %s\n", name, location.URL())
 
 func (l *DatasetShardLocator) isDatasetShardRegistered(shard *flow.DatasetShard) bool {
-
-	if _, hasValue := l.GetShardLocation(shard.Name()); !hasValue {
-		// fmt.Printf("%s's waiting for %s, but it is not ready\n", shard.Dataset.Step.Name, shard.Name())
-		return false
-	}
-	// fmt.Printf("%s knows %s is ready\n", shard.Dataset.Step.Name, shard.Name())
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
-func (l *DatasetShardLocator) waitForInputDatasetShardLocations(task *flow.Task) {
-	l.Lock()
-	defer l.Unlock()
+// fmt.Printf("%s's waiting for %s, but it is not ready\n", shard.Dataset.Step.Name, shard.Name())
 
-	for _, input := range task.InputShards {
-		for !l.isDatasetShardRegistered(input) {
-			l.waitForAllInputs.Wait()
-		}
-	}
+// fmt.Printf("%s knows %s is ready\n", shard.Dataset.Step.Name, shard.Name())
+
+func (l *DatasetShardLocator) waitForInputDatasetShardLocations(task *flow.Task) {
+	_ = "STUB: not implemented"
+	return
 }
 
 func (l *DatasetShardLocator) waitForOutputDatasetShardLocations(task *flow.Task) {
-	l.Lock()
-	defer l.Unlock()
-
-	for _, output := range task.OutputShards {
-		for !l.isDatasetShardRegistered(output) {
-			l.waitForAllInputs.Wait()
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (l *DatasetShardLocator) allInputLocations(task *flow.Task) string {
-	l.Lock()
-	defer l.Unlock()
-
-	var buf bytes.Buffer
-	for i, input := range task.InputShards {
-		name := input.Name()
-		location, hasValue := l.GetShardLocation(name)
-		if !hasValue {
-			panic("hmmm, we just checked all inputs are registered!")
-		}
-		if i != 0 {
-			buf.WriteString(",")
-		}
-		buf.WriteString(name)
-		buf.WriteString("@")
-		buf.WriteString(location.Location.URL())
-	}
-	return buf.String()
+	_ = "STUB: not implemented"
+	return ""
 }

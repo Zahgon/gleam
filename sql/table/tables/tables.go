@@ -32,12 +32,11 @@ type Table struct {
 }
 
 // Meta implements table.Table Meta interface.
-func (t *Table) Meta() *model.TableInfo {
-	return t.meta
-}
+func (t *Table) Meta() *model.TableInfo { _ = "STUB: not implemented"; return nil }
 
 func MockTableFromMeta(tableInfo *model.TableInfo) table.Table {
-	return &Table{meta: tableInfo}
+	_ = "STUB: not implemented"
+	return *new(table.Table)
 }
 
 func init() {

@@ -39,11 +39,4 @@ func main() {
 
 }
 
-func absolute(row []interface{}) error {
-	a, b := gio.ToString(row[0]), gio.ToInt64(row[1])
-	if b < 0 {
-		b = -b
-	}
-	gio.Emit(a, b)
-	return nil
-}
+func absolute(row []interface{}) error { _ = "STUB: not implemented"; return nil }

@@ -1,8 +1,6 @@
 package flow
 
 import (
-	"fmt"
-
 	"github.com/chrislusf/gleam/instruction"
 )
 
@@ -17,11 +15,8 @@ type pair struct {
 // distinct on field 1 and 2.
 // TODO: optimize for low cardinality case.
 func (d *Dataset) Distinct(name string, sortOption *SortOption) *Dataset {
-	ret := d.LocalSort(name, sortOption).LocalDistinct(name, sortOption)
-	if len(d.Shards) > 1 {
-		ret = ret.MergeSortedTo(name, 1).LocalDistinct(name, sortOption)
-	}
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Sort sort on specific fields, default to the first field.
@@ -29,75 +24,40 @@ func (d *Dataset) Distinct(name string, sortOption *SortOption) *Dataset {
 // example usage: Sort(Field(1,2)) means
 // sorting on field 1 and 2.
 func (d *Dataset) Sort(name string, sortOption *SortOption) *Dataset {
-	ret := d.LocalSort(name, sortOption)
-	ret = ret.TreeMergeSortedTo(name, 1, 10)
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (d *Dataset) SortByKey(name string) *Dataset {
-	return d.Sort(name, Field(1))
-}
+func (d *Dataset) SortByKey(name string) *Dataset { _ = "STUB: not implemented"; return nil }
 
 // Top streams through total n items, picking reverse ordered k items with O(n*log(k)) complexity.
 // Required Memory: about same size as n items in memory
 func (d *Dataset) Top(name string, k int, sortOption *SortOption) *Dataset {
-	ret := d.LocalTop(name, k, sortOption)
-	if len(d.Shards) > 1 {
-		ret = ret.MergeSortedTo(name, 1).LocalLimit(name, k, 0)
-	}
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (d *Dataset) LocalDistinct(name string, sortOption *SortOption) *Dataset {
-	ret, step := add1ShardTo1Step(d)
-	ret.IsLocalSorted = sortOption.orderByList
-	ret.IsPartitionedBy = d.IsPartitionedBy
-	step.SetInstruction(name, instruction.NewLocalDistinct(sortOption.orderByList))
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (d *Dataset) LocalSort(name string, sortOption *SortOption) *Dataset {
-	if isOrderByEquals(d.IsLocalSorted, sortOption.orderByList) {
-		return d
-	}
-
-	ret, step := add1ShardTo1Step(d)
-	ret.IsLocalSorted = sortOption.orderByList
-	ret.IsPartitionedBy = d.IsPartitionedBy
-	step.SetInstruction(name, instruction.NewLocalSort(sortOption.orderByList, int(d.GetPartitionSize())*3))
-	step.Description = sortOption.String()
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (d *Dataset) LocalTop(name string, n int, sortOption *SortOption) *Dataset {
-	ret, step := add1ShardTo1Step(d)
-	ret.IsLocalSorted = getReverseOrderBy(sortOption.orderByList)
-	ret.IsPartitionedBy = d.IsPartitionedBy
-	step.SetInstruction(name, instruction.NewLocalTop(n, ret.IsLocalSorted))
-	step.Description = fmt.Sprintf("local top %v", n)
-
-	return ret
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func isOrderByEquals(a []instruction.OrderBy, b []instruction.OrderBy) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i, v := range a {
-		if v.Index != b[i].Index || v.Order != b[i].Order {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func getReverseOrderBy(a []instruction.OrderBy) (reversed []instruction.OrderBy) {
-	for _, v := range a {
-		if v.Order == instruction.Ascending {
-			reversed = append(reversed, instruction.OrderBy{v.Index, instruction.Descending})
-		} else {
-			reversed = append(reversed, instruction.OrderBy{v.Index, instruction.Ascending})
-		}
-	}
-	return reversed
+	_ = "STUB: not implemented"
+	return nil
 }

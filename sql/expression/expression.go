@@ -14,7 +14,6 @@
 package expression
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 
@@ -23,9 +22,7 @@ import (
 	"github.com/chrislusf/gleam/sql/model"
 	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/terror"
-	"github.com/chrislusf/gleam/sql/util/codec"
 	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // Error instances.
@@ -76,19 +73,8 @@ type Expression interface {
 
 // EvalBool evaluates expression to a boolean value.
 func EvalBool(expr Expression, row []types.Datum, ctx context.Context) (bool, error) {
-	data, err := expr.Eval(row, ctx)
-	if err != nil {
-		return false, errors.Trace(err)
-	}
-	if data.IsNull() {
-		return false, nil
-	}
-
-	i, err := data.ToBool(ctx.GetSessionVars().StmtCtx)
-	if err != nil {
-		return false, errors.Trace(err)
-	}
-	return i != 0, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // One stands for a number 1.
@@ -116,90 +102,80 @@ type Constant struct {
 }
 
 // String implements fmt.Stringer interface.
-func (c *Constant) String() string {
-	return fmt.Sprintf("%v", c.Value.GetValue())
-}
+func (c *Constant) String() string { _ = "STUB: not implemented"; return "" }
 
 // MarshalJSON implements json.Marshaler interface.
-func (c *Constant) MarshalJSON() ([]byte, error) {
-	buffer := bytes.NewBufferString(fmt.Sprintf("\"%s\"", c))
-	return buffer.Bytes(), nil
-}
+func (c *Constant) MarshalJSON() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Clone implements Expression interface.
 func (c *Constant) Clone() Expression {
-	con := *c
-	return &con
+	_ = "STUB: not implemented"
+	return *
+
+	// GetType implements Expression interface.
+	new(Expression)
 }
 
-// GetType implements Expression interface.
 func (c *Constant) GetType() *types.FieldType {
-	return c.RetType
+	_ = "STUB: not implemented"
+
+	// Eval implements Expression interface.
+	return nil
 }
 
-// Eval implements Expression interface.
 func (c *Constant) Eval(_ []types.Datum, _ context.Context) (types.Datum, error) {
-	return c.Value, nil
+	_ = "STUB: not implemented"
+	return *
+
+	// Equal implements Expression interface.
+	new(types.Datum), nil
 }
 
-// Equal implements Expression interface.
 func (c *Constant) Equal(b Expression, ctx context.Context) bool {
-	y, ok := b.(*Constant)
-	if !ok {
-		return false
-	}
-	con, err := c.Value.CompareDatum(ctx.GetSessionVars().StmtCtx, y.Value)
-	if err != nil || con != 0 {
-		return false
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsCorrelated implements Expression interface.
 func (c *Constant) IsCorrelated() bool {
+	_ = "STUB: not implemented"
+
+	// Decorrelate implements Expression interface.
 	return false
 }
 
-// Decorrelate implements Expression interface.
 func (c *Constant) Decorrelate(_ Schema) Expression {
-	return c
+	_ = "STUB: not implemented"
+
+	// HashCode implements Expression interface.
+	return *new(Expression)
 }
 
-// HashCode implements Expression interface.
-func (c *Constant) HashCode() []byte {
-	var bytes []byte
-	bytes, _ = codec.EncodeValue(bytes, c.Value)
-	return bytes
-}
+func (c *Constant) HashCode() []byte { _ = "STUB: not implemented"; return nil }
 
 // ResolveIndices implements Expression interface.
 func (c *Constant) ResolveIndices(_ Schema) {
+	_ = "STUB: not implemented"
+
+	// composeConditionWithBinaryOp composes condition with binary operator into a balance deep tree, which benefits a lot for pb decoder/encoder.
+	return
 }
 
-// composeConditionWithBinaryOp composes condition with binary operator into a balance deep tree, which benefits a lot for pb decoder/encoder.
 func composeConditionWithBinaryOp(ctx context.Context, conditions []Expression, funcName string) Expression {
-	length := len(conditions)
-	if length == 0 {
-		return nil
-	}
-	if length == 1 {
-		return conditions[0]
-	}
-	expr, _ := NewFunction(ctx, funcName,
-		types.NewFieldType(mysql.TypeTiny),
-		composeConditionWithBinaryOp(ctx, conditions[:length/2], funcName),
-		composeConditionWithBinaryOp(ctx, conditions[length/2:], funcName))
-	return expr
+	_ = "STUB: not implemented"
+	return *new(Expression)
 }
 
 // ComposeCNFCondition composes CNF items into a balance deep CNF tree, which benefits a lot for pb decoder/encoder.
 func ComposeCNFCondition(ctx context.Context, conditions ...Expression) Expression {
-	return composeConditionWithBinaryOp(ctx, conditions, ast.AndAnd)
+	_ = "STUB: not implemented"
+	return *new(Expression)
 }
 
 // ComposeDNFCondition composes DNF items into a balance deep DNF tree.
 func ComposeDNFCondition(ctx context.Context, conditions ...Expression) Expression {
-	return composeConditionWithBinaryOp(ctx, conditions, ast.OrOr)
+	_ = "STUB: not implemented"
+	return *new(Expression)
 }
 
 // Assignment represents a set assignment in Update, such as
@@ -221,122 +197,38 @@ type VarAssignment struct {
 
 // splitNormalFormItems split CNF(conjunctive normal form) like "a and b and c", or DNF(disjunctive normal form) like "a or b or c"
 func splitNormalFormItems(onExpr Expression, funcName string) []Expression {
-	switch v := onExpr.(type) {
-	case *ScalarFunction:
-		if v.FuncName.L == funcName {
-			var ret []Expression
-			for _, arg := range v.GetArgs() {
-				ret = append(ret, splitNormalFormItems(arg, funcName)...)
-			}
-			return ret
-		}
-	}
-	return []Expression{onExpr}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SplitCNFItems splits CNF items.
 // CNF means conjunctive normal form, e.g. "a and b and c".
-func SplitCNFItems(onExpr Expression) []Expression {
-	return splitNormalFormItems(onExpr, ast.AndAnd)
-}
+func SplitCNFItems(onExpr Expression) []Expression { _ = "STUB: not implemented"; return nil }
 
 // SplitDNFItems splits DNF items.
 // DNF means disjunctive normal form, e.g. "a or b or c".
-func SplitDNFItems(onExpr Expression) []Expression {
-	return splitNormalFormItems(onExpr, ast.OrOr)
-}
+func SplitDNFItems(onExpr Expression) []Expression { _ = "STUB: not implemented"; return nil }
 
 // EvaluateExprWithNull sets columns in schema as null and calculate the final result of the scalar function.
 // If the Expression is a non-constant value, it means the result is unknown.
 func EvaluateExprWithNull(ctx context.Context, schema Schema, expr Expression) (Expression, error) {
-	switch x := expr.(type) {
-	case *ScalarFunction:
-		var err error
-		args := make([]Expression, len(x.GetArgs()))
-		for i, arg := range x.GetArgs() {
-			args[i], err = EvaluateExprWithNull(ctx, schema, arg)
-			if err != nil {
-				return nil, errors.Trace(err)
-			}
-		}
-		newFunc, err := NewFunction(ctx, x.FuncName.L, types.NewFieldType(mysql.TypeTiny), args...)
-		if err != nil {
-			return nil, errors.Trace(err)
-		}
-		return FoldConstant(ctx, newFunc), nil
-	case *Column:
-		if schema.GetColumnIndex(x) == -1 {
-			return x, nil
-		}
-		constant := &Constant{Value: types.Datum{}}
-		return constant, nil
-	default:
-		return x.Clone(), nil
-	}
+	_ = "STUB: not implemented"
+	return *new(Expression), nil
 }
 
 // TableInfo2Schema converts table info to schema.
-func TableInfo2Schema(tbl *model.TableInfo) Schema {
-	schema := NewSchema(make([]*Column, 0, len(tbl.Columns)))
-	keys := make([]KeyInfo, 0, len(tbl.Indices)+1)
-	for i, col := range tbl.Columns {
-		newCol := &Column{
-			ColName:  col.Name,
-			TblName:  tbl.Name,
-			RetType:  &col.FieldType,
-			Position: i,
-		}
-		schema.Append(newCol)
-	}
-	for _, idx := range tbl.Indices {
-		if !idx.Unique {
-			continue
-		}
-		ok := true
-		newKey := make([]*Column, 0, len(idx.Columns))
-		for _, idxCol := range idx.Columns {
-			find := false
-			for i, col := range tbl.Columns {
-				if idxCol.Name.L == col.Name.L {
-					if !mysql.HasNotNullFlag(col.Flag) {
-						break
-					}
-					newKey = append(newKey, schema.Columns[i])
-					find = true
-					break
-				}
-			}
-			if !find {
-				ok = false
-				break
-			}
-		}
-		if ok {
-			keys = append(keys, newKey)
-		}
-	}
-	schema.SetUniqueKeys(keys)
-	return schema
-}
+func TableInfo2Schema(tbl *model.TableInfo) Schema { _ = "STUB: not implemented"; return *new(Schema) }
 
 // NewCastFunc creates a new cast function.
 func NewCastFunc(tp *types.FieldType, arg Expression, ctx context.Context) *ScalarFunction {
-	bt := &builtinCastSig{newBaseBuiltinFunc([]Expression{arg}, ctx), tp}
-	return &ScalarFunction{
-		FuncName: model.NewCIStr(ast.Cast),
-		RetType:  tp,
-		Function: bt,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewValuesFunc creates a new values function.
 func NewValuesFunc(offset int, retTp *types.FieldType, ctx context.Context) *ScalarFunction {
-	bt := &builtinValuesSig{newBaseBuiltinFunc(nil, ctx), offset}
-	return &ScalarFunction{
-		FuncName: model.NewCIStr(ast.Values),
-		RetType:  retTp,
-		Function: bt,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func init() {

@@ -18,48 +18,24 @@
 package types
 
 import (
-	"io"
-	"strings"
-
-	"github.com/juju/errors"
 	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/parser/opcode"
-	"github.com/chrislusf/gleam/sql/terror"
-	"github.com/chrislusf/gleam/sql/util/charset"
 )
 
 // IsTypeBlob returns a boolean indicating whether the tp is a blob type.
-func IsTypeBlob(tp byte) bool {
-	switch tp {
-	case mysql.TypeTinyBlob, mysql.TypeMediumBlob, mysql.TypeBlob, mysql.TypeLongBlob:
-		return true
-	default:
-		return false
-	}
-}
+func IsTypeBlob(tp byte) bool { _ = "STUB: not implemented"; return false }
 
 // IsTypeChar returns a boolean indicating
 // whether the tp is the char type like a string type or a varchar type.
-func IsTypeChar(tp byte) bool {
-	switch tp {
-	case mysql.TypeString, mysql.TypeVarchar:
-		return true
-	default:
-		return false
-	}
-}
+func IsTypeChar(tp byte) bool { _ = "STUB: not implemented"; return false }
 
 // IsTypePrefixable returns a boolean indicating
 // whether an index on a column with the tp can be defined with a prefix.
-func IsTypePrefixable(tp byte) bool {
-	return IsTypeBlob(tp) || IsTypeChar(tp)
-}
+func IsTypePrefixable(tp byte) bool { _ = "STUB: not implemented"; return false }
 
 // IsTypeFractionable returns a boolean indicating
 // whether the tp can has time fraction.
-func IsTypeFractionable(tp byte) bool {
-	return tp == mysql.TypeDatetime || tp == mysql.TypeDuration || tp == mysql.TypeTimestamp
-}
+func IsTypeFractionable(tp byte) bool { _ = "STUB: not implemented"; return false }
 
 var type2Str = map[byte]string{
 	mysql.TypeBit:        "bit",
@@ -91,44 +67,26 @@ var type2Str = map[byte]string{
 }
 
 // TypeStr converts tp to a string.
-func TypeStr(tp byte) (r string) {
-	return type2Str[tp]
-}
+func TypeStr(tp byte) (r string) { _ = "STUB: not implemented"; return "" }
 
 // TypeToStr converts a field to a string.
 // It is used for converting Text to Blob,
 // or converting Char to Binary.
 // Args:
+//
 //	tp: type enum
 //	cs: charset
-func TypeToStr(tp byte, cs string) (r string) {
-	ts := type2Str[tp]
-	if cs != charset.CharsetBin {
-		return ts
-	}
-	if IsTypeBlob(tp) {
-		ts = strings.Replace(ts, "text", "blob", 1)
-	} else if IsTypeChar(tp) {
-		ts = strings.Replace(ts, "char", "binary", 1)
-	}
-	return ts
-}
+func TypeToStr(tp byte, cs string) (r string) { _ = "STUB: not implemented"; return "" }
 
 // EOFAsNil filtrates errors,
 // If err is equal to io.EOF returns nil.
-func EOFAsNil(err error) error {
-	if terror.ErrorEqual(err, io.EOF) {
-		return nil
-	}
-	return errors.Trace(err)
-}
+func EOFAsNil(err error) error { _ = "STUB: not implemented"; return nil }
 
 // InvOp2 returns an invalid operation error.
 func InvOp2(x, y interface{}, o opcode.Op) (interface{}, error) {
-	return nil, errors.Errorf("Invalid operation: %v %v %v (mismatched types %T and %T)", x, o, y, x, y)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Overflow returns an overflowed error.
-func overflow(v interface{}, tp byte) error {
-	return errors.Errorf("constant %v overflows %s", v, TypeStr(tp))
-}
+func overflow(v interface{}, tp byte) error { _ = "STUB: not implemented"; return nil }

@@ -14,8 +14,6 @@
 package charset
 
 import (
-	"strings"
-
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/encoding/japanese"
@@ -30,9 +28,8 @@ import (
 // standard encodings for HTML. Matching is case-insensitive and ignores
 // leading and trailing empty space.
 func Lookup(label string) (e encoding.Encoding, name string) {
-	label = strings.ToLower(strings.Trim(label, "\t\n\r\f "))
-	enc := encodings[label]
-	return enc.e, enc.name
+	_ = "STUB: not implemented"
+	return *new(encoding.Encoding), ""
 }
 
 var encodings = map[string]struct {

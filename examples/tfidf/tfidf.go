@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"os"
@@ -71,35 +70,6 @@ func main() {
 
 }
 
-func readContent(x []interface{}) error {
+func readContent(x []interface{}) error { _ = "STUB: not implemented"; return nil }
 
-	filepath := gio.ToString(x[0])
-
-	f, err := os.Open(filepath)
-	if err != nil {
-		println("error reading file:", filepath)
-		return err
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-	scanner.Split(bufio.ScanWords)
-	for scanner.Scan() {
-		gio.Emit(scanner.Text(), filepath, 1)
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading input:", err)
-	}
-	return nil
-}
-
-func tfidf(x []interface{}) error {
-	fmt.Fprintf(os.Stderr, "tfidf input: %v\n", x)
-	word := gio.ToString(x[0])
-	df := uint16(gio.ToInt64(x[1]))
-	doc := gio.ToString(x[2])
-	tf := uint16(gio.ToInt64(x[3]))
-
-	gio.Emit(word, doc, tf, df, float32(tf)/float32(df))
-	return nil
-}
+func tfidf(x []interface{}) error { _ = "STUB: not implemented"; return nil }

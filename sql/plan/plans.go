@@ -14,9 +14,6 @@
 package plan
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/chrislusf/gleam/sql/ast"
 	"github.com/chrislusf/gleam/sql/expression"
 	"github.com/chrislusf/gleam/sql/sessionctx/variable"
@@ -52,52 +49,11 @@ type IndexRange struct {
 
 // IsPoint returns if the index range is a point.
 func (ir *IndexRange) IsPoint(sc *variable.StatementContext) bool {
-	if len(ir.LowVal) != len(ir.HighVal) {
-		return false
-	}
-	for i := range ir.LowVal {
-		a := ir.LowVal[i]
-		b := ir.HighVal[i]
-		if a.Kind() == types.KindMinNotNull || b.Kind() == types.KindMaxValue {
-			return false
-		}
-		cmp, err := a.CompareDatum(sc, b)
-		if err != nil {
-			return false
-		}
-		if cmp != 0 {
-			return false
-		}
-	}
-	return !ir.LowExclude && !ir.HighExclude
+	_ = "STUB: not implemented"
+	return false
 }
 
-func (ir *IndexRange) String() string {
-	lowStrs := make([]string, 0, len(ir.LowVal))
-	for _, d := range ir.LowVal {
-		if d.Kind() == types.KindMinNotNull {
-			lowStrs = append(lowStrs, "-inf")
-		} else {
-			lowStrs = append(lowStrs, fmt.Sprintf("%v", d.GetValue()))
-		}
-	}
-	highStrs := make([]string, 0, len(ir.LowVal))
-	for _, d := range ir.HighVal {
-		if d.Kind() == types.KindMaxValue {
-			highStrs = append(highStrs, "+inf")
-		} else {
-			highStrs = append(highStrs, fmt.Sprintf("%v", d.GetValue()))
-		}
-	}
-	l, r := "[", "]"
-	if ir.LowExclude {
-		l = "("
-	}
-	if ir.HighExclude {
-		r = ")"
-	}
-	return l + strings.Join(lowStrs, " ") + "," + strings.Join(highStrs, " ") + r
-}
+func (ir *IndexRange) String() string { _ = "STUB: not implemented"; return "" }
 
 // SelectLock represents a select lock plan.
 type SelectLock struct {

@@ -17,17 +17,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"strings"
 
-	"log"
-
-	"github.com/chrislusf/gleam/sql/ast"
 	"github.com/chrislusf/gleam/sql/context"
-	"github.com/chrislusf/gleam/sql/mysql"
-	"github.com/chrislusf/gleam/sql/util/charset"
 	"github.com/chrislusf/gleam/sql/util/distinct"
 	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // AggregationFunction stands for aggregate functions.
@@ -96,23 +89,8 @@ type aggEvaluateContext struct {
 
 // NewAggFunction creates a new AggregationFunction.
 func NewAggFunction(funcType string, funcArgs []Expression, distinct bool) AggregationFunction {
-	switch tp := strings.ToLower(funcType); tp {
-	case ast.AggFuncSum:
-		return &sumFunction{aggFunction: newAggFunc(tp, funcArgs, distinct)}
-	case ast.AggFuncCount:
-		return &countFunction{aggFunction: newAggFunc(tp, funcArgs, distinct)}
-	case ast.AggFuncAvg:
-		return &avgFunction{aggFunction: newAggFunc(tp, funcArgs, distinct)}
-	case ast.AggFuncGroupConcat:
-		return &concatFunction{aggFunction: newAggFunc(tp, funcArgs, distinct)}
-	case ast.AggFuncMax:
-		return &maxMinFunction{aggFunction: newAggFunc(tp, funcArgs, distinct), isMax: true}
-	case ast.AggFuncMin:
-		return &maxMinFunction{aggFunction: newAggFunc(tp, funcArgs, distinct), isMax: false}
-	case ast.AggFuncFirstRow:
-		return &firstRowFunction{aggFunction: newAggFunc(tp, funcArgs, distinct)}
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 type aggCtxMapper map[string]*aggEvaluateContext
@@ -138,169 +116,91 @@ type aggFunction struct {
 
 // Equal implements AggregationFunction interface.
 func (af *aggFunction) Equal(b AggregationFunction, ctx context.Context) bool {
-	if af.GetName() != b.GetName() {
-		return false
-	}
-	if af.Distinct != b.IsDistinct() {
-		return false
-	}
-	if len(af.GetArgs()) == len(b.GetArgs()) {
-		for i, argA := range af.GetArgs() {
-			if !argA.Equal(b.GetArgs()[i], ctx) {
-				return false
-			}
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 // String implements fmt.Stringer interface.
-func (af *aggFunction) String() string {
-	result := af.name + "("
-	for i, arg := range af.Args {
-		result += arg.String()
-		if i+1 != len(af.Args) {
-			result += ", "
-		}
-	}
-	result += ")"
-	return result
-}
+func (af *aggFunction) String() string { _ = "STUB: not implemented"; return "" }
 
 // MarshalJSON implements json.Marshaler interface.
-func (af *aggFunction) MarshalJSON() ([]byte, error) {
-	buffer := bytes.NewBufferString(fmt.Sprintf("\"%s\"", af))
-	return buffer.Bytes(), nil
-}
+func (af *aggFunction) MarshalJSON() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func newAggFunc(name string, args []Expression, dist bool) aggFunction {
-	return aggFunction{
-		name:         name,
-		Args:         args,
-		resultMapper: make(aggCtxMapper, 0),
-		Distinct:     dist,
-	}
+	_ = "STUB: not implemented"
+	return *new(aggFunction)
 }
 
 // CalculateDefaultValue implements AggregationFunction interface.
 func (af *aggFunction) CalculateDefaultValue(schema Schema, ctx context.Context) (types.Datum, bool) {
-	return types.Datum{}, false
+	_ = "STUB: not implemented"
+	return *new(types.Datum), false
 }
 
 // IsDistinct implements AggregationFunction interface.
 func (af *aggFunction) IsDistinct() bool {
-	return af.Distinct
+	_ = "STUB: not implemented"
+
+	// Clear implements AggregationFunction interface.
+	return false
 }
 
-// Clear implements AggregationFunction interface.
-func (af *aggFunction) Clear() {
-	af.resultMapper = make(aggCtxMapper, 0)
-	af.streamCtx = nil
-}
+func (af *aggFunction) Clear() { _ = "STUB: not implemented"; return }
 
 // GetName implements AggregationFunction interface.
 func (af *aggFunction) GetName() string {
-	return af.name
+	_ = "STUB: not implemented"
+
+	// SetMode implements AggregationFunction interface.
+	return ""
 }
 
-// SetMode implements AggregationFunction interface.
 func (af *aggFunction) SetMode(mode AggFunctionMode) {
-	af.mode = mode
+	_ = "STUB: not implemented"
+
+	// GetMode implements AggregationFunction interface.
+	return
 }
 
-// GetMode implements AggregationFunction interface.
 func (af *aggFunction) GetMode() AggFunctionMode {
-	return af.mode
+	_ = "STUB: not implemented"
+
+	// GetArgs implements AggregationFunction interface.
+	return *new(AggFunctionMode)
 }
 
-// GetArgs implements AggregationFunction interface.
 func (af *aggFunction) GetArgs() []Expression {
-	return af.Args
+	_ = "STUB: not implemented"
+
+	// SetArgs implements AggregationFunction interface.
+	return nil
 }
 
-// SetArgs implements AggregationFunction interface.
-func (af *aggFunction) SetArgs(args []Expression) {
-	af.Args = args
-}
+func (af *aggFunction) SetArgs(args []Expression) { _ = "STUB: not implemented"; return }
 
 func (af *aggFunction) getContext(groupKey []byte) *aggEvaluateContext {
-	ctx, ok := af.resultMapper[string(groupKey)]
-	if !ok {
-		ctx = &aggEvaluateContext{}
-		if af.Distinct {
-			ctx.DistinctChecker = distinct.CreateDistinctChecker()
-		}
-		af.resultMapper[string(groupKey)] = ctx
-	}
-	return ctx
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (af *aggFunction) getStreamedContext() *aggEvaluateContext {
-	if af.streamCtx == nil {
-		af.streamCtx = &aggEvaluateContext{}
-		if af.Distinct {
-			af.streamCtx.DistinctChecker = distinct.CreateDistinctChecker()
-		}
-	}
-	return af.streamCtx
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetContext implements AggregationFunction interface.
 func (af *aggFunction) SetContext(ctx map[string](*aggEvaluateContext)) {
-	af.resultMapper = ctx
+	_ = "STUB: not implemented"
+	return
 }
 
 func (af *aggFunction) updateSum(row []types.Datum, groupKey []byte, ectx context.Context) error {
-	ctx := af.getContext(groupKey)
-	a := af.Args[0]
-	value, err := a.Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if value.IsNull() {
-		return nil
-	}
-	if af.Distinct {
-		d, err1 := ctx.DistinctChecker.Check([]interface{}{value.GetValue()})
-		if err1 != nil {
-			return errors.Trace(err1)
-		}
-		if !d {
-			return nil
-		}
-	}
-	ctx.Value, err = calculateSum(ectx.GetSessionVars().StmtCtx, ctx.Value, value)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	ctx.Count++
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (af *aggFunction) streamUpdateSum(row []types.Datum, ectx context.Context) error {
-	ctx := af.getStreamedContext()
-	a := af.Args[0]
-	value, err := a.Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if value.IsNull() {
-		return nil
-	}
-	if af.Distinct {
-		d, err1 := ctx.DistinctChecker.Check([]interface{}{value.GetValue()})
-		if err1 != nil {
-			return errors.Trace(err1)
-		}
-		if !d {
-			return nil
-		}
-	}
-	ctx.Value, err = calculateSum(ectx.GetSessionVars().StmtCtx, ctx.Value, value)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	ctx.Count++
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -310,65 +210,42 @@ type sumFunction struct {
 
 // Clone implements AggregationFunction interface.
 func (sf *sumFunction) Clone() AggregationFunction {
-	nf := *sf
-	for i, arg := range sf.Args {
-		nf.Args[i] = arg.Clone()
-	}
-	nf.resultMapper = make(aggCtxMapper)
-	return &nf
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 // Update implements AggregationFunction interface.
 func (sf *sumFunction) Update(row []types.Datum, groupKey []byte, ctx context.Context) error {
-	return sf.updateSum(row, groupKey, ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // StreamUpdate implements AggregationFunction interface.
 func (sf *sumFunction) StreamUpdate(row []types.Datum, ectx context.Context) error {
-	return sf.streamUpdateSum(row, ectx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetGroupResult implements AggregationFunction interface.
 func (sf *sumFunction) GetGroupResult(groupKey []byte) (d types.Datum) {
-	return sf.getContext(groupKey).Value
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetStreamResult implements AggregationFunction interface.
 func (sf *sumFunction) GetStreamResult() (d types.Datum) {
-	if sf.streamCtx == nil {
-		return
-	}
-	d = sf.streamCtx.Value
-	sf.streamCtx = nil
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // CalculateDefaultValue implements AggregationFunction interface.
 func (sf *sumFunction) CalculateDefaultValue(schema Schema, ctx context.Context) (d types.Datum, valid bool) {
-	arg := sf.Args[0]
-	result, err := EvaluateExprWithNull(ctx, schema, arg)
-	if err != nil {
-		log.Printf("Evaluate expr with null failed in function %s, err msg is %s", sf, err.Error())
-		return d, false
-	}
-	if con, ok := result.(*Constant); ok {
-		d, err = calculateSum(ctx.GetSessionVars().StmtCtx, d, con.Value)
-		if err != nil {
-			log.Printf("CalculateSum failed in function %s, err msg is %s", sf, err.Error())
-		}
-		return d, err == nil
-	}
-	return d, false
+	_ = "STUB: not implemented"
+	return *new(types.Datum), false
 }
 
 // GetType implements AggregationFunction interface.
-func (sf *sumFunction) GetType() *types.FieldType {
-	ft := types.NewFieldType(mysql.TypeNewDecimal)
-	ft.Charset = charset.CharsetBin
-	ft.Collate = charset.CollationBin
-	ft.Decimal = sf.Args[0].GetType().Decimal
-	return ft
-}
+func (sf *sumFunction) GetType() *types.FieldType { _ = "STUB: not implemented"; return nil }
 
 type countFunction struct {
 	aggFunction
@@ -376,125 +253,41 @@ type countFunction struct {
 
 // Clone implements AggregationFunction interface.
 func (cf *countFunction) Clone() AggregationFunction {
-	nf := *cf
-	for i, arg := range cf.Args {
-		nf.Args[i] = arg.Clone()
-	}
-	nf.resultMapper = make(aggCtxMapper)
-	return &nf
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 // CalculateDefaultValue implements AggregationFunction interface.
 func (cf *countFunction) CalculateDefaultValue(schema Schema, ctx context.Context) (d types.Datum, valid bool) {
-	for _, arg := range cf.Args {
-		result, err := EvaluateExprWithNull(ctx, schema, arg)
-		if err != nil {
-			log.Printf("Evaluate expr with null failed in function %s, err msg is %s", cf, err.Error())
-			return d, false
-		}
-		if con, ok := result.(*Constant); ok {
-			if con.Value.IsNull() {
-				return types.NewDatum(0), true
-			}
-		} else {
-			return d, false
-		}
-	}
-	return types.NewDatum(1), true
+	_ = "STUB: not implemented"
+	return *new(types.Datum), false
 }
 
 // GetType implements AggregationFunction interface.
-func (cf *countFunction) GetType() *types.FieldType {
-	ft := types.NewFieldType(mysql.TypeLonglong)
-	ft.Flen = 21
-	ft.Charset = charset.CharsetBin
-	ft.Collate = charset.CollationBin
-	return ft
-}
+func (cf *countFunction) GetType() *types.FieldType { _ = "STUB: not implemented"; return nil }
 
 // Update implements AggregationFunction interface.
 func (cf *countFunction) Update(row []types.Datum, groupKey []byte, ectx context.Context) error {
-	ctx := cf.getContext(groupKey)
-	var vals []interface{}
-	if cf.Distinct {
-		vals = make([]interface{}, 0, len(cf.Args))
-	}
-	for _, a := range cf.Args {
-		value, err := a.Eval(row, ectx)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if value.GetValue() == nil {
-			return nil
-		}
-		if cf.mode == FinalMode {
-			ctx.Count += value.GetInt64()
-		}
-		if cf.Distinct {
-			vals = append(vals, value.GetValue())
-		}
-	}
-	if cf.Distinct {
-		d, err := ctx.DistinctChecker.Check(vals)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if !d {
-			return nil
-		}
-	}
-	if cf.mode == CompleteMode {
-		ctx.Count++
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // StreamUpdate implements AggregationFunction interface.
 func (cf *countFunction) StreamUpdate(row []types.Datum, ectx context.Context) error {
-	ctx := cf.getStreamedContext()
-	var vals []interface{}
-	if cf.Distinct {
-		vals = make([]interface{}, 0, len(cf.Args))
-	}
-	for _, a := range cf.Args {
-		value, err := a.Eval(row, ectx)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if value.GetValue() == nil {
-			return nil
-		}
-		if cf.Distinct {
-			vals = append(vals, value.GetValue())
-		}
-	}
-	if cf.Distinct {
-		d, err := ctx.DistinctChecker.Check(vals)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if !d {
-			return nil
-		}
-	}
-	ctx.Count++
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // GetGroupResult implements AggregationFunction interface.
 func (cf *countFunction) GetGroupResult(groupKey []byte) (d types.Datum) {
-	d.SetInt64(cf.getContext(groupKey).Count)
-	return d
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetStreamResult implements AggregationFunction interface.
 func (cf *countFunction) GetStreamResult() (d types.Datum) {
-	if cf.streamCtx == nil {
-		return types.NewDatum(0)
-	}
-	d.SetInt64(cf.streamCtx.Count)
-	cf.streamCtx = nil
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 type avgFunction struct {
@@ -503,97 +296,45 @@ type avgFunction struct {
 
 // Clone implements AggregationFunction interface.
 func (af *avgFunction) Clone() AggregationFunction {
-	nf := *af
-	for i, arg := range af.Args {
-		nf.Args[i] = arg.Clone()
-	}
-	nf.resultMapper = make(aggCtxMapper)
-	return &nf
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 // GetType implements AggregationFunction interface.
-func (af *avgFunction) GetType() *types.FieldType {
-	ft := types.NewFieldType(mysql.TypeNewDecimal)
-	ft.Charset = charset.CharsetBin
-	ft.Collate = charset.CollationBin
-	ft.Decimal = af.Args[0].GetType().Decimal
-	return ft
-}
+func (af *avgFunction) GetType() *types.FieldType { _ = "STUB: not implemented"; return nil }
 
 func (af *avgFunction) updateAvg(row []types.Datum, groupKey []byte, ectx context.Context) error {
-	ctx := af.getContext(groupKey)
-	a := af.Args[1]
-	value, err := a.Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if value.IsNull() {
-		return nil
-	}
-	if af.Distinct {
-		d, err1 := ctx.DistinctChecker.Check([]interface{}{value.GetValue()})
-		if err1 != nil {
-			return errors.Trace(err1)
-		}
-		if !d {
-			return nil
-		}
-	}
-	ctx.Value, err = calculateSum(ectx.GetSessionVars().StmtCtx, ctx.Value, value)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	count, err := af.Args[0].Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	ctx.Count += count.GetInt64()
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // Update implements AggregationFunction interface.
 func (af *avgFunction) Update(row []types.Datum, groupKey []byte, ctx context.Context) error {
-	if af.mode == FinalMode {
-		return af.updateAvg(row, groupKey, ctx)
-	}
-	return af.updateSum(row, groupKey, ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // StreamUpdate implements AggregationFunction interface.
 func (af *avgFunction) StreamUpdate(row []types.Datum, ctx context.Context) error {
-	return af.streamUpdateSum(row, ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (af *avgFunction) calculateResult(ctx *aggEvaluateContext) (d types.Datum) {
-	switch ctx.Value.Kind() {
-	case types.KindFloat64:
-		t := ctx.Value.GetFloat64() / float64(ctx.Count)
-		d.SetValue(t)
-	case types.KindMysqlDecimal:
-		x := ctx.Value.GetMysqlDecimal()
-		y := types.NewDecFromInt(ctx.Count)
-		to := new(types.MyDecimal)
-		types.DecimalDiv(x, y, to, types.DivFracIncr)
-		to.Round(to, ctx.Value.Frac()+types.DivFracIncr)
-		d.SetMysqlDecimal(to)
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetGroupResult implements AggregationFunction interface.
 func (af *avgFunction) GetGroupResult(groupKey []byte) types.Datum {
-	ctx := af.getContext(groupKey)
-	return af.calculateResult(ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetStreamResult implements AggregationFunction interface.
 func (af *avgFunction) GetStreamResult() (d types.Datum) {
-	if af.streamCtx == nil {
-		return
-	}
-	d = af.calculateResult(af.streamCtx)
-	af.streamCtx = nil
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 type concatFunction struct {
@@ -602,114 +343,43 @@ type concatFunction struct {
 
 // Clone implements AggregationFunction interface.
 func (cf *concatFunction) Clone() AggregationFunction {
-	nf := *cf
-	for i, arg := range cf.Args {
-		nf.Args[i] = arg.Clone()
-	}
-	nf.resultMapper = make(aggCtxMapper)
-	return &nf
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 // GetType implements AggregationFunction interface.
-func (cf *concatFunction) GetType() *types.FieldType {
-	return types.NewFieldType(mysql.TypeVarString)
-}
+func (cf *concatFunction) GetType() *types.FieldType { _ = "STUB: not implemented"; return nil }
 
 // Update implements AggregationFunction interface.
 func (cf *concatFunction) Update(row []types.Datum, groupKey []byte, ectx context.Context) error {
-	ctx := cf.getContext(groupKey)
-	vals := make([]interface{}, 0, len(cf.Args))
-	for _, a := range cf.Args {
-		value, err := a.Eval(row, ectx)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if value.GetValue() == nil {
-			return nil
-		}
-		vals = append(vals, value.GetValue())
-	}
-	if cf.Distinct {
-		d, err := ctx.DistinctChecker.Check(vals)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if !d {
-			return nil
-		}
-	}
-	if ctx.Buffer == nil {
-		ctx.Buffer = &bytes.Buffer{}
-	} else {
-		// now use comma separator
-		ctx.Buffer.WriteString(",")
-	}
-	for _, val := range vals {
-		ctx.Buffer.WriteString(fmt.Sprintf("%v", val))
-	}
-	// TODO: if total length is greater than global var group_concat_max_len, truncate it.
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// now use comma separator
+
+// TODO: if total length is greater than global var group_concat_max_len, truncate it.
 
 // StreamUpdate implements AggregationFunction interface.
 func (cf *concatFunction) StreamUpdate(row []types.Datum, ectx context.Context) error {
-	ctx := cf.getStreamedContext()
-	vals := make([]interface{}, 0, len(cf.Args))
-	for _, a := range cf.Args {
-		value, err := a.Eval(row, ectx)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if value.GetValue() == nil {
-			return nil
-		}
-		vals = append(vals, value)
-	}
-	if cf.Distinct {
-		d, err := ctx.DistinctChecker.Check(vals)
-		if err != nil {
-			return errors.Trace(err)
-		}
-		if !d {
-			return nil
-		}
-	}
-	if ctx.Buffer == nil {
-		ctx.Buffer = &bytes.Buffer{}
-	} else {
-		// now use comma separator
-		ctx.Buffer.WriteString(",")
-	}
-	for _, val := range vals {
-		ctx.Buffer.WriteString(fmt.Sprintf("%v", val))
-	}
-	// TODO: if total length is greater than global var group_concat_max_len, truncate it.
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// now use comma separator
+
+// TODO: if total length is greater than global var group_concat_max_len, truncate it.
+
 // GetGroupResult implements AggregationFunction interface.
 func (cf *concatFunction) GetGroupResult(groupKey []byte) (d types.Datum) {
-	ctx := cf.getContext(groupKey)
-	if ctx.Buffer != nil {
-		d.SetString(ctx.Buffer.String())
-	} else {
-		d.SetNull()
-	}
-	return d
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetStreamResult implements AggregationFunction interface.
 func (cf *concatFunction) GetStreamResult() (d types.Datum) {
-	if cf.streamCtx == nil {
-		return
-	}
-	if cf.streamCtx.Buffer != nil {
-		d.SetString(cf.streamCtx.Buffer.String())
-	} else {
-		d.SetNull()
-	}
-	cf.streamCtx = nil
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 type maxMinFunction struct {
@@ -719,101 +389,40 @@ type maxMinFunction struct {
 
 // Clone implements AggregationFunction interface.
 func (mmf *maxMinFunction) Clone() AggregationFunction {
-	nf := *mmf
-	for i, arg := range mmf.Args {
-		nf.Args[i] = arg.Clone()
-	}
-	nf.resultMapper = make(aggCtxMapper)
-	return &nf
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 // CalculateDefaultValue implements AggregationFunction interface.
 func (mmf *maxMinFunction) CalculateDefaultValue(schema Schema, ctx context.Context) (d types.Datum, valid bool) {
-	arg := mmf.Args[0]
-	result, err := EvaluateExprWithNull(ctx, schema, arg)
-	if err != nil {
-		log.Printf("Evaluate expr with null failed in function %s, err msg is %s", mmf, err.Error())
-		return d, false
-	}
-	if con, ok := result.(*Constant); ok {
-		return con.Value, true
-	}
-	return d, false
+	_ = "STUB: not implemented"
+	return *new(types.Datum), false
 }
 
 // GetType implements AggregationFunction interface.
-func (mmf *maxMinFunction) GetType() *types.FieldType {
-	return mmf.Args[0].GetType()
-}
+func (mmf *maxMinFunction) GetType() *types.FieldType { _ = "STUB: not implemented"; return nil }
 
 // GetGroupResult implements AggregationFunction interface.
 func (mmf *maxMinFunction) GetGroupResult(groupKey []byte) (d types.Datum) {
-	return mmf.getContext(groupKey).Value
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetStreamResult implements AggregationFunction interface.
 func (mmf *maxMinFunction) GetStreamResult() (d types.Datum) {
-	if mmf.streamCtx == nil {
-		return
-	}
-	d = mmf.streamCtx.Value
-	mmf.streamCtx = nil
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // Update implements AggregationFunction interface.
 func (mmf *maxMinFunction) Update(row []types.Datum, groupKey []byte, ectx context.Context) error {
-	ctx := mmf.getContext(groupKey)
-	if len(mmf.Args) != 1 {
-		return errors.New("Wrong number of args for AggFuncMaxMin")
-	}
-	a := mmf.Args[0]
-	value, err := a.Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if ctx.Value.IsNull() {
-		ctx.Value = value
-	}
-	if value.IsNull() {
-		return nil
-	}
-	var c int
-	c, err = ctx.Value.CompareDatum(ectx.GetSessionVars().StmtCtx, value)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if (mmf.isMax && c == -1) || (!mmf.isMax && c == 1) {
-		ctx.Value = value
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // StreamUpdate implements AggregationFunction interface.
 func (mmf *maxMinFunction) StreamUpdate(row []types.Datum, ectx context.Context) error {
-	ctx := mmf.getStreamedContext()
-	if len(mmf.Args) != 1 {
-		return errors.New("Wrong number of args for AggFuncMaxMin")
-	}
-	a := mmf.Args[0]
-	value, err := a.Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if ctx.Value.IsNull() {
-		ctx.Value = value
-	}
-	if value.IsNull() {
-		return nil
-	}
-	var c int
-	c, err = ctx.Value.CompareDatum(ectx.GetSessionVars().StmtCtx, value)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	if (mmf.isMax && c == -1) || (!mmf.isMax && c == 1) {
-		ctx.Value = value
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -823,80 +432,39 @@ type firstRowFunction struct {
 
 // Clone implements AggregationFunction interface.
 func (ff *firstRowFunction) Clone() AggregationFunction {
-	nf := *ff
-	for i, arg := range ff.Args {
-		nf.Args[i] = arg.Clone()
-	}
-	nf.resultMapper = make(aggCtxMapper)
-	return &nf
+	_ = "STUB: not implemented"
+	return *new(AggregationFunction)
 }
 
 // GetType implements AggregationFunction interface.
-func (ff *firstRowFunction) GetType() *types.FieldType {
-	return ff.Args[0].GetType()
-}
+func (ff *firstRowFunction) GetType() *types.FieldType { _ = "STUB: not implemented"; return nil }
 
 // Update implements AggregationFunction interface.
 func (ff *firstRowFunction) Update(row []types.Datum, groupKey []byte, ectx context.Context) error {
-	ctx := ff.getContext(groupKey)
-	if ctx.GotFirstRow {
-		return nil
-	}
-	if len(ff.Args) != 1 {
-		return errors.New("Wrong number of args for AggFuncFirstRow")
-	}
-	value, err := ff.Args[0].Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	ctx.Value = value
-	ctx.GotFirstRow = true
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // StreamUpdate implements AggregationFunction interface.
 func (ff *firstRowFunction) StreamUpdate(row []types.Datum, ectx context.Context) error {
-	ctx := ff.getStreamedContext()
-	if ctx.GotFirstRow {
-		return nil
-	}
-	if len(ff.Args) != 1 {
-		return errors.New("Wrong number of args for AggFuncFirstRow")
-	}
-	value, err := ff.Args[0].Eval(row, ectx)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	ctx.Value = value
-	ctx.GotFirstRow = true
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // GetGroupResult implements AggregationFunction interface.
 func (ff *firstRowFunction) GetGroupResult(groupKey []byte) types.Datum {
-	return ff.getContext(groupKey).Value
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // GetStreamResult implements AggregationFunction interface.
 func (ff *firstRowFunction) GetStreamResult() (d types.Datum) {
-	if ff.streamCtx == nil {
-		return
-	}
-	d = ff.streamCtx.Value
-	ff.streamCtx = nil
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum)
 }
 
 // CalculateDefaultValue implements AggregationFunction interface.
 func (ff *firstRowFunction) CalculateDefaultValue(schema Schema, ctx context.Context) (d types.Datum, valid bool) {
-	arg := ff.Args[0]
-	result, err := EvaluateExprWithNull(ctx, schema, arg)
-	if err != nil {
-		log.Printf("Evaluate expr with null failed in function %s, err msg is %s", ff, err.Error())
-		return d, false
-	}
-	if con, ok := result.(*Constant); ok {
-		return con.Value, true
-	}
-	return d, false
+	_ = "STUB: not implemented"
+	return *new(types.Datum), false
 }

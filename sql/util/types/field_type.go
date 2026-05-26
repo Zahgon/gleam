@@ -14,11 +14,7 @@
 package types
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/chrislusf/gleam/sql/mysql"
-	"github.com/chrislusf/gleam/sql/util/charset"
 )
 
 // UnspecifiedLength is unspecified length.
@@ -40,170 +36,37 @@ type FieldType struct {
 
 // NewFieldType returns a FieldType,
 // with a type and other information about field type.
-func NewFieldType(tp byte) *FieldType {
-	return &FieldType{
-		Tp:      tp,
-		Flen:    UnspecifiedLength,
-		Decimal: UnspecifiedLength,
-	}
-}
+func NewFieldType(tp byte) *FieldType { _ = "STUB: not implemented"; return nil }
 
 // Init initializes the FieldType data.
-func (ft *FieldType) Init(tp byte) {
-	ft.Tp = tp
-	ft.Flen = UnspecifiedLength
-	ft.Decimal = UnspecifiedLength
-}
+func (ft *FieldType) Init(tp byte) { _ = "STUB: not implemented"; return }
 
 // CompactStr only considers Tp/CharsetBin/Flen/Deimal.
 // This is used for showing column type in infoschema.
-func (ft *FieldType) CompactStr() string {
-	ts := TypeToStr(ft.Tp, ft.Charset)
-	suffix := ""
-	switch ft.Tp {
-	case mysql.TypeEnum, mysql.TypeSet:
-		// Format is ENUM ('e1', 'e2') or SET ('e1', 'e2')
-		es := make([]string, 0, len(ft.Elems))
-		for _, e := range ft.Elems {
-			e = strings.Replace(e, "'", "''", -1)
-			es = append(es, e)
-		}
-		suffix = fmt.Sprintf("('%s')", strings.Join(es, "','"))
-	case mysql.TypeTimestamp, mysql.TypeDatetime, mysql.TypeDate:
-		if ft.Decimal != UnspecifiedLength && ft.Decimal != 0 {
-			suffix = fmt.Sprintf("(%d)", ft.Decimal)
-		}
-	default:
-		if ft.Flen != UnspecifiedLength {
-			if ft.Decimal == UnspecifiedLength {
-				if ft.Tp != mysql.TypeFloat && ft.Tp != mysql.TypeDouble {
-					suffix = fmt.Sprintf("(%d)", ft.Flen)
-				}
-			} else {
-				suffix = fmt.Sprintf("(%d,%d)", ft.Flen, ft.Decimal)
-			}
-		} else if ft.Decimal != UnspecifiedLength {
-			suffix = fmt.Sprintf("(%d)", ft.Decimal)
-		}
-	}
-	return ts + suffix
-}
+func (ft *FieldType) CompactStr() string { _ = "STUB: not implemented"; return "" }
+
+// Format is ENUM ('e1', 'e2') or SET ('e1', 'e2')
 
 // String joins the information of FieldType and
 // returns a string.
-func (ft *FieldType) String() string {
-	strs := []string{ft.CompactStr()}
-	if mysql.HasUnsignedFlag(ft.Flag) {
-		strs = append(strs, "UNSIGNED")
-	}
-	if mysql.HasZerofillFlag(ft.Flag) {
-		strs = append(strs, "ZEROFILL")
-	}
-	if mysql.HasBinaryFlag(ft.Flag) {
-		strs = append(strs, "BINARY")
-	}
-
-	if IsTypeChar(ft.Tp) || IsTypeBlob(ft.Tp) {
-		if ft.Charset != "" && ft.Charset != charset.CharsetBin {
-			strs = append(strs, fmt.Sprintf("CHARACTER SET %s", ft.Charset))
-		}
-		if ft.Collate != "" && ft.Collate != charset.CharsetBin {
-			strs = append(strs, fmt.Sprintf("COLLATE %s", ft.Collate))
-		}
-	}
-
-	return strings.Join(strs, " ")
-}
+func (ft *FieldType) String() string { _ = "STUB: not implemented"; return "" }
 
 // DefaultTypeForValue returns the default FieldType for the value.
-func DefaultTypeForValue(value interface{}, tp *FieldType) {
-	switch x := value.(type) {
-	case nil:
-		tp.Tp = mysql.TypeNull
-	case bool, int64, int:
-		tp.Tp = mysql.TypeLonglong
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case uint64:
-		tp.Tp = mysql.TypeLonglong
-		tp.Flag |= mysql.UnsignedFlag
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case string:
-		tp.Tp = mysql.TypeVarString
-		tp.Charset = mysql.DefaultCharset
-		tp.Collate = mysql.DefaultCollationName
-	case float64:
-		tp.Tp = mysql.TypeDouble
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case []byte:
-		tp.Tp = mysql.TypeBlob
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case Bit:
-		tp.Tp = mysql.TypeBit
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case Hex:
-		tp.Tp = mysql.TypeVarchar
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case Time:
-		tp.Tp = x.Type
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case Duration:
-		tp.Tp = mysql.TypeDuration
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case *MyDecimal:
-		tp.Tp = mysql.TypeNewDecimal
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case Enum:
-		tp.Tp = mysql.TypeEnum
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	case Set:
-		tp.Tp = mysql.TypeSet
-		tp.Charset = charset.CharsetBin
-		tp.Collate = charset.CharsetBin
-	default:
-		tp.Tp = mysql.TypeDecimal
-	}
-	tp.Flen = UnspecifiedLength
-	tp.Decimal = UnspecifiedLength
-}
+func DefaultTypeForValue(value interface{}, tp *FieldType) { _ = "STUB: not implemented"; return }
 
 // DefaultCharsetForType returns the default charset/collation for mysql type.
-func DefaultCharsetForType(tp byte) (string, string) {
-	switch tp {
-	case mysql.TypeVarString, mysql.TypeString, mysql.TypeVarchar:
-		// Default charset for string types is utf8.
-		return mysql.DefaultCharset, mysql.DefaultCollationName
-	}
-	return charset.CharsetBin, charset.CollationBin
-}
+func DefaultCharsetForType(tp byte) (string, string) { _ = "STUB: not implemented"; return "", "" }
+
+// Default charset for string types is utf8.
 
 // MergeFieldType merges two MySQL type to a new type.
 // This is used in hybrid field type expression.
 // For example "select case c when 1 then 2 when 2 then 'tidb' from t;"
 // The result field type of the case expression is the merged type of the two when clause.
 // See https://github.com/mysql/mysql-server/blob/5.7/sql/field.cc#L1042
-func MergeFieldType(a byte, b byte) byte {
-	ia := getFieldTypeIndex(a)
-	ib := getFieldTypeIndex(b)
-	return fieldTypeMergeRules[ia][ib]
-}
+func MergeFieldType(a byte, b byte) byte { _ = "STUB: not implemented"; return 0 }
 
-func getFieldTypeIndex(tp byte) int {
-	itp := int(tp)
-	if itp < fieldTypeTearFrom {
-		return itp
-	}
-	return fieldTypeTearFrom + itp - fieldTypeTearTo - 1
-}
+func getFieldTypeIndex(tp byte) int { _ = "STUB: not implemented"; return 0 }
 
 const (
 	fieldTypeTearFrom = int(mysql.TypeBit) + 1

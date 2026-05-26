@@ -18,7 +18,6 @@ import (
 	"github.com/chrislusf/gleam/sql/expression"
 	"github.com/chrislusf/gleam/sql/model"
 	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // JoinType contains CrossJoin, InnerJoin, LeftOuterJoin, RightOuterJoin, FullOuterJoin, SemiJoin.
@@ -56,47 +55,15 @@ type Join struct {
 	DefaultValues []types.Datum
 }
 
-func (p *Join) attachOnConds(onConds []expression.Expression) {
-	eq, left, right, other := extractOnCondition(onConds, p.children[0].(LogicalPlan), p.children[1].(LogicalPlan))
-	p.EqualConditions = append(eq, p.EqualConditions...)
-	p.LeftConditions = append(left, p.LeftConditions...)
-	p.RightConditions = append(right, p.RightConditions...)
-	p.OtherConditions = append(other, p.OtherConditions...)
-}
+func (p *Join) attachOnConds(onConds []expression.Expression) { _ = "STUB: not implemented"; return }
 
 func (p *Join) extractCorrelatedCols() []*expression.CorrelatedColumn {
-	corCols := p.basePlan.extractCorrelatedCols()
-	for _, fun := range p.EqualConditions {
-		corCols = append(corCols, extractCorColumns(fun)...)
-	}
-	for _, fun := range p.LeftConditions {
-		corCols = append(corCols, extractCorColumns(fun)...)
-	}
-	for _, fun := range p.RightConditions {
-		corCols = append(corCols, extractCorColumns(fun)...)
-	}
-	for _, fun := range p.OtherConditions {
-		corCols = append(corCols, extractCorColumns(fun)...)
-	}
-	return corCols
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetCorrelated implements Plan interface.
-func (p *Join) SetCorrelated() {
-	p.basePlan.SetCorrelated()
-	for _, cond := range p.EqualConditions {
-		p.correlated = p.correlated || cond.IsCorrelated()
-	}
-	for _, cond := range p.LeftConditions {
-		p.correlated = p.correlated || cond.IsCorrelated()
-	}
-	for _, cond := range p.RightConditions {
-		p.correlated = p.correlated || cond.IsCorrelated()
-	}
-	for _, cond := range p.OtherConditions {
-		p.correlated = p.correlated || cond.IsCorrelated()
-	}
-}
+func (p *Join) SetCorrelated() { _ = "STUB: not implemented"; return }
 
 // Projection represents a select fields plan.
 type Projection struct {
@@ -105,20 +72,12 @@ type Projection struct {
 }
 
 func (p *Projection) extractCorrelatedCols() []*expression.CorrelatedColumn {
-	corCols := p.basePlan.extractCorrelatedCols()
-	for _, expr := range p.Exprs {
-		corCols = append(corCols, extractCorColumns(expr)...)
-	}
-	return corCols
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetCorrelated implements Plan interface.
-func (p *Projection) SetCorrelated() {
-	p.basePlan.SetCorrelated()
-	for _, expr := range p.Exprs {
-		p.correlated = p.correlated || expr.IsCorrelated()
-	}
-}
+func (p *Projection) SetCorrelated() { _ = "STUB: not implemented"; return }
 
 // Aggregation represents an aggregate plan.
 type Aggregation struct {
@@ -132,30 +91,12 @@ type Aggregation struct {
 }
 
 func (p *Aggregation) extractCorrelatedCols() []*expression.CorrelatedColumn {
-	corCols := p.basePlan.extractCorrelatedCols()
-	for _, expr := range p.GroupByItems {
-		corCols = append(corCols, extractCorColumns(expr)...)
-	}
-	for _, fun := range p.AggFuncs {
-		for _, arg := range fun.GetArgs() {
-			corCols = append(corCols, extractCorColumns(arg)...)
-		}
-	}
-	return corCols
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetCorrelated implements Plan interface.
-func (p *Aggregation) SetCorrelated() {
-	p.basePlan.SetCorrelated()
-	for _, item := range p.GroupByItems {
-		p.correlated = p.correlated || item.IsCorrelated()
-	}
-	for _, fun := range p.AggFuncs {
-		for _, arg := range fun.GetArgs() {
-			p.correlated = p.correlated || arg.IsCorrelated()
-		}
-	}
-}
+func (p *Aggregation) SetCorrelated() { _ = "STUB: not implemented"; return }
 
 // Selection means a filter.
 type Selection struct {
@@ -171,20 +112,12 @@ type Selection struct {
 }
 
 func (p *Selection) extractCorrelatedCols() []*expression.CorrelatedColumn {
-	corCols := p.basePlan.extractCorrelatedCols()
-	for _, cond := range p.Conditions {
-		corCols = append(corCols, extractCorColumns(cond)...)
-	}
-	return corCols
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetCorrelated implements Plan interface.
-func (p *Selection) SetCorrelated() {
-	p.basePlan.SetCorrelated()
-	for _, cond := range p.Conditions {
-		p.correlated = p.correlated || cond.IsCorrelated()
-	}
-}
+func (p *Selection) SetCorrelated() { _ = "STUB: not implemented"; return }
 
 // Apply gets one row from outer executor and gets one row from inner executor according to outer row.
 type Apply struct {
@@ -194,17 +127,9 @@ type Apply struct {
 }
 
 // SetCorrelated implements Plan interface.
-func (p *Apply) SetCorrelated() {
-	corCols := p.GetChildren()[1].extractCorrelatedCols()
-	p.correlated = p.GetChildren()[0].IsCorrelated()
-	for _, corCol := range corCols {
-		// If the outer column can't be resolved from this outer schema, it should be resolved by outer schema.
-		if idx := p.GetChildren()[0].GetSchema().GetColumnIndex(&corCol.Column); idx == -1 {
-			p.correlated = true
-			break
-		}
-	}
-}
+func (p *Apply) SetCorrelated() { _ = "STUB: not implemented"; return }
+
+// If the outer column can't be resolved from this outer schema, it should be resolved by outer schema.
 
 // Exists checks if a query returns result.
 type Exists struct {
@@ -254,20 +179,12 @@ type Sort struct {
 }
 
 func (p *Sort) extractCorrelatedCols() []*expression.CorrelatedColumn {
-	corCols := p.basePlan.extractCorrelatedCols()
-	for _, item := range p.ByItems {
-		corCols = append(corCols, extractCorColumns(item.Expr)...)
-	}
-	return corCols
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetCorrelated implements Plan interface.
-func (p *Sort) SetCorrelated() {
-	p.basePlan.SetCorrelated()
-	for _, it := range p.ByItems {
-		p.correlated = p.correlated || it.Expr.IsCorrelated()
-	}
-}
+func (p *Sort) SetCorrelated() { _ = "STUB: not implemented"; return }
 
 // Update represents Update plan.
 type Update struct {
@@ -285,46 +202,10 @@ type Delete struct {
 }
 
 // AddChild for parent.
-func addChild(parent Plan, child Plan) {
-	if child == nil || parent == nil {
-		return
-	}
-	child.AddParent(parent)
-	parent.AddChild(child)
-}
+func addChild(parent Plan, child Plan) { _ = "STUB: not implemented"; return }
 
 // InsertPlan means inserting plan between two plans.
-func InsertPlan(parent Plan, child Plan, insert Plan) error {
-	err := child.ReplaceParent(parent, insert)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	err = parent.ReplaceChild(child, insert)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	insert.AddChild(child)
-	insert.AddParent(parent)
-	return nil
-}
+func InsertPlan(parent Plan, child Plan, insert Plan) error { _ = "STUB: not implemented"; return nil }
 
 // RemovePlan means removing a plan.
-func RemovePlan(p Plan) error {
-	parents := p.GetParents()
-	children := p.GetChildren()
-	if len(parents) > 1 || len(children) != 1 {
-		return SystemInternalErrorType.Gen("can't remove this plan")
-	}
-	if len(parents) == 0 {
-		child := children[0]
-		child.SetParents()
-		return nil
-	}
-	parent, child := parents[0], children[0]
-	err := parent.ReplaceChild(p, child)
-	if err != nil {
-		return errors.Trace(err)
-	}
-	err = child.ReplaceParent(p, parent)
-	return errors.Trace(err)
-}
+func RemovePlan(p Plan) error { _ = "STUB: not implemented"; return nil }

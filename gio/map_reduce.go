@@ -2,10 +2,6 @@ package gio
 
 import (
 	"flag"
-	"fmt"
-	"os"
-	"reflect"
-	"runtime"
 	"sync"
 
 	"github.com/chrislusf/gleam/pb"
@@ -72,65 +68,24 @@ func init() {
 }
 
 // RegisterMapper register a mapper function to process a command
-func RegisterMapper(fn Mapper) MapperId {
-	mappersLock.Lock()
-	defer mappersLock.Unlock()
-
-	mapperId := MapperId(fmt.Sprintf("m%d", len(mappers)+1))
-	mappers[mapperId] = MapperObject{fn, runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name()}
-
-	return mapperId
-}
+func RegisterMapper(fn Mapper) MapperId { _ = "STUB: not implemented"; return *new(MapperId) }
 
 func GetMapper(mapperId MapperId) (mapper MapperObject, found bool) {
-	mappersLock.Lock()
-	defer mappersLock.Unlock()
-
-	mapper, found = mappers[mapperId]
-
-	return
+	_ = "STUB: not implemented"
+	return *new(MapperObject), false
 }
 
-func RegisterReducer(fn Reducer) ReducerId {
-	reducersLock.Lock()
-	defer reducersLock.Unlock()
-
-	reducerId := ReducerId(fmt.Sprintf("r%d", len(reducers)+1))
-	reducers[reducerId] = ReducerObject{fn, runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name()}
-
-	return reducerId
-}
+func RegisterReducer(fn Reducer) ReducerId { _ = "STUB: not implemented"; return *new(ReducerId) }
 
 func GetReducer(reducerId ReducerId) (reducer ReducerObject, found bool) {
-	reducersLock.Lock()
-	defer reducersLock.Unlock()
-
-	reducer, found = reducers[reducerId]
-
-	return
+	_ = "STUB: not implemented"
+	return *new(ReducerObject), false
 }
 
 // Init determines whether the driver program will execute the mapper/reducer or not.
 // If the command line invokes the mapper or reducer, execute it and exit.
 // This function will invoke flag.Parse() first.
-func Init() {
-	HasInitalized = true
-
-	flag.Parse()
-
-	if taskOption.Mapper != "" || taskOption.Reducer != "" {
-		runner := &gleamRunner{Option: &taskOption}
-		runner.runMapperReducer()
-		os.Exit(0)
-	}
-}
+func Init() { _ = "STUB: not implemented"; return }
 
 // ListRegisteredFunctions lists out all registered mappers and reducers
-func ListRegisteredFunctions() {
-	for k, fn := range mappers {
-		println(k, "=>", fn.Name)
-	}
-	for k, fn := range reducers {
-		println(k, "=>", fn.Name)
-	}
-}
+func ListRegisteredFunctions() { _ = "STUB: not implemented"; return }

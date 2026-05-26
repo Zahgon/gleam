@@ -2,45 +2,31 @@ package flow
 
 import (
 	"context"
-	"fmt"
 	"time"
 )
 
-func newDataset(context *Flow) *Dataset {
-	d := &Dataset{
-		Id:   len(context.Datasets),
-		Flow: context,
-		Meta: &DasetsetMetadata{TotalSize: -1},
-	}
-	context.Datasets = append(context.Datasets, d)
-	return d
-}
+func newDataset(context *Flow) *Dataset { _ = "STUB: not implemented"; return nil }
 
 func (d *Dataset) GetShards() []*DatasetShard {
-	return d.Shards
+	_ = "STUB: not implemented"
+
+	// Run starts the whole flow. This is a convenient method, same as *Flow.Run()
+	return nil
 }
 
-// Run starts the whole flow. This is a convenient method, same as *Flow.Run()
-func (d *Dataset) Run(option ...FlowOption) {
-	d.RunContext(context.Background(), option...)
-}
+func (d *Dataset) Run(option ...FlowOption) { _ = "STUB: not implemented"; return }
 
 // Run starts the whole flow. This is a convenient method, same as *Flow.RunContext()
 func (d *Dataset) RunContext(ctx context.Context, option ...FlowOption) {
-	d.Flow.RunContext(ctx, option...)
+	_ = "STUB: not implemented"
+	return
 }
 
-func (s *DatasetShard) Closed() bool {
-	return !s.CloseTime.IsZero()
-}
+func (s *DatasetShard) Closed() bool { _ = "STUB: not implemented"; return false }
 
 func (s *DatasetShard) TimeTaken() time.Duration {
-	if s.Closed() {
-		return s.CloseTime.Sub(s.ReadyTime)
-	}
-	return time.Now().Sub(s.ReadyTime)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
-func (s *DatasetShard) Name() string {
-	return fmt.Sprintf("f%d-d%d-s%d", s.Dataset.Flow.HashCode, s.Dataset.Id, s.Id)
-}
+func (s *DatasetShard) Name() string { _ = "STUB: not implemented"; return "" }

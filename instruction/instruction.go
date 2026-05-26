@@ -35,14 +35,11 @@ type instructionRunner struct {
 }
 
 func (r *instructionRunner) Register(f func(*pb.Instruction) Instruction) {
-	r.functions = append(r.functions, f)
+	_ = "STUB: not implemented"
+	return
 }
 
 func (r *instructionRunner) GetInstructionFunction(i *pb.Instruction) func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-	for _, f := range r.functions {
-		if inst := f(i); inst != nil {
-			return inst.Function()
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }

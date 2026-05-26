@@ -13,12 +13,6 @@
 
 package charset
 
-import (
-	"strings"
-
-	"github.com/juju/errors"
-)
-
 // Charset is a charset.
 // Now we only support MySQL.
 type Charset struct {
@@ -74,75 +68,29 @@ type Desc struct {
 }
 
 // GetAllCharsets gets all charset descriptions in the local charsets.
-func GetAllCharsets() []*Desc {
-	descs := make([]*Desc, 0, len(charsets))
-	// The charsetInfos is an array, so the iterate order will be stable.
-	for _, ci := range charsetInfos {
-		c, ok := charsets[ci.Name]
-		if !ok {
-			continue
-		}
-		desc := &Desc{
-			Name:             c.Name,
-			DefaultCollation: c.DefaultCollation.Name,
-			Desc:             c.Desc,
-			Maxlen:           c.Maxlen,
-		}
-		descs = append(descs, desc)
-	}
-	return descs
-}
+func GetAllCharsets() []*Desc { _ = "STUB: not implemented"; return nil }
+
+// The charsetInfos is an array, so the iterate order will be stable.
 
 // ValidCharsetAndCollation checks the charset and the collation validity
 // and returns a boolean.
 func ValidCharsetAndCollation(cs string, co string) bool {
+	_ = "STUB: not implemented"
 	// We will use utf8 as a default charset.
-	if cs == "" {
-		cs = "utf8"
-	}
-
-	c, ok := charsets[cs]
-	if !ok {
-		return false
-	}
-
-	if co == "" {
-		return true
-	}
-	_, ok = c.Collations[co]
-	if !ok {
-		return false
-	}
-
-	return true
+	return false
 }
 
 // GetDefaultCollation returns the default collation for charset.
-func GetDefaultCollation(charset string) (string, error) {
-	charset = strings.ToLower(charset)
-	if charset == CharsetBin {
-		return CollationBin, nil
-	}
-	c, ok := charsets[charset]
-	if !ok {
-		return "", errors.Errorf("Unknown charset %s", charset)
-	}
-	return c.DefaultCollation.Name, nil
-}
+func GetDefaultCollation(charset string) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // GetCharsetInfo returns charset and collation for cs as name.
 func GetCharsetInfo(cs string) (string, string, error) {
-	c, ok := charsets[strings.ToLower(cs)]
-	if !ok {
-		return "", "", errors.Errorf("Unknown charset %s", cs)
-	}
-	return c.Name, c.DefaultCollation.Name, nil
+	_ = "STUB: not implemented"
+	return "", "", nil
 }
 
 // GetCollations returns a list for all collations.
-func GetCollations() []*Collation {
-	return collations
-}
+func GetCollations() []*Collation { _ = "STUB: not implemented"; return nil }
 
 const (
 	// CharsetBin is used for marking binary charset.

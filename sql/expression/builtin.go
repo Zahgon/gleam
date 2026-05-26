@@ -22,7 +22,6 @@ import (
 	"github.com/chrislusf/gleam/sql/context"
 	"github.com/chrislusf/gleam/sql/parser/opcode"
 	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // baseBuiltinFunc will be contained in every struct that implement builtinFunc interface.
@@ -34,56 +33,35 @@ type baseBuiltinFunc struct {
 }
 
 func newBaseBuiltinFunc(args []Expression, ctx context.Context) baseBuiltinFunc {
-	return baseBuiltinFunc{
-		args:          args,
-		argValues:     make([]types.Datum, len(args)),
-		ctx:           ctx,
-		deterministic: true,
-	}
+	_ = "STUB: not implemented"
+	return *new(baseBuiltinFunc)
 }
 
 func (b *baseBuiltinFunc) evalArgs(row []types.Datum) (_ []types.Datum, err error) {
-	for i, arg := range b.args {
-		b.argValues[i], err = arg.Eval(row, b.ctx)
-		if err != nil {
-			return nil, errors.Trace(err)
-		}
-	}
-	return b.argValues, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // isDeterministic will be true by default. Non-deterministic function will override this function.
-func (b *baseBuiltinFunc) isDeterministic() bool {
-	return b.deterministic
-}
+func (b *baseBuiltinFunc) isDeterministic() bool { _ = "STUB: not implemented"; return false }
 
 func (b *baseBuiltinFunc) getArgs() []Expression {
-	return b.args
+	_ = "STUB: not implemented"
+
+	// equal only checks if both functions are non-deterministic and if these arguments are same.
+	// Function name will be checked outside.
+	return nil
 }
 
-// equal only checks if both functions are non-deterministic and if these arguments are same.
-// Function name will be checked outside.
-func (b *baseBuiltinFunc) equal(fun builtinFunc) bool {
-	if !b.isDeterministic() || !fun.isDeterministic() {
-		return false
-	}
-	funArgs := fun.getArgs()
-	if len(funArgs) != len(b.args) {
-		return false
-	}
-	for i := range b.args {
-		if !b.args[i].Equal(funArgs[i], b.ctx) {
-			return false
-		}
-	}
-	return true
-}
+func (b *baseBuiltinFunc) equal(fun builtinFunc) bool { _ = "STUB: not implemented"; return false }
 
 func (b *baseBuiltinFunc) getCtx() context.Context {
-	return b.ctx
+	_ = "STUB: not implemented"
+
+	// builtinFunc stands for a particular function signature.
+	return *new(context.Context)
 }
 
-// builtinFunc stands for a particular function signature.
 type builtinFunc interface {
 	// eval does evaluation by the given row.
 	eval([]types.Datum) (types.Datum, error)
@@ -107,10 +85,7 @@ type baseFunctionClass struct {
 }
 
 func (b *baseFunctionClass) verifyArgs(args []Expression) error {
-	l := len(args)
-	if l < b.minArgs || (b.maxArgs != -1 && l > b.maxArgs) {
-		return errIncorrectParameterCount.GenByArgs(b.funcName)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 

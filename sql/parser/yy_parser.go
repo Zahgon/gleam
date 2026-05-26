@@ -14,17 +14,10 @@
 package parser
 
 import (
-	"math"
 	"regexp"
-	"strconv"
-	"unicode"
 
 	"github.com/chrislusf/gleam/sql/ast"
-	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/terror"
-	"github.com/chrislusf/gleam/sql/util/hack"
-	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // Error instances.
@@ -43,10 +36,7 @@ var (
 	specCodeEnd     = regexp.MustCompile(`[ \t]*\*\/$`)
 )
 
-func trimComment(txt string) string {
-	txt = specCodeStart.ReplaceAllString(txt, "")
-	return specCodeEnd.ReplaceAllString(txt, "")
-}
+func trimComment(txt string) string { _ = "STUB: not implemented"; return "" }
 
 // Parser represents a parser instance. Some temporary objects are stored in it to reduce object allocation during Parse function.
 type Parser struct {
@@ -67,137 +57,44 @@ type stmtTexter interface {
 }
 
 // New returns a Parser object.
-func New() *Parser {
-	return &Parser{
-		cache: make([]yySymType, 200),
-	}
-}
+func New() *Parser { _ = "STUB: not implemented"; return nil }
 
 // Parse parses a query string to raw ast.StmtNode.
 // If charset or collation is "", default charset and collation will be used.
 func (parser *Parser) Parse(sql, charset, collation string) ([]ast.StmtNode, error) {
-	if charset == "" {
-		charset = mysql.DefaultCharset
-	}
-	if collation == "" {
-		collation = mysql.DefaultCollationName
-	}
-	parser.charset = charset
-	parser.collation = collation
-	parser.src = sql
-	parser.result = parser.result[:0]
-
-	var l yyLexer
-	parser.lexer.reset(sql)
-	l = &parser.lexer
-	yyParse(l, parser)
-
-	if len(l.Errors()) != 0 {
-		return nil, errors.Trace(l.Errors()[0])
-	}
-	for _, stmt := range parser.result {
-		ast.SetFlag(stmt)
-	}
-	return parser.result, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ParseOneStmt parses a query and returns an ast.StmtNode.
 // The query must have one statement, otherwise ErrSyntax is returned.
 func (parser *Parser) ParseOneStmt(sql, charset, collation string) (ast.StmtNode, error) {
-	stmts, err := parser.Parse(sql, charset, collation)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	if len(stmts) != 1 {
-		return nil, ErrSyntax
-	}
-	ast.SetFlag(stmts[0])
-	return stmts[0], nil
+	_ = "STUB: not implemented"
+	return *new(ast.StmtNode), nil
 }
 
 // The select statement is not at the end of the whole statement, if the last
 // field text was set from its offset to the end of the src string, update
 // the last field text.
 func (parser *Parser) setLastSelectFieldText(st *ast.SelectStmt, lastEnd int) {
-	lastField := st.Fields.Fields[len(st.Fields.Fields)-1]
-	if lastField.Offset+len(lastField.Text()) >= len(parser.src)-1 {
-		lastField.SetText(parser.src[lastField.Offset:lastEnd])
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
-func (parser *Parser) startOffset(v *yySymType) int {
-	return v.offset
-}
+func (parser *Parser) startOffset(v *yySymType) int { _ = "STUB: not implemented"; return 0 }
 
-func (parser *Parser) endOffset(v *yySymType) int {
-	offset := v.offset
-	for offset > 0 && unicode.IsSpace(rune(parser.src[offset-1])) {
-		offset--
-	}
-	return offset
-}
+func (parser *Parser) endOffset(v *yySymType) int { _ = "STUB: not implemented"; return 0 }
 
-func toInt(l yyLexer, lval *yySymType, str string) int {
-	n, err := strconv.ParseUint(str, 10, 64)
-	if err != nil {
-		l.Errorf("integer literal: %v", err)
-		return int(unicode.ReplacementChar)
-	}
+func toInt(l yyLexer, lval *yySymType, str string) int { _ = "STUB: not implemented"; return 0 }
 
-	switch {
-	case n < math.MaxInt64:
-		lval.item = int64(n)
-	default:
-		lval.item = uint64(n)
-	}
-	return intLit
-}
+func toDecimal(l yyLexer, lval *yySymType, str string) int { _ = "STUB: not implemented"; return 0 }
 
-func toDecimal(l yyLexer, lval *yySymType, str string) int {
-	dec := new(types.MyDecimal)
-	err := dec.FromString(hack.Slice(str))
-	if err != nil {
-		l.Errorf("decimal literal: %v", err)
-	}
-	lval.item = dec
-	return decLit
-}
-
-func toFloat(l yyLexer, lval *yySymType, str string) int {
-	n, err := strconv.ParseFloat(str, 64)
-	if err != nil {
-		l.Errorf("float literal: %v", err)
-		return int(unicode.ReplacementChar)
-	}
-
-	lval.item = float64(n)
-	return floatLit
-}
+func toFloat(l yyLexer, lval *yySymType, str string) int { _ = "STUB: not implemented"; return 0 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/hexadecimal-literals.html
-func toHex(l yyLexer, lval *yySymType, str string) int {
-	h, err := types.ParseHex(str)
-	if err != nil {
-		// If parse hexadecimal literal to numerical value error, we should treat it as a string.
-		hexStr, err1 := types.ParseHexStr(str)
-		if err1 != nil {
-			l.Errorf("hex literal: %v", err)
-			return int(unicode.ReplacementChar)
-		}
-		lval.item = hexStr
-		return hexLit
-	}
-	lval.item = h
-	return hexLit
-}
+func toHex(l yyLexer, lval *yySymType, str string) int { _ = "STUB: not implemented"; return 0 }
+
+// If parse hexadecimal literal to numerical value error, we should treat it as a string.
 
 // See https://dev.mysql.com/doc/refman/5.7/en/bit-type.html
-func toBit(l yyLexer, lval *yySymType, str string) int {
-	b, err := types.ParseBit(str, -1)
-	if err != nil {
-		l.Errorf("bit literal: %v", err)
-		return int(unicode.ReplacementChar)
-	}
-	lval.item = b
-	return bitLit
-}
+func toBit(l yyLexer, lval *yySymType, str string) int { _ = "STUB: not implemented"; return 0 }

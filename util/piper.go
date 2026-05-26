@@ -11,10 +11,4 @@ type Piper struct {
 	Error   error
 }
 
-func NewPiper() *Piper {
-	pr, pw := io.Pipe()
-	return &Piper{
-		Reader: pr,
-		Writer: pw,
-	}
-}
+func NewPiper() *Piper { _ = "STUB: not implemented"; return nil }

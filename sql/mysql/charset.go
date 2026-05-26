@@ -559,6 +559,4 @@ const (
 )
 
 // IsUTF8Charset checks if charset is utf8 or utf8mb4
-func IsUTF8Charset(charset string) bool {
-	return charset == UTF8Charset || charset == UTF8MB4Charset
-}
+func IsUTF8Charset(charset string) bool { _ = "STUB: not implemented"; return false }

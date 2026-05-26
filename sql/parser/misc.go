@@ -15,35 +15,19 @@ package parser
 
 import (
 	"bytes"
-	"strings"
-
-	"github.com/chrislusf/gleam/sql/util/charset"
-	"github.com/chrislusf/gleam/sql/util/hack"
 )
 
-func isLetter(ch rune) bool {
-	return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')
-}
+func isLetter(ch rune) bool { _ = "STUB: not implemented"; return false }
 
-func isDigit(ch rune) bool {
-	return (ch >= '0' && ch <= '9')
-}
+func isDigit(ch rune) bool { _ = "STUB: not implemented"; return false }
 
-func isIdentChar(ch rune) bool {
-	return isLetter(ch) || isDigit(ch) || ch == '_' || ch == '$' || isIdentExtend(ch)
-}
+func isIdentChar(ch rune) bool { _ = "STUB: not implemented"; return false }
 
-func isIdentExtend(ch rune) bool {
-	return ch >= 0x80 && ch <= '\uffff'
-}
+func isIdentExtend(ch rune) bool { _ = "STUB: not implemented"; return false }
 
-func isIdentFirstChar(ch rune) bool {
-	return isLetter(ch) || ch == '_'
-}
+func isIdentFirstChar(ch rune) bool { _ = "STUB: not implemented"; return false }
 
-func isASCII(ch rune) bool {
-	return ch >= 0 && ch <= 0177
-}
+func isASCII(ch rune) bool { _ = "STUB: not implemented"; return false }
 
 type trieNode struct {
 	childs [256]*trieNode
@@ -53,32 +37,12 @@ type trieNode struct {
 
 var ruleTable trieNode
 
-func initTokenByte(c byte, tok int) {
-	if ruleTable.childs[c] == nil {
-		ruleTable.childs[c] = &trieNode{}
-	}
-	ruleTable.childs[c].token = tok
-}
+func initTokenByte(c byte, tok int) { _ = "STUB: not implemented"; return }
 
-func initTokenString(str string, tok int) {
-	node := &ruleTable
-	for _, c := range str {
-		if node.childs[c] == nil {
-			node.childs[c] = &trieNode{}
-		}
-		node = node.childs[c]
-	}
-	node.token = tok
-}
+func initTokenString(str string, tok int) { _ = "STUB: not implemented"; return }
 
 func initTokenFunc(str string, fn func(s *Scanner) (int, Pos, string)) {
-	for i := 0; i < len(str); i++ {
-		c := str[i]
-		if ruleTable.childs[c] == nil {
-			ruleTable.childs[c] = &trieNode{}
-		}
-		ruleTable.childs[c].fn = fn
-	}
+	_ = "STUB: not implemented"
 	return
 }
 
@@ -500,33 +464,13 @@ var tokenMap = map[string]int{
 	"CRC32":               crc32,
 }
 
-func isTokenIdentifier(s string, buf *bytes.Buffer) int {
-	buf.Reset()
-	buf.Grow(len(s))
-	data := buf.Bytes()[:len(s)]
-	for i := 0; i < len(s); i++ {
-		if s[i] >= 'a' && s[i] <= 'z' {
-			data[i] = s[i] + 'A' - 'a'
-		} else {
-			data[i] = s[i]
-		}
-	}
-	tok := tokenMap[hack.String(data)]
-	return tok
-}
+func isTokenIdentifier(s string, buf *bytes.Buffer) int { _ = "STUB: not implemented"; return 0 }
 
 func handleIdent(lval *yySymType) int {
-	s := lval.ident
+	_ = "STUB: not implemented"
+
 	// A character string literal may have an optional character set introducer and COLLATE clause:
 	// [_charset_name]'string' [COLLATE collation_name]
 	// See https://dev.mysql.com/doc/refman/5.7/en/charset-literal.html
-	if !strings.HasPrefix(s, "_") {
-		return identifier
-	}
-	cs, _, err := charset.GetCharsetInfo(s[1:])
-	if err != nil {
-		return identifier
-	}
-	lval.item = cs
-	return underscoreCS
+	return 0
 }

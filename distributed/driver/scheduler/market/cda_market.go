@@ -43,123 +43,48 @@ type Market struct {
 	hasDemands *sync.Cond
 }
 
-func NewMarket() *Market {
-	m := &Market{}
-	m.hasDemands = sync.NewCond(&m.Lock)
-	return m
-}
+func NewMarket() *Market { _ = "STUB: not implemented"; return nil }
 
 func (m *Market) SetScoreFunction(scorer func(Requirement, float64, Object) float64) *Market {
-	m.ScoreFn = scorer
-	return m
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (m *Market) SetFetchFunction(fn func([]Demand)) *Market {
-	m.FetchFn = fn
-	return m
-}
+func (m *Market) SetFetchFunction(fn func([]Demand)) *Market { _ = "STUB: not implemented"; return nil }
 
 // retChan should be a buffered channel
 func (m *Market) AddDemand(r Requirement, bid float64, retChan chan Supply) {
-	m.Lock.Lock()
-	defer m.Lock.Unlock()
-
-	if len(m.Supplies) > 0 {
-		supply, matched := m.pickBestSupplyFor(r)
-		if matched {
-			retChan <- supply
-			close(retChan)
-			return
-		}
-	}
-	m.Demands = append(m.Demands, Demand{
-		Requirement: r,
-		Bid:         bid,
-		ReturnChan:  retChan,
-	})
-	m.hasDemands.Signal()
+	_ = "STUB: not implemented"
+	return
 }
 
 func (m *Market) FetcherLoop() {
-	for {
-		// println("FetcherLoop Lock:", len(m.Demands))
-		m.Lock.Lock()
-		for len(m.Demands) == 0 {
-			// println("FetcherLoop wait:", len(m.Demands))
-			m.hasDemands.Wait()
-		}
-		// println("FetcherLoop UnLock:", len(m.Demands))
-		m.Lock.Unlock()
+	_ = "STUB: not implemented"
 
-		// println("fetching current demands:", len(m.Demands))
-		m.FetchFn(m.Demands)
-		// println("fetching finished demands:", len(m.Demands))
-	}
+	// println("FetcherLoop Lock:", len(m.Demands))
+	return
 }
 
-func (m *Market) ReturnSupply(s Supply) {
-	m.AddSupply(s)
-}
+// println("FetcherLoop wait:", len(m.Demands))
 
-func (m *Market) AddSupply(supply Supply) {
-	m.Lock.Lock()
-	defer m.Lock.Unlock()
+// println("FetcherLoop UnLock:", len(m.Demands))
 
-	if len(m.Demands) > 0 {
-		demand, matched := m.pickBestDemandFor(supply)
-		if matched {
-			demand.ReturnChan <- supply
-			close(demand.ReturnChan)
-			return
-		}
-	}
+// println("fetching current demands:", len(m.Demands))
 
-	m.Supplies = append(m.Supplies, supply)
-}
+// println("fetching finished demands:", len(m.Demands))
+
+func (m *Market) ReturnSupply(s Supply) { _ = "STUB: not implemented"; return }
+
+func (m *Market) AddSupply(supply Supply) { _ = "STUB: not implemented"; return }
 
 func (m *Market) pickBestSupplyFor(r Requirement) (ret Supply, matched bool) {
-
-	scores := make([]float64, len(m.Supplies))
-	for i, supply := range m.Supplies {
-		scores[i] = m.ScoreFn(r, 1, supply.Object)
-	}
-	maxScore, maxIndex := 0.0, 0
-	for i, score := range scores {
-		if score > maxScore {
-			maxScore = score
-			maxIndex = i
-			matched = true
-		}
-	}
-
-	if matched {
-		ret = m.Supplies[maxIndex]
-		m.Supplies = append(m.Supplies[:maxIndex], m.Supplies[maxIndex+1:]...)
-	}
-
-	return ret, matched
+	_ = "STUB: not implemented"
+	return *new(Supply), false
 }
 
 func (m *Market) pickBestDemandFor(supply Supply) (ret Demand, matched bool) {
-
-	scores := make([]float64, len(m.Demands))
-	for i, demand := range m.Demands {
-		scores[i] = m.ScoreFn(demand.Requirement, demand.Bid, supply.Object)
-	}
-	maxScore, maxIndex := 0.0, 0
-	for i, score := range scores {
-		if score > maxScore {
-			maxScore = score
-			maxIndex = i
-			matched = true
-		}
-	}
-
-	if matched {
-		ret = m.Demands[maxIndex]
-		// fmt.Printf("matched demand: %+v\n", ret)
-		m.Demands = append(m.Demands[:maxIndex], m.Demands[maxIndex+1:]...)
-	}
-
-	return ret, matched
+	_ = "STUB: not implemented"
+	return *new(Demand), false
 }
+
+// fmt.Printf("matched demand: %+v\n", ret)

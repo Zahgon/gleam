@@ -1,12 +1,9 @@
 package instruction
 
 import (
-	"fmt"
 	"io"
-	"io/ioutil"
 
 	"github.com/chrislusf/gleam/pb"
-	"github.com/chrislusf/gleam/util"
 )
 
 func init() {
@@ -25,65 +22,32 @@ type LocalHashAndJoinWith struct {
 }
 
 func NewLocalHashAndJoinWith(indexes []int) *LocalHashAndJoinWith {
-	return &LocalHashAndJoinWith{indexes}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (b *LocalHashAndJoinWith) Name(prefix string) string {
-	return prefix + ".LocalHashAndJoinWith"
-}
+func (b *LocalHashAndJoinWith) Name(prefix string) string { _ = "STUB: not implemented"; return "" }
 
 func (b *LocalHashAndJoinWith) Function() func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-	return func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-		return DoLocalHashAndJoinWith(readers[0], readers[1], writers[0], b.indexes, stats)
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (b *LocalHashAndJoinWith) SerializeToCommand() *pb.Instruction {
-	return &pb.Instruction{
-		LocalHashAndJoinWith: &pb.Instruction_LocalHashAndJoinWith{
-			Indexes: getIndexes(b.indexes),
-		},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (b *LocalHashAndJoinWith) GetMemoryCostInMB(partitionSize int64) int64 {
-	return int64(float32(partitionSize) * 1.1)
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func DoLocalHashAndJoinWith(leftReader, rightReader io.Reader, writer io.Writer, indexes []int, stats *pb.InstructionStat) error {
-	hashmap := make(map[string]*util.Row)
-	err := util.ProcessRow(leftReader, indexes, func(row *util.Row) error {
-		// write the row if key is different
-		stats.InputCounter++
-		keyBytes, _ := util.EncodeKeys(row.K...)
-		hashmap[string(keyBytes)] = row
-		return nil
-	})
-	if err != nil {
-		fmt.Printf("Sort>Failed to read input data:%v\n", err)
-		return err
-	}
-	if len(hashmap) == 0 {
-		io.Copy(ioutil.Discard, rightReader)
-		return nil
-	}
-
-	err = util.ProcessRow(rightReader, indexes, func(row *util.Row) error {
-		// write the row if key is different
-		stats.InputCounter++
-		keyBytes, err := util.EncodeKeys(row.K...)
-		if err != nil {
-			return fmt.Errorf("Failed to encoded keys %+v: %v", row.K, err)
-		}
-		if mappedRow, ok := hashmap[string(keyBytes)]; ok {
-			row.AppendValue(mappedRow.V...).WriteTo(writer)
-			stats.OutputCounter++
-		}
-		return nil
-	})
-
-	if err != nil {
-		fmt.Printf("LocalHashAndJoinWith>Failed to process the bigger input data:%v\n", err)
-	}
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// write the row if key is different
+
+// write the row if key is different

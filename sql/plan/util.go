@@ -27,21 +27,12 @@ type AggregateFuncExtractor struct {
 
 // Enter implements Visitor interface.
 func (a *AggregateFuncExtractor) Enter(n ast.Node) (ast.Node, bool) {
-	switch n.(type) {
-	case *ast.AggregateFuncExpr:
-		a.inAggregateFuncExpr = true
-	case *ast.SelectStmt, *ast.UnionStmt:
-		return n, true
-	}
-	return n, false
+	_ = "STUB: not implemented"
+	return *new(ast.Node), false
 }
 
 // Leave implements Visitor interface.
 func (a *AggregateFuncExtractor) Leave(n ast.Node) (ast.Node, bool) {
-	switch v := n.(type) {
-	case *ast.AggregateFuncExpr:
-		a.inAggregateFuncExpr = false
-		a.AggFuncs = append(a.AggFuncs, v)
-	}
-	return n, true
+	_ = "STUB: not implemented"
+	return *new(ast.Node), false
 }

@@ -14,13 +14,10 @@
 package expression
 
 import (
-	"strings"
 	"time"
 
 	"github.com/chrislusf/gleam/sql/ast"
 	"github.com/chrislusf/gleam/sql/context"
-	"github.com/chrislusf/gleam/sql/mysql"
-	"github.com/chrislusf/gleam/sql/sessionctx/varsutil"
 	"github.com/chrislusf/gleam/sql/util/types"
 	"github.com/juju/errors"
 )
@@ -30,12 +27,7 @@ const (
 	oneI64  int64 = 1
 )
 
-func boolToInt64(v bool) int64 {
-	if v {
-		return int64(1)
-	}
-	return int64(0)
-}
+func boolToInt64(v bool) int64 { _ = "STUB: not implemented"; return 0 }
 
 var (
 	// CurrentTimestamp is the keyword getting default value for datetime and timestamp type.
@@ -51,111 +43,23 @@ var (
 
 // GetTimeValue gets the time value with type tp.
 func GetTimeValue(ctx context.Context, v interface{}, tp byte, fsp int) (types.Datum, error) {
-	return getTimeValue(ctx, v, tp, fsp)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func getTimeValue(ctx context.Context, v interface{}, tp byte, fsp int) (d types.Datum, err error) {
-	value := types.Time{
-		Type: tp,
-		Fsp:  fsp,
-	}
-
-	defaultTime, err := getSystemTimestamp(ctx)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	switch x := v.(type) {
-	case string:
-		upperX := strings.ToUpper(x)
-		if upperX == CurrentTimestamp {
-			value.Time = types.FromGoTime(defaultTime)
-		} else if upperX == ZeroTimestamp {
-			value, _ = types.ParseTimeFromNum(0, tp, fsp)
-		} else {
-			value, err = types.ParseTime(x, tp, fsp)
-			if err != nil {
-				return d, errors.Trace(err)
-			}
-		}
-	case *ast.ValueExpr:
-		switch x.Kind() {
-		case types.KindString:
-			value, err = types.ParseTime(x.GetString(), tp, fsp)
-			if err != nil {
-				return d, errors.Trace(err)
-			}
-		case types.KindInt64:
-			value, err = types.ParseTimeFromNum(x.GetInt64(), tp, fsp)
-			if err != nil {
-				return d, errors.Trace(err)
-			}
-		case types.KindNull:
-			return d, nil
-		default:
-			return d, errors.Trace(errDefaultValue)
-		}
-	case *ast.FuncCallExpr:
-		if x.FnName.L == currentTimestampL {
-			d.SetString(CurrentTimestamp)
-			return d, nil
-		}
-		return d, errors.Trace(errDefaultValue)
-	case *ast.UnaryOperationExpr:
-		// support some expression, like `-1`
-		v, err := EvalAstExpr(x, ctx)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		ft := types.NewFieldType(mysql.TypeLonglong)
-		xval, err := v.ConvertTo(ctx.GetSessionVars().StmtCtx, ft)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-
-		value, err = types.ParseTimeFromNum(xval.GetInt64(), tp, fsp)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-	default:
-		return d, nil
-	}
-
-	d.SetMysqlTime(value)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// support some expression, like `-1`
 
 // IsCurrentTimeExpr returns whether e is CurrentTimeExpr.
-func IsCurrentTimeExpr(e ast.ExprNode) bool {
-	x, ok := e.(*ast.FuncCallExpr)
-	if !ok {
-		return false
-	}
-	return x.FnName.L == currentTimestampL
-}
+func IsCurrentTimeExpr(e ast.ExprNode) bool { _ = "STUB: not implemented"; return false }
 
 func getSystemTimestamp(ctx context.Context) (time.Time, error) {
-	value := time.Now()
-
-	if ctx == nil {
-		return value, nil
-	}
-
-	// check whether use timestamp varibale
-	sessionVars := ctx.GetSessionVars()
-	val, err := varsutil.GetSessionSystemVar(sessionVars, "timestamp")
-	if err != nil {
-		return value, errors.Trace(err)
-	}
-	if val != "" {
-		timestamp, err := types.StrToInt(sessionVars.StmtCtx, val)
-		if err != nil {
-			return time.Time{}, errors.Trace(err)
-		}
-		if timestamp <= 0 {
-			return value, nil
-		}
-		return time.Unix(timestamp, 0), nil
-	}
-	return value, nil
+	_ = "STUB: not implemented"
+	return *new(time.Time), nil
 }
+
+// check whether use timestamp varibale

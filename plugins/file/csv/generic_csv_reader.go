@@ -53,9 +53,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"io"
-	"unicode"
 )
 
 // A ParseError is returned for parsing errors.
@@ -66,9 +64,7 @@ type ParseError struct {
 	Err    error // The actual error
 }
 
-func (e *ParseError) Error() string {
-	return fmt.Sprintf("line %d, column %d: %s", e.Line, e.Column, e.Err)
-}
+func (e *ParseError) Error() string { _ = "STUB: not implemented"; return "" }
 
 // These are the errors that can be returned in ParseError.Error
 var (
@@ -118,45 +114,16 @@ type Reader struct {
 }
 
 // NewReader returns a new Reader that reads from r.
-func NewReader(r io.Reader) *Reader {
-	return &Reader{
-		Comma: ',',
-		r:     bufio.NewReader(r),
-	}
-}
+func NewReader(r io.Reader) *Reader { _ = "STUB: not implemented"; return nil }
 
 // error creates a new ParseError based on err.
-func (r *Reader) error(err error) error {
-	return &ParseError{
-		Line:   r.line,
-		Column: r.column,
-		Err:    err,
-	}
-}
+func (r *Reader) error(err error) error { _ = "STUB: not implemented"; return nil }
 
 // Read reads one record from r.  The record is a slice of strings with each
 // string representing one field.
-func (r *Reader) Read() (record []string, err error) {
-	for {
-		record, err = r.parseRecord()
-		if record != nil {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-	}
+func (r *Reader) Read() (record []string, err error) { _ = "STUB: not implemented"; return nil, nil }
 
-	if r.FieldsPerRecord > 0 {
-		if len(record) != r.FieldsPerRecord {
-			r.column = 0 // report at start of record
-			return record, r.error(ErrFieldCount)
-		}
-	} else if r.FieldsPerRecord == 0 {
-		r.FieldsPerRecord = len(record)
-	}
-	return record, nil
-}
+// report at start of record
 
 // ReadAll reads all the remaining records from r.
 // Each record is a slice of fields.
@@ -164,217 +131,55 @@ func (r *Reader) Read() (record []string, err error) {
 // defined to read until EOF, it does not treat end of file as an error to be
 // reported.
 func (r *Reader) ReadAll() (records [][]string, err error) {
-	for {
-		record, err := r.Read()
-		if err == io.EOF {
-			return records, nil
-		}
-		if err != nil {
-			return nil, err
-		}
-		records = append(records, record)
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // readRune reads one rune from r, folding \r\n to \n and keeping track
 // of how far into the line we have read.  r.column will point to the start
 // of this rune, not the end of this rune.
-func (r *Reader) readRune() (rune, error) {
-	r1, _, err := r.r.ReadRune()
+func (r *Reader) readRune() (rune, error) { _ = "STUB: not implemented"; return 0, nil }
 
-	// Handle \r\n here.  We make the simplifying assumption that
-	// anytime \r is followed by \n that it can be folded to \n.
-	// We will not detect files which contain both \r\n and bare \n.
-	if r1 == '\r' {
-		r1, _, err = r.r.ReadRune()
-		if err == nil {
-			if r1 != '\n' {
-				r.r.UnreadRune()
-				r1 = '\r'
-			}
-		}
-	}
-	r.column++
-	return r1, err
-}
+// Handle \r\n here.  We make the simplifying assumption that
+// anytime \r is followed by \n that it can be folded to \n.
+// We will not detect files which contain both \r\n and bare \n.
 
 // skip reads runes up to and including the rune delim or until error.
-func (r *Reader) skip(delim rune) error {
-	for {
-		r1, err := r.readRune()
-		if err != nil {
-			return err
-		}
-		if r1 == delim {
-			return nil
-		}
-	}
-}
+func (r *Reader) skip(delim rune) error { _ = "STUB: not implemented"; return nil }
 
 // parseRecord reads and parses a single csv record from r.
 func (r *Reader) parseRecord() (fields []string, err error) {
+	_ = "STUB: not implemented"
 	// Each record starts on a new line.  We increment our line
 	// number (lines start at 1, not 0) and set column to -1
 	// so as we increment in readRune it points to the character we read.
-	r.line++
-	r.column = -1
-
-	// Peek at the first rune.  If it is an error we are done.
-	// If we are support comments and it is the comment character
-	// then skip to the end of line.
-
-	r1, _, err := r.r.ReadRune()
-	if err != nil {
-		return nil, err
-	}
-
-	if r.Comment != 0 && r1 == r.Comment {
-		return nil, r.skip('\n')
-	}
-	r.r.UnreadRune()
-
-	// At this point we have at least one field.
-	for {
-		haveField, delim, err := r.parseField()
-		if haveField {
-			fields = append(fields, r.field.String())
-		}
-		if delim == '\n' || err == io.EOF {
-			return fields, err
-		} else if err != nil {
-			return nil, err
-		}
-	}
+	return nil, nil
 }
+
+// Peek at the first rune.  If it is an error we are done.
+// If we are support comments and it is the comment character
+// then skip to the end of line.
+
+// At this point we have at least one field.
 
 // parseField parses the next field in the record.  The read field is
 // located in r.field.  Delim is the first character not part of the field
 // (r.Comma or '\n').
 func (r *Reader) parseField() (haveField bool, delim rune, err error) {
-	r.field.Reset()
-
-	r1, err := r.readRune()
-	for err == nil && r.TrimLeadingSpace && r1 != '\n' && unicode.IsSpace(r1) {
-		r1, err = r.readRune()
-	}
-
-	if err == io.EOF && r.column != 0 {
-		return true, 0, err
-	}
-	if err != nil {
-		return false, 0, err
-	}
-
-	switch r1 {
-	case r.Comma:
-		// will check below
-
-	case '\n':
-		// We are a trailing empty field or a blank line
-		if r.column == 0 {
-			return false, r1, nil
-		}
-		return true, r1, nil
-
-	case SINGLE_QUOTE:
-		// quoted field
-	Quoted1:
-		for {
-			r1, err = r.readRune()
-			if err != nil {
-				if err == io.EOF {
-					if r.LazyQuotes {
-						return true, 0, err
-					}
-					return false, 0, r.error(ErrQuote)
-				}
-				return false, 0, err
-			}
-			switch r1 {
-			case SINGLE_QUOTE:
-				r1, err = r.readRune()
-				if err != nil || r1 == r.Comma {
-					break Quoted1
-				}
-				if r1 == '\n' {
-					return true, r1, nil
-				}
-				if r1 != SINGLE_QUOTE {
-					if !r.LazyQuotes {
-						r.column--
-						return false, 0, r.error(ErrQuote)
-					}
-					// accept the bare quote
-					r.field.WriteRune(SINGLE_QUOTE)
-				}
-			case '\n':
-				r.line++
-				r.column = -1
-			}
-			r.field.WriteRune(r1)
-		}
-
-	case DOUBLE_QUOTE:
-		// quoted field
-	Quoted2:
-		for {
-			r1, err = r.readRune()
-			if err != nil {
-				if err == io.EOF {
-					if r.LazyQuotes {
-						return true, 0, err
-					}
-					return false, 0, r.error(ErrQuote)
-				}
-				return false, 0, err
-			}
-			switch r1 {
-			case DOUBLE_QUOTE:
-				r1, err = r.readRune()
-				if err != nil || r1 == r.Comma {
-					break Quoted2
-				}
-				if r1 == '\n' {
-					return true, r1, nil
-				}
-				if r1 != DOUBLE_QUOTE {
-					if !r.LazyQuotes {
-						r.column--
-						return false, 0, r.error(ErrQuote)
-					}
-					// accept the bare quote
-					r.field.WriteRune(DOUBLE_QUOTE)
-				}
-			case '\n':
-				r.line++
-				r.column = -1
-			}
-			r.field.WriteRune(r1)
-		}
-
-	default:
-		// unquoted field
-		for {
-			r.field.WriteRune(r1)
-			r1, err = r.readRune()
-			if err != nil || r1 == r.Comma {
-				break
-			}
-			if r1 == '\n' {
-				return true, r1, nil
-			}
-			if !r.LazyQuotes && (r1 == '"' || r1 == '\'') {
-				return false, 0, r.error(ErrBareQuote)
-			}
-		}
-	}
-
-	if err != nil {
-		if err == io.EOF {
-			return true, 0, err
-		}
-		return false, 0, err
-	}
-
-	return true, r1, nil
+	_ = "STUB: not implemented"
+	return false, 0, nil
 }
+
+// will check below
+
+// We are a trailing empty field or a blank line
+
+// quoted field
+
+// accept the bare quote
+
+// quoted field
+
+// accept the bare quote
+
+// unquoted field

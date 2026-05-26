@@ -4,7 +4,6 @@ import (
 	"io"
 
 	"github.com/chrislusf/gleam/pb"
-	"github.com/chrislusf/gleam/util"
 )
 
 func init() {
@@ -19,37 +18,23 @@ func init() {
 type Broadcast struct {
 }
 
-func NewBroadcast() *Broadcast {
-	return &Broadcast{}
-}
+func NewBroadcast() *Broadcast { _ = "STUB: not implemented"; return nil }
 
-func (b *Broadcast) Name(prefix string) string {
-	return prefix + ".Broadcast"
-}
+func (b *Broadcast) Name(prefix string) string { _ = "STUB: not implemented"; return "" }
 
 func (b *Broadcast) Function() func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-	return func(readers []io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-		return DoBroadcast(readers[0], writers, stats)
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (b *Broadcast) SerializeToCommand() *pb.Instruction {
-	return &pb.Instruction{
-		Broadcast: &pb.Instruction_Broadcast{},
-	}
-}
+func (b *Broadcast) SerializeToCommand() *pb.Instruction { _ = "STUB: not implemented"; return nil }
 
 func (b *Broadcast) GetMemoryCostInMB(partitionSize int64) int64 {
-	return 1
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func DoBroadcast(reader io.Reader, writers []io.Writer, stats *pb.InstructionStat) error {
-	return util.ProcessMessage(reader, func(data []byte) error {
-		stats.InputCounter++
-		for _, writer := range writers {
-			stats.OutputCounter++
-			util.WriteMessage(writer, data)
-		}
-		return nil
-	})
+	_ = "STUB: not implemented"
+	return nil
 }

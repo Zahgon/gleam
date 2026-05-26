@@ -14,12 +14,7 @@
 package expression
 
 import (
-	"strings"
-	"time"
-
-	"github.com/juju/errors"
 	"github.com/chrislusf/gleam/sql/context"
-	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/util/types"
 )
 
@@ -52,12 +47,8 @@ type sleepFunctionClass struct {
 }
 
 func (c *sleepFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinSleepSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinSleepSig struct {
@@ -65,52 +56,28 @@ type builtinSleepSig struct {
 }
 
 func (b *builtinSleepSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinSleep(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_sleep
 func builtinSleep(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	sessVars := ctx.GetSessionVars()
-	if args[0].IsNull() {
-		if sessVars.StrictSQLMode {
-			return d, errors.New("incorrect arguments to sleep")
-		}
-		d.SetInt64(0)
-		return
-	}
-	// processing argument is negative
-	zero := types.NewIntDatum(0)
-	sc := sessVars.StmtCtx
-	ret, err := args[0].CompareDatum(sc, zero)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	if ret == -1 {
-		if sessVars.StrictSQLMode {
-			return d, errors.New("incorrect arguments to sleep")
-		}
-		d.SetInt64(0)
-		return
-	}
-
-	// TODO: consider it's interrupted using KILL QUERY from other session, or
-	// interrupted by time out.
-	duration := time.Duration(args[0].GetFloat64() * float64(time.Second.Nanoseconds()))
-	time.Sleep(duration)
-	d.SetInt64(0)
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// processing argument is negative
+
+// TODO: consider it's interrupted using KILL QUERY from other session, or
+// interrupted by time out.
 
 type inFunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *inFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinInSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinInSig struct {
@@ -118,55 +85,26 @@ type builtinInSig struct {
 }
 
 func (b *builtinInSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinIn(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/any-in-some-subqueries.html
 func builtinIn(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() {
-		return
-	}
-	sc := ctx.GetSessionVars().StmtCtx
-	var hasNull bool
-	for _, v := range args[1:] {
-		if v.IsNull() {
-			hasNull = true
-			continue
-		}
-
-		a, b, err := types.CoerceDatum(sc, args[0], v)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		ret, err := a.CompareDatum(sc, b)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		if ret == 0 {
-			d.SetInt64(1)
-			return d, nil
-		}
-	}
-
-	if hasNull {
-		// If it's no matched but we get null in In, returns null.
-		// e.g 1 in (null, 2, 3) returns null.
-		return
-	}
-	d.SetInt64(0)
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// If it's no matched but we get null in In, returns null.
+// e.g 1 in (null, 2, 3) returns null.
 
 type rowFunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *rowFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinRowSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinRowSig struct {
@@ -174,16 +112,13 @@ type builtinRowSig struct {
 }
 
 func (b *builtinRowSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinRow(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func builtinRow(row []types.Datum, _ context.Context) (d types.Datum, err error) {
-	d.SetRow(row)
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type castFunctionClass struct {
@@ -193,7 +128,8 @@ type castFunctionClass struct {
 }
 
 func (c *castFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinCastSig{newBaseBuiltinFunc(args, ctx), c.tp}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinCastSig struct {
@@ -203,33 +139,17 @@ type builtinCastSig struct {
 }
 
 func (b *builtinCastSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	f, err := CastFuncFactory(b.tp)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return f(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // CastFuncFactory produces builtin function according to field types.
 // See https://dev.mysql.com/doc/refman/5.7/en/cast-functions.html
 func CastFuncFactory(tp *types.FieldType) (BuiltinFunc, error) {
-	switch tp.Tp {
+	_ = "STUB: not implemented"
+
 	// Parser has restricted this.
-	case mysql.TypeString, mysql.TypeDuration, mysql.TypeDatetime,
-		mysql.TypeDate, mysql.TypeLonglong, mysql.TypeNewDecimal:
-		return func(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-			d = args[0]
-			if d.IsNull() {
-				return
-			}
-			return d.ConvertTo(ctx.GetSessionVars().StmtCtx, tp)
-		}, nil
-	}
-	return nil, errors.Errorf("unknown cast type - %v", tp)
+	return *new(BuiltinFunc), nil
 }
 
 type setVarFunctionClass struct {
@@ -237,12 +157,8 @@ type setVarFunctionClass struct {
 }
 
 func (c *setVarFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinSetVarSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinSetVarSig struct {
@@ -250,24 +166,13 @@ type builtinSetVarSig struct {
 }
 
 func (b *builtinSetVarSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinSetVar(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func builtinSetVar(args []types.Datum, ctx context.Context) (types.Datum, error) {
-	sessionVars := ctx.GetSessionVars()
-	varName, _ := args[0].ToString()
-	if !args[1].IsNull() {
-		strVal, err := args[1].ToString()
-		if err != nil {
-			return types.Datum{}, errors.Trace(err)
-		}
-		sessionVars.Users[varName] = strings.ToLower(strVal)
-	}
-	return args[1], nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type getVarFunctionClass struct {
@@ -275,12 +180,8 @@ type getVarFunctionClass struct {
 }
 
 func (c *getVarFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinGetVarSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinGetVarSig struct {
@@ -288,20 +189,13 @@ type builtinGetVarSig struct {
 }
 
 func (b *builtinGetVarSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinGetVar(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func builtinGetVar(args []types.Datum, ctx context.Context) (types.Datum, error) {
-	sessionVars := ctx.GetSessionVars()
-	varName, _ := args[0].ToString()
-	if v, ok := sessionVars.Users[varName]; ok {
-		return types.NewDatum(v), nil
-	}
-	return types.Datum{}, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type lockFunctionClass struct {
@@ -309,7 +203,8 @@ type lockFunctionClass struct {
 }
 
 func (c *lockFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinLockSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinLockSig struct {
@@ -317,18 +212,15 @@ type builtinLockSig struct {
 }
 
 func (b *builtinLockSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinLock(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // The lock function will do nothing.
 // Warning: get_lock() function is parsed but ignored.
 func builtinLock(args []types.Datum, _ context.Context) (d types.Datum, err error) {
-	d.SetInt64(1)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type releaseLockFunctionClass struct {
@@ -336,7 +228,8 @@ type releaseLockFunctionClass struct {
 }
 
 func (c *releaseLockFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinReleaseLockSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinReleaseLockSig struct {
@@ -344,18 +237,15 @@ type builtinReleaseLockSig struct {
 }
 
 func (b *builtinReleaseLockSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinReleaseLock(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // The release lock function will do nothing.
 // Warning: release_lock() function is parsed but ignored.
 func builtinReleaseLock(args []types.Datum, _ context.Context) (d types.Datum, err error) {
-	d.SetInt64(1)
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type valuesFunctionClass struct {
@@ -365,12 +255,8 @@ type valuesFunctionClass struct {
 }
 
 func (c *valuesFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinValuesSig{newBaseBuiltinFunc(args, ctx), c.offset}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinValuesSig struct {
@@ -380,26 +266,12 @@ type builtinValuesSig struct {
 }
 
 func (b *builtinValuesSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return BuiltinValuesFactory(b.offset)(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // BuiltinValuesFactory generates values builtin function.
 func BuiltinValuesFactory(offset int) BuiltinFunc {
-	return func(_ []types.Datum, ctx context.Context) (d types.Datum, err error) {
-		values := ctx.GetSessionVars().CurrInsertValues
-		if values == nil {
-			err = errors.New("Session current insert values is nil")
-			return
-		}
-		row := values.([]types.Datum)
-		if len(row) > offset {
-			return row[offset], nil
-		}
-		err = errors.Errorf("Session current insert values len %d and column's offset %v don't match", len(row), offset)
-		return
-	}
+	_ = "STUB: not implemented"
+	return *new(BuiltinFunc)
 }

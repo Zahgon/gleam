@@ -13,8 +13,6 @@
 
 package opcode
 
-import "fmt"
-
 // Op is opcode type.
 type Op int
 
@@ -87,11 +85,4 @@ var Ops = map[Op]string{
 }
 
 // String implements Stringer interface.
-func (o Op) String() string {
-	str, ok := Ops[o]
-	if !ok {
-		panic(fmt.Sprintf("%d", o))
-	}
-
-	return str
-}
+func (o Op) String() string { _ = "STUB: not implemented"; return "" }

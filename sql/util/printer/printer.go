@@ -13,13 +13,6 @@
 
 package printer
 
-import (
-	"bytes"
-	"fmt"
-
-	"log"
-)
-
 // Version information.
 var (
 	TiDBBuildTS = "None"
@@ -27,110 +20,26 @@ var (
 )
 
 // PrintTiDBInfo prints the TiDB version information.
-func PrintTiDBInfo() {
-	log.Printf("Welcome to TiDB.")
-	log.Printf("Version:")
-	log.Printf("Git Commit Hash: %s", TiDBGitHash)
-	log.Printf("UTC Build Time:  %s", TiDBBuildTS)
-}
+func PrintTiDBInfo() { _ = "STUB: not implemented"; return }
 
 // PrintRawTiDBInfo prints the TiDB version information without log info.
-func PrintRawTiDBInfo() {
-	fmt.Println("Git Commit Hash:", TiDBGitHash)
-	fmt.Println("UTC Build Time: ", TiDBBuildTS)
-}
+func PrintRawTiDBInfo() { _ = "STUB: not implemented"; return }
 
 // checkValidity checks whether cols and every data have the same length.
-func checkValidity(cols []string, datas [][]string) bool {
-	colLen := len(cols)
-	if len(datas) == 0 || colLen == 0 {
-		return false
-	}
+func checkValidity(cols []string, datas [][]string) bool { _ = "STUB: not implemented"; return false }
 
-	for _, data := range datas {
-		if colLen != len(data) {
-			return false
-		}
-	}
+func getMaxColLen(cols []string, datas [][]string) []int { _ = "STUB: not implemented"; return nil }
 
-	return true
-}
+func getPrintDivLine(maxColLen []int) []byte { _ = "STUB: not implemented"; return nil }
 
-func getMaxColLen(cols []string, datas [][]string) []int {
-	maxColLen := make([]int, len(cols))
-	for i, col := range cols {
-		maxColLen[i] = len(col)
-	}
+func getPrintCol(cols []string, maxColLen []int) []byte { _ = "STUB: not implemented"; return nil }
 
-	for _, data := range datas {
-		for i, v := range data {
-			if len(v) > maxColLen[i] {
-				maxColLen[i] = len(v)
-			}
-		}
-	}
+func getPrintRow(data []string, maxColLen []int) []byte { _ = "STUB: not implemented"; return nil }
 
-	return maxColLen
-}
-
-func getPrintDivLine(maxColLen []int) []byte {
-	var value []byte
-	for _, v := range maxColLen {
-		value = append(value, '+')
-		value = append(value, bytes.Repeat([]byte{'-'}, v+2)...)
-	}
-	value = append(value, '+')
-	value = append(value, '\n')
-	return value
-}
-
-func getPrintCol(cols []string, maxColLen []int) []byte {
-	var value []byte
-	for i, v := range cols {
-		value = append(value, '|')
-		value = append(value, ' ')
-		value = append(value, []byte(v)...)
-		value = append(value, bytes.Repeat([]byte{' '}, maxColLen[i]+1-len(v))...)
-	}
-	value = append(value, '|')
-	value = append(value, '\n')
-	return value
-}
-
-func getPrintRow(data []string, maxColLen []int) []byte {
-	var value []byte
-	for i, v := range data {
-		value = append(value, '|')
-		value = append(value, ' ')
-		value = append(value, []byte(v)...)
-		value = append(value, bytes.Repeat([]byte{' '}, maxColLen[i]+1-len(v))...)
-	}
-	value = append(value, '|')
-	value = append(value, '\n')
-	return value
-}
-
-func getPrintRows(datas [][]string, maxColLen []int) []byte {
-	var value []byte
-	for _, data := range datas {
-		value = append(value, getPrintRow(data, maxColLen)...)
-	}
-	return value
-}
+func getPrintRows(datas [][]string, maxColLen []int) []byte { _ = "STUB: not implemented"; return nil }
 
 // GetPrintResult gets a result with a formatted string.
 func GetPrintResult(cols []string, datas [][]string) (string, bool) {
-	if !checkValidity(cols, datas) {
-		return "", false
-	}
-
-	var value []byte
-	maxColLen := getMaxColLen(cols, datas)
-
-	value = append(value, getPrintDivLine(maxColLen)...)
-	value = append(value, getPrintCol(cols, maxColLen)...)
-	value = append(value, getPrintDivLine(maxColLen)...)
-	value = append(value, getPrintRows(datas, maxColLen)...)
-	value = append(value, getPrintDivLine(maxColLen)...)
-	return string(value), true
+	_ = "STUB: not implemented"
+	return "", false
 }

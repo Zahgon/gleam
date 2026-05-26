@@ -10,24 +10,14 @@ type CsvFileReader struct {
 	csvReader *Reader
 }
 
-func New(reader io.Reader) *CsvFileReader {
-	return &CsvFileReader{
-		csvReader: NewReader(reader),
-	}
-}
+func New(reader io.Reader) *CsvFileReader { _ = "STUB: not implemented"; return nil }
 
 func (r *CsvFileReader) ReadHeader() (fieldNames []string, err error) {
-	return r.csvReader.Read()
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
 func (r *CsvFileReader) Read() (row *util.Row, err error) {
-	var record []string
-	var objects []interface{}
-	record, err = r.csvReader.Read()
-	if err != nil {
-		return
-	}
-	for _, s := range record {
-		objects = append(objects, s)
-	}
-	return util.NewRow(util.Now(), objects...), err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

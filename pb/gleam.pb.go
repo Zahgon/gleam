@@ -6,9 +6,11 @@
 Package pb is a generated protocol buffer package.
 
 It is generated from these files:
+
 	gleam.proto
 
 It has these top-level messages:
+
 	ComputeRequest
 	ComputeResource
 	DataResource
@@ -40,12 +42,15 @@ It has these top-level messages:
 */
 package pb
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
 import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+
 	context "context"
+
 	grpc "google.golang.org/grpc"
 )
 
@@ -69,45 +74,23 @@ type ComputeRequest struct {
 	FlowHashCode     uint32             `protobuf:"varint,5,opt,name=flowHashCode" json:"flowHashCode,omitempty"`
 }
 
-func (m *ComputeRequest) Reset()                    { *m = ComputeRequest{} }
-func (m *ComputeRequest) String() string            { return proto.CompactTextString(m) }
-func (*ComputeRequest) ProtoMessage()               {}
-func (*ComputeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *ComputeRequest) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ComputeRequest) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ComputeRequest) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ComputeRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *ComputeRequest) GetDataCenter() string {
-	if m != nil {
-		return m.DataCenter
-	}
-	return ""
-}
+func (m *ComputeRequest) GetDataCenter() string { _ = "STUB: not implemented"; return "" }
 
 func (m *ComputeRequest) GetComputeResources() []*ComputeResource {
-	if m != nil {
-		return m.ComputeResources
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *ComputeRequest) GetUsername() string {
-	if m != nil {
-		return m.Username
-	}
-	return ""
-}
+func (m *ComputeRequest) GetUsername() string { _ = "STUB: not implemented"; return "" }
 
-func (m *ComputeRequest) GetHostname() string {
-	if m != nil {
-		return m.Hostname
-	}
-	return ""
-}
+func (m *ComputeRequest) GetHostname() string { _ = "STUB: not implemented"; return "" }
 
-func (m *ComputeRequest) GetFlowHashCode() uint32 {
-	if m != nil {
-		return m.FlowHashCode
-	}
-	return 0
-}
+func (m *ComputeRequest) GetFlowHashCode() uint32 { _ = "STUB: not implemented"; return 0 }
 
 type ComputeResource struct {
 	CpuCount int32 `protobuf:"varint,1,opt,name=cpu_count,json=cpuCount" json:"cpu_count,omitempty"`
@@ -118,76 +101,36 @@ type ComputeResource struct {
 	DiskMb   int64 `protobuf:"varint,6,opt,name=disk_mb,json=diskMb" json:"disk_mb,omitempty"`
 }
 
-func (m *ComputeResource) Reset()                    { *m = ComputeResource{} }
-func (m *ComputeResource) String() string            { return proto.CompactTextString(m) }
-func (*ComputeResource) ProtoMessage()               {}
-func (*ComputeResource) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *ComputeResource) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ComputeResource) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ComputeResource) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ComputeResource) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *ComputeResource) GetCpuCount() int32 {
-	if m != nil {
-		return m.CpuCount
-	}
-	return 0
-}
+func (m *ComputeResource) GetCpuCount() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ComputeResource) GetCpuLevel() int32 {
-	if m != nil {
-		return m.CpuLevel
-	}
-	return 0
-}
+func (m *ComputeResource) GetCpuLevel() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ComputeResource) GetGpuCount() int32 {
-	if m != nil {
-		return m.GpuCount
-	}
-	return 0
-}
+func (m *ComputeResource) GetGpuCount() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ComputeResource) GetGpuLevel() int32 {
-	if m != nil {
-		return m.GpuLevel
-	}
-	return 0
-}
+func (m *ComputeResource) GetGpuLevel() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ComputeResource) GetMemoryMb() int64 {
-	if m != nil {
-		return m.MemoryMb
-	}
-	return 0
-}
+func (m *ComputeResource) GetMemoryMb() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ComputeResource) GetDiskMb() int64 {
-	if m != nil {
-		return m.DiskMb
-	}
-	return 0
-}
+func (m *ComputeResource) GetDiskMb() int64 { _ = "STUB: not implemented"; return 0 }
 
 type DataResource struct {
 	Location *Location `protobuf:"bytes,1,opt,name=location" json:"location,omitempty"`
 	Size     int64     `protobuf:"varint,2,opt,name=size" json:"size,omitempty"`
 }
 
-func (m *DataResource) Reset()                    { *m = DataResource{} }
-func (m *DataResource) String() string            { return proto.CompactTextString(m) }
-func (*DataResource) ProtoMessage()               {}
-func (*DataResource) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *DataResource) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *DataResource) String() string            { _ = "STUB: not implemented"; return "" }
+func (*DataResource) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*DataResource) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *DataResource) GetLocation() *Location {
-	if m != nil {
-		return m.Location
-	}
-	return nil
-}
+func (m *DataResource) GetLocation() *Location { _ = "STUB: not implemented"; return nil }
 
-func (m *DataResource) GetSize() int64 {
-	if m != nil {
-		return m.Size
-	}
-	return 0
-}
+func (m *DataResource) GetSize() int64 { _ = "STUB: not implemented"; return 0 }
 
 type Location struct {
 	DataCenter string `protobuf:"bytes,1,opt,name=data_center,json=dataCenter" json:"data_center,omitempty"`
@@ -196,78 +139,43 @@ type Location struct {
 	Port       int32  `protobuf:"varint,4,opt,name=port" json:"port,omitempty"`
 }
 
-func (m *Location) Reset()                    { *m = Location{} }
-func (m *Location) String() string            { return proto.CompactTextString(m) }
-func (*Location) ProtoMessage()               {}
-func (*Location) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *Location) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Location) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Location) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Location) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Location) GetDataCenter() string {
-	if m != nil {
-		return m.DataCenter
-	}
-	return ""
-}
+func (m *Location) GetDataCenter() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Location) GetRack() string {
-	if m != nil {
-		return m.Rack
-	}
-	return ""
-}
+func (m *Location) GetRack() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Location) GetServer() string {
-	if m != nil {
-		return m.Server
-	}
-	return ""
-}
+func (m *Location) GetServer() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Location) GetPort() int32 {
-	if m != nil {
-		return m.Port
-	}
-	return 0
-}
+func (m *Location) GetPort() int32 { _ = "STUB: not implemented"; return 0 }
 
 type Allocation struct {
 	Location  *Location        `protobuf:"bytes,1,opt,name=location" json:"location,omitempty"`
 	Allocated *ComputeResource `protobuf:"bytes,2,opt,name=allocated" json:"allocated,omitempty"`
 }
 
-func (m *Allocation) Reset()                    { *m = Allocation{} }
-func (m *Allocation) String() string            { return proto.CompactTextString(m) }
-func (*Allocation) ProtoMessage()               {}
-func (*Allocation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *Allocation) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Allocation) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Allocation) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Allocation) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Allocation) GetLocation() *Location {
-	if m != nil {
-		return m.Location
-	}
-	return nil
-}
+func (m *Allocation) GetLocation() *Location { _ = "STUB: not implemented"; return nil }
 
-func (m *Allocation) GetAllocated() *ComputeResource {
-	if m != nil {
-		return m.Allocated
-	}
-	return nil
-}
+func (m *Allocation) GetAllocated() *ComputeResource { _ = "STUB: not implemented"; return nil }
 
 type AllocationResult struct {
 	Allocations []*Allocation `protobuf:"bytes,1,rep,name=allocations" json:"allocations,omitempty"`
 }
 
-func (m *AllocationResult) Reset()                    { *m = AllocationResult{} }
-func (m *AllocationResult) String() string            { return proto.CompactTextString(m) }
-func (*AllocationResult) ProtoMessage()               {}
-func (*AllocationResult) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *AllocationResult) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *AllocationResult) String() string            { _ = "STUB: not implemented"; return "" }
+func (*AllocationResult) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*AllocationResult) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *AllocationResult) GetAllocations() []*Allocation {
-	if m != nil {
-		return m.Allocations
-	}
-	return nil
-}
+func (m *AllocationResult) GetAllocations() []*Allocation { _ = "STUB: not implemented"; return nil }
 
 // ////////////////////////////////////////////////
 type Heartbeat struct {
@@ -276,39 +184,24 @@ type Heartbeat struct {
 	Allocated *ComputeResource `protobuf:"bytes,3,opt,name=allocated" json:"allocated,omitempty"`
 }
 
-func (m *Heartbeat) Reset()                    { *m = Heartbeat{} }
-func (m *Heartbeat) String() string            { return proto.CompactTextString(m) }
-func (*Heartbeat) ProtoMessage()               {}
-func (*Heartbeat) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *Heartbeat) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Heartbeat) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Heartbeat) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Heartbeat) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Heartbeat) GetLocation() *Location {
-	if m != nil {
-		return m.Location
-	}
-	return nil
-}
+func (m *Heartbeat) GetLocation() *Location { _ = "STUB: not implemented"; return nil }
 
-func (m *Heartbeat) GetResource() *ComputeResource {
-	if m != nil {
-		return m.Resource
-	}
-	return nil
-}
+func (m *Heartbeat) GetResource() *ComputeResource { _ = "STUB: not implemented"; return nil }
 
-func (m *Heartbeat) GetAllocated() *ComputeResource {
-	if m != nil {
-		return m.Allocated
-	}
-	return nil
-}
+func (m *Heartbeat) GetAllocated() *ComputeResource { _ = "STUB: not implemented"; return nil }
 
 type Empty struct {
 }
 
-func (m *Empty) Reset()                    { *m = Empty{} }
-func (m *Empty) String() string            { return proto.CompactTextString(m) }
-func (*Empty) ProtoMessage()               {}
-func (*Empty) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *Empty) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Empty) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Empty) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Empty) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 // ////////////////////////////////////////////////
 type DataLocation struct {
@@ -317,31 +210,16 @@ type DataLocation struct {
 	OnDisk   bool      `protobuf:"varint,3,opt,name=onDisk" json:"onDisk,omitempty"`
 }
 
-func (m *DataLocation) Reset()                    { *m = DataLocation{} }
-func (m *DataLocation) String() string            { return proto.CompactTextString(m) }
-func (*DataLocation) ProtoMessage()               {}
-func (*DataLocation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+func (m *DataLocation) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *DataLocation) String() string            { _ = "STUB: not implemented"; return "" }
+func (*DataLocation) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*DataLocation) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *DataLocation) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
+func (m *DataLocation) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *DataLocation) GetLocation() *Location {
-	if m != nil {
-		return m.Location
-	}
-	return nil
-}
+func (m *DataLocation) GetLocation() *Location { _ = "STUB: not implemented"; return nil }
 
-func (m *DataLocation) GetOnDisk() bool {
-	if m != nil {
-		return m.OnDisk
-	}
-	return false
-}
+func (m *DataLocation) GetOnDisk() bool { _ = "STUB: not implemented"; return false }
 
 // ////////////////////////////////////////////////
 type FlowExecutionStatus struct {
@@ -356,97 +234,69 @@ type FlowExecutionStatus struct {
 	Error         string                              `protobuf:"bytes,9,opt,name=error" json:"error,omitempty"`
 }
 
-func (m *FlowExecutionStatus) Reset()                    { *m = FlowExecutionStatus{} }
-func (m *FlowExecutionStatus) String() string            { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus) ProtoMessage()               {}
-func (*FlowExecutionStatus) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+func (m *FlowExecutionStatus) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*FlowExecutionStatus) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
 
 func (m *FlowExecutionStatus) GetStepGroups() []*FlowExecutionStatus_StepGroup {
-	if m != nil {
-		return m.StepGroups
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus) GetTaskGroups() []*FlowExecutionStatus_TaskGroup {
-	if m != nil {
-		return m.TaskGroups
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus) GetDatasets() []*FlowExecutionStatus_Dataset {
-	if m != nil {
-		return m.Datasets
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus) GetDatasetShards() []*FlowExecutionStatus_DatasetShard {
-	if m != nil {
-		return m.DatasetShards
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus) GetTasks() []*FlowExecutionStatus_Task {
-	if m != nil {
-		return m.Tasks
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus) GetSteps() []*FlowExecutionStatus_Step {
-	if m != nil {
-		return m.Steps
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *FlowExecutionStatus) GetId() uint32 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
+func (m *FlowExecutionStatus) GetId() uint32 { _ = "STUB: not implemented"; return 0 }
 
 func (m *FlowExecutionStatus) GetDriver() *FlowExecutionStatus_DriverInfo {
-	if m != nil {
-		return m.Driver
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *FlowExecutionStatus) GetError() string {
-	if m != nil {
-		return m.Error
-	}
-	return ""
-}
+func (m *FlowExecutionStatus) GetError() string { _ = "STUB: not implemented"; return "" }
 
 type FlowExecutionStatus_Task struct {
 	StepId int32 `protobuf:"varint,1,opt,name=stepId" json:"stepId,omitempty"`
 	Id     int32 `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
 }
 
-func (m *FlowExecutionStatus_Task) Reset()                    { *m = FlowExecutionStatus_Task{} }
-func (m *FlowExecutionStatus_Task) String() string            { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_Task) ProtoMessage()               {}
-func (*FlowExecutionStatus_Task) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9, 0} }
-
-func (m *FlowExecutionStatus_Task) GetStepId() int32 {
-	if m != nil {
-		return m.StepId
-	}
-	return 0
+func (m *FlowExecutionStatus_Task) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_Task) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_Task) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*FlowExecutionStatus_Task) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FlowExecutionStatus_Task) GetId() int32 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
+func (m *FlowExecutionStatus_Task) GetStepId() int32 { _ = "STUB: not implemented"; return 0 }
+
+func (m *FlowExecutionStatus_Task) GetId() int32 { _ = "STUB: not implemented"; return 0 }
 
 type FlowExecutionStatus_Step struct {
 	Id              int32   `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
@@ -458,59 +308,30 @@ type FlowExecutionStatus_Step struct {
 	Description     string  `protobuf:"bytes,7,opt,name=description" json:"description,omitempty"`
 }
 
-func (m *FlowExecutionStatus_Step) Reset()                    { *m = FlowExecutionStatus_Step{} }
-func (m *FlowExecutionStatus_Step) String() string            { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_Step) ProtoMessage()               {}
-func (*FlowExecutionStatus_Step) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9, 1} }
-
-func (m *FlowExecutionStatus_Step) GetId() int32 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
+func (m *FlowExecutionStatus_Step) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_Step) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_Step) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*FlowExecutionStatus_Step) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FlowExecutionStatus_Step) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
+func (m *FlowExecutionStatus_Step) GetId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *FlowExecutionStatus_Step) GetParentIds() []int32 {
-	if m != nil {
-		return m.ParentIds
-	}
-	return nil
-}
+func (m *FlowExecutionStatus_Step) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *FlowExecutionStatus_Step) GetTaskIds() []int32 {
-	if m != nil {
-		return m.TaskIds
-	}
-	return nil
-}
+func (m *FlowExecutionStatus_Step) GetParentIds() []int32 { _ = "STUB: not implemented"; return nil }
+
+func (m *FlowExecutionStatus_Step) GetTaskIds() []int32 { _ = "STUB: not implemented"; return nil }
 
 func (m *FlowExecutionStatus_Step) GetInputDatasetId() []int32 {
-	if m != nil {
-		return m.InputDatasetId
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *FlowExecutionStatus_Step) GetOutputDatasetId() int32 {
-	if m != nil {
-		return m.OutputDatasetId
-	}
-	return 0
-}
+func (m *FlowExecutionStatus_Step) GetOutputDatasetId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *FlowExecutionStatus_Step) GetDescription() string {
-	if m != nil {
-		return m.Description
-	}
-	return ""
-}
+func (m *FlowExecutionStatus_Step) GetDescription() string { _ = "STUB: not implemented"; return "" }
 
 type FlowExecutionStatus_Dataset struct {
 	Id             int32   `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
@@ -518,29 +339,20 @@ type FlowExecutionStatus_Dataset struct {
 	ReadingStepIds []int32 `protobuf:"varint,3,rep,packed,name=readingStepIds" json:"readingStepIds,omitempty"`
 }
 
-func (m *FlowExecutionStatus_Dataset) Reset()                    { *m = FlowExecutionStatus_Dataset{} }
-func (m *FlowExecutionStatus_Dataset) String() string            { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_Dataset) ProtoMessage()               {}
-func (*FlowExecutionStatus_Dataset) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9, 2} }
-
-func (m *FlowExecutionStatus_Dataset) GetId() int32 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
+func (m *FlowExecutionStatus_Dataset) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_Dataset) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_Dataset) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*FlowExecutionStatus_Dataset) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FlowExecutionStatus_Dataset) GetStepId() int32 {
-	if m != nil {
-		return m.StepId
-	}
-	return 0
-}
+func (m *FlowExecutionStatus_Dataset) GetId() int32 { _ = "STUB: not implemented"; return 0 }
+
+func (m *FlowExecutionStatus_Dataset) GetStepId() int32 { _ = "STUB: not implemented"; return 0 }
 
 func (m *FlowExecutionStatus_Dataset) GetReadingStepIds() []int32 {
-	if m != nil {
-		return m.ReadingStepIds
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -549,50 +361,38 @@ type FlowExecutionStatus_DatasetShard struct {
 	Id        int32 `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
 }
 
-func (m *FlowExecutionStatus_DatasetShard) Reset()         { *m = FlowExecutionStatus_DatasetShard{} }
-func (m *FlowExecutionStatus_DatasetShard) String() string { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_DatasetShard) ProtoMessage()    {}
+func (m *FlowExecutionStatus_DatasetShard) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_DatasetShard) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_DatasetShard) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*FlowExecutionStatus_DatasetShard) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 3}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *FlowExecutionStatus_DatasetShard) GetDatasetId() int32 {
-	if m != nil {
-		return m.DatasetId
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
-func (m *FlowExecutionStatus_DatasetShard) GetId() int32 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
+func (m *FlowExecutionStatus_DatasetShard) GetId() int32 { _ = "STUB: not implemented"; return 0 }
 
 type FlowExecutionStatus_StepGroup struct {
 	StepIds   []int32 `protobuf:"varint,1,rep,packed,name=stepIds" json:"stepIds,omitempty"`
 	ParentIds []int32 `protobuf:"varint,2,rep,packed,name=parentIds" json:"parentIds,omitempty"`
 }
 
-func (m *FlowExecutionStatus_StepGroup) Reset()         { *m = FlowExecutionStatus_StepGroup{} }
-func (m *FlowExecutionStatus_StepGroup) String() string { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_StepGroup) ProtoMessage()    {}
+func (m *FlowExecutionStatus_StepGroup) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_StepGroup) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_StepGroup) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*FlowExecutionStatus_StepGroup) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 4}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FlowExecutionStatus_StepGroup) GetStepIds() []int32 {
-	if m != nil {
-		return m.StepIds
-	}
-	return nil
-}
+func (m *FlowExecutionStatus_StepGroup) GetStepIds() []int32 { _ = "STUB: not implemented"; return nil }
 
 func (m *FlowExecutionStatus_StepGroup) GetParentIds() []int32 {
-	if m != nil {
-		return m.ParentIds
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -604,45 +404,30 @@ type FlowExecutionStatus_TaskGroup struct {
 	Executions []*FlowExecutionStatus_TaskGroup_Execution `protobuf:"bytes,5,rep,name=executions" json:"executions,omitempty"`
 }
 
-func (m *FlowExecutionStatus_TaskGroup) Reset()         { *m = FlowExecutionStatus_TaskGroup{} }
-func (m *FlowExecutionStatus_TaskGroup) String() string { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_TaskGroup) ProtoMessage()    {}
+func (m *FlowExecutionStatus_TaskGroup) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_TaskGroup) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_TaskGroup) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*FlowExecutionStatus_TaskGroup) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 5}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FlowExecutionStatus_TaskGroup) GetStepIds() []int32 {
-	if m != nil {
-		return m.StepIds
-	}
-	return nil
-}
+func (m *FlowExecutionStatus_TaskGroup) GetStepIds() []int32 { _ = "STUB: not implemented"; return nil }
 
-func (m *FlowExecutionStatus_TaskGroup) GetTaskIds() []int32 {
-	if m != nil {
-		return m.TaskIds
-	}
-	return nil
-}
+func (m *FlowExecutionStatus_TaskGroup) GetTaskIds() []int32 { _ = "STUB: not implemented"; return nil }
 
 func (m *FlowExecutionStatus_TaskGroup) GetRequest() *ExecutionRequest {
-	if m != nil {
-		return m.Request
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus_TaskGroup) GetAllocation() *Allocation {
-	if m != nil {
-		return m.Allocation
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus_TaskGroup) GetExecutions() []*FlowExecutionStatus_TaskGroup_Execution {
-	if m != nil {
-		return m.Executions
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -656,61 +441,50 @@ type FlowExecutionStatus_TaskGroup_Execution struct {
 	ExecutionStat *ExecutionStat `protobuf:"bytes,7,opt,name=executionStat" json:"executionStat,omitempty"`
 }
 
-func (m *FlowExecutionStatus_TaskGroup_Execution) Reset() {
-	*m = FlowExecutionStatus_TaskGroup_Execution{}
+func (m *FlowExecutionStatus_TaskGroup_Execution) Reset() { _ = "STUB: not implemented"; return }
+
+func (m *FlowExecutionStatus_TaskGroup_Execution) String() string {
+	_ = "STUB: not implemented"
+	return ""
 }
-func (m *FlowExecutionStatus_TaskGroup_Execution) String() string { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_TaskGroup_Execution) ProtoMessage()    {}
+func (*FlowExecutionStatus_TaskGroup_Execution) ProtoMessage() { _ = "STUB: not implemented"; return }
 func (*FlowExecutionStatus_TaskGroup_Execution) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 5, 0}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetStartTime() int64 {
-	if m != nil {
-		return m.StartTime
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetStopTime() int64 {
-	if m != nil {
-		return m.StopTime
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetSystemTime() float64 {
-	if m != nil {
-		return m.SystemTime
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetUserTime() float64 {
-	if m != nil {
-		return m.UserTime
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetError() []byte {
-	if m != nil {
-		return m.Error
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetOutputHash() []byte {
-	if m != nil {
-		return m.OutputHash
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *FlowExecutionStatus_TaskGroup_Execution) GetExecutionStat() *ExecutionStat {
-	if m != nil {
-		return m.ExecutionStat
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -724,61 +498,33 @@ type FlowExecutionStatus_DriverInfo struct {
 	Name           string `protobuf:"bytes,7,opt,name=name" json:"name,omitempty"`
 }
 
-func (m *FlowExecutionStatus_DriverInfo) Reset()         { *m = FlowExecutionStatus_DriverInfo{} }
-func (m *FlowExecutionStatus_DriverInfo) String() string { return proto.CompactTextString(m) }
-func (*FlowExecutionStatus_DriverInfo) ProtoMessage()    {}
+func (m *FlowExecutionStatus_DriverInfo) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FlowExecutionStatus_DriverInfo) String() string { _ = "STUB: not implemented"; return "" }
+func (*FlowExecutionStatus_DriverInfo) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*FlowExecutionStatus_DriverInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 6}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FlowExecutionStatus_DriverInfo) GetUsername() string {
-	if m != nil {
-		return m.Username
-	}
-	return ""
-}
+func (m *FlowExecutionStatus_DriverInfo) GetUsername() string { _ = "STUB: not implemented"; return "" }
 
-func (m *FlowExecutionStatus_DriverInfo) GetHostname() string {
-	if m != nil {
-		return m.Hostname
-	}
-	return ""
-}
+func (m *FlowExecutionStatus_DriverInfo) GetHostname() string { _ = "STUB: not implemented"; return "" }
 
 func (m *FlowExecutionStatus_DriverInfo) GetExecutable() string {
-	if m != nil {
-		return m.Executable
-	}
+	_ = "STUB: not implemented"
 	return ""
 }
 
 func (m *FlowExecutionStatus_DriverInfo) GetExecutableHash() string {
-	if m != nil {
-		return m.ExecutableHash
-	}
+	_ = "STUB: not implemented"
 	return ""
 }
 
-func (m *FlowExecutionStatus_DriverInfo) GetStartTime() int64 {
-	if m != nil {
-		return m.StartTime
-	}
-	return 0
-}
+func (m *FlowExecutionStatus_DriverInfo) GetStartTime() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *FlowExecutionStatus_DriverInfo) GetStopTime() int64 {
-	if m != nil {
-		return m.StopTime
-	}
-	return 0
-}
+func (m *FlowExecutionStatus_DriverInfo) GetStopTime() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *FlowExecutionStatus_DriverInfo) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
+func (m *FlowExecutionStatus_DriverInfo) GetName() string { _ = "STUB: not implemented"; return "" }
 
 type FileResourceRequest struct {
 	Name         string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
@@ -788,69 +534,40 @@ type FileResourceRequest struct {
 	Content      []byte `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
 }
 
-func (m *FileResourceRequest) Reset()                    { *m = FileResourceRequest{} }
-func (m *FileResourceRequest) String() string            { return proto.CompactTextString(m) }
-func (*FileResourceRequest) ProtoMessage()               {}
-func (*FileResourceRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
-
-func (m *FileResourceRequest) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
+func (m *FileResourceRequest) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FileResourceRequest) String() string { _ = "STUB: not implemented"; return "" }
+func (*FileResourceRequest) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*FileResourceRequest) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FileResourceRequest) GetDir() string {
-	if m != nil {
-		return m.Dir
-	}
-	return ""
-}
+func (m *FileResourceRequest) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *FileResourceRequest) GetHash() uint32 {
-	if m != nil {
-		return m.Hash
-	}
-	return 0
-}
+func (m *FileResourceRequest) GetDir() string { _ = "STUB: not implemented"; return "" }
 
-func (m *FileResourceRequest) GetFlowHashCode() uint32 {
-	if m != nil {
-		return m.FlowHashCode
-	}
-	return 0
-}
+func (m *FileResourceRequest) GetHash() uint32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *FileResourceRequest) GetContent() []byte {
-	if m != nil {
-		return m.Content
-	}
-	return nil
-}
+func (m *FileResourceRequest) GetFlowHashCode() uint32 { _ = "STUB: not implemented"; return 0 }
+
+func (m *FileResourceRequest) GetContent() []byte { _ = "STUB: not implemented"; return nil }
 
 type FileResourceResponse struct {
 	AlreadyExists bool `protobuf:"varint,1,opt,name=alreadyExists" json:"alreadyExists,omitempty"`
 	Ok            bool `protobuf:"varint,2,opt,name=ok" json:"ok,omitempty"`
 }
 
-func (m *FileResourceResponse) Reset()                    { *m = FileResourceResponse{} }
-func (m *FileResourceResponse) String() string            { return proto.CompactTextString(m) }
-func (*FileResourceResponse) ProtoMessage()               {}
-func (*FileResourceResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
-
-func (m *FileResourceResponse) GetAlreadyExists() bool {
-	if m != nil {
-		return m.AlreadyExists
-	}
-	return false
+func (m *FileResourceResponse) Reset()         { _ = "STUB: not implemented"; return }
+func (m *FileResourceResponse) String() string { _ = "STUB: not implemented"; return "" }
+func (*FileResourceResponse) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*FileResourceResponse) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *FileResourceResponse) GetOk() bool {
-	if m != nil {
-		return m.Ok
-	}
-	return false
-}
+func (m *FileResourceResponse) GetAlreadyExists() bool { _ = "STUB: not implemented"; return false }
+
+func (m *FileResourceResponse) GetOk() bool { _ = "STUB: not implemented"; return false }
 
 type ExecutionRequest struct {
 	InstructionSet *InstructionSet  `protobuf:"bytes,1,opt,name=instructionSet" json:"instructionSet,omitempty"`
@@ -858,31 +575,19 @@ type ExecutionRequest struct {
 	Resource       *ComputeResource `protobuf:"bytes,3,opt,name=resource" json:"resource,omitempty"`
 }
 
-func (m *ExecutionRequest) Reset()                    { *m = ExecutionRequest{} }
-func (m *ExecutionRequest) String() string            { return proto.CompactTextString(m) }
-func (*ExecutionRequest) ProtoMessage()               {}
-func (*ExecutionRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
+func (m *ExecutionRequest) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ExecutionRequest) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ExecutionRequest) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ExecutionRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 func (m *ExecutionRequest) GetInstructionSet() *InstructionSet {
-	if m != nil {
-		return m.InstructionSet
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *ExecutionRequest) GetDir() string {
-	if m != nil {
-		return m.Dir
-	}
-	return ""
-}
+func (m *ExecutionRequest) GetDir() string { _ = "STUB: not implemented"; return "" }
 
-func (m *ExecutionRequest) GetResource() *ComputeResource {
-	if m != nil {
-		return m.Resource
-	}
-	return nil
-}
+func (m *ExecutionRequest) GetResource() *ComputeResource { _ = "STUB: not implemented"; return nil }
 
 type ExecutionResponse struct {
 	Output        []byte         `protobuf:"bytes,1,opt,name=output,proto3" json:"output,omitempty"`
@@ -892,43 +597,21 @@ type ExecutionResponse struct {
 	ExecutionStat *ExecutionStat `protobuf:"bytes,5,opt,name=executionStat" json:"executionStat,omitempty"`
 }
 
-func (m *ExecutionResponse) Reset()                    { *m = ExecutionResponse{} }
-func (m *ExecutionResponse) String() string            { return proto.CompactTextString(m) }
-func (*ExecutionResponse) ProtoMessage()               {}
-func (*ExecutionResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+func (m *ExecutionResponse) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ExecutionResponse) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ExecutionResponse) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ExecutionResponse) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *ExecutionResponse) GetOutput() []byte {
-	if m != nil {
-		return m.Output
-	}
-	return nil
-}
+func (m *ExecutionResponse) GetOutput() []byte { _ = "STUB: not implemented"; return nil }
 
-func (m *ExecutionResponse) GetError() []byte {
-	if m != nil {
-		return m.Error
-	}
-	return nil
-}
+func (m *ExecutionResponse) GetError() []byte { _ = "STUB: not implemented"; return nil }
 
-func (m *ExecutionResponse) GetSystemTime() float64 {
-	if m != nil {
-		return m.SystemTime
-	}
-	return 0
-}
+func (m *ExecutionResponse) GetSystemTime() float64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ExecutionResponse) GetUserTime() float64 {
-	if m != nil {
-		return m.UserTime
-	}
-	return 0
-}
+func (m *ExecutionResponse) GetUserTime() float64 { _ = "STUB: not implemented"; return 0 }
 
 func (m *ExecutionResponse) GetExecutionStat() *ExecutionStat {
-	if m != nil {
-		return m.ExecutionStat
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -937,24 +620,14 @@ type ExecutionStat struct {
 	Stats        []*InstructionStat `protobuf:"bytes,2,rep,name=stats" json:"stats,omitempty"`
 }
 
-func (m *ExecutionStat) Reset()                    { *m = ExecutionStat{} }
-func (m *ExecutionStat) String() string            { return proto.CompactTextString(m) }
-func (*ExecutionStat) ProtoMessage()               {}
-func (*ExecutionStat) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
+func (m *ExecutionStat) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ExecutionStat) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ExecutionStat) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ExecutionStat) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *ExecutionStat) GetFlowHashCode() uint32 {
-	if m != nil {
-		return m.FlowHashCode
-	}
-	return 0
-}
+func (m *ExecutionStat) GetFlowHashCode() uint32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *ExecutionStat) GetStats() []*InstructionStat {
-	if m != nil {
-		return m.Stats
-	}
-	return nil
-}
+func (m *ExecutionStat) GetStats() []*InstructionStat { _ = "STUB: not implemented"; return nil }
 
 type InstructionStat struct {
 	StepId        int32 `protobuf:"varint,1,opt,name=stepId" json:"stepId,omitempty"`
@@ -963,38 +636,18 @@ type InstructionStat struct {
 	OutputCounter int64 `protobuf:"varint,4,opt,name=outputCounter" json:"outputCounter,omitempty"`
 }
 
-func (m *InstructionStat) Reset()                    { *m = InstructionStat{} }
-func (m *InstructionStat) String() string            { return proto.CompactTextString(m) }
-func (*InstructionStat) ProtoMessage()               {}
-func (*InstructionStat) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
+func (m *InstructionStat) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *InstructionStat) String() string            { _ = "STUB: not implemented"; return "" }
+func (*InstructionStat) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*InstructionStat) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *InstructionStat) GetStepId() int32 {
-	if m != nil {
-		return m.StepId
-	}
-	return 0
-}
+func (m *InstructionStat) GetStepId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *InstructionStat) GetTaskId() int32 {
-	if m != nil {
-		return m.TaskId
-	}
-	return 0
-}
+func (m *InstructionStat) GetTaskId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *InstructionStat) GetInputCounter() int64 {
-	if m != nil {
-		return m.InputCounter
-	}
-	return 0
-}
+func (m *InstructionStat) GetInputCounter() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (m *InstructionStat) GetOutputCounter() int64 {
-	if m != nil {
-		return m.OutputCounter
-	}
-	return 0
-}
+func (m *InstructionStat) GetOutputCounter() int64 { _ = "STUB: not implemented"; return 0 }
 
 type ControlMessage struct {
 	IsOnDiskIO   bool          `protobuf:"varint,1,opt,name=isOnDiskIO" json:"isOnDiskIO,omitempty"`
@@ -1002,95 +655,66 @@ type ControlMessage struct {
 	WriteRequest *WriteRequest `protobuf:"bytes,3,opt,name=writeRequest" json:"writeRequest,omitempty"`
 }
 
-func (m *ControlMessage) Reset()                    { *m = ControlMessage{} }
-func (m *ControlMessage) String() string            { return proto.CompactTextString(m) }
-func (*ControlMessage) ProtoMessage()               {}
-func (*ControlMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
+func (m *ControlMessage) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ControlMessage) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ControlMessage) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ControlMessage) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *ControlMessage) GetIsOnDiskIO() bool {
-	if m != nil {
-		return m.IsOnDiskIO
-	}
-	return false
-}
+func (m *ControlMessage) GetIsOnDiskIO() bool { _ = "STUB: not implemented"; return false }
 
-func (m *ControlMessage) GetReadRequest() *ReadRequest {
-	if m != nil {
-		return m.ReadRequest
-	}
-	return nil
-}
+func (m *ControlMessage) GetReadRequest() *ReadRequest { _ = "STUB: not implemented"; return nil }
 
-func (m *ControlMessage) GetWriteRequest() *WriteRequest {
-	if m != nil {
-		return m.WriteRequest
-	}
-	return nil
-}
+func (m *ControlMessage) GetWriteRequest() *WriteRequest { _ = "STUB: not implemented"; return nil }
 
 type DeleteDatasetShardRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 }
 
-func (m *DeleteDatasetShardRequest) Reset()                    { *m = DeleteDatasetShardRequest{} }
-func (m *DeleteDatasetShardRequest) String() string            { return proto.CompactTextString(m) }
-func (*DeleteDatasetShardRequest) ProtoMessage()               {}
-func (*DeleteDatasetShardRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
-
-func (m *DeleteDatasetShardRequest) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
+func (m *DeleteDatasetShardRequest) Reset()         { _ = "STUB: not implemented"; return }
+func (m *DeleteDatasetShardRequest) String() string { _ = "STUB: not implemented"; return "" }
+func (*DeleteDatasetShardRequest) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*DeleteDatasetShardRequest) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+func (m *DeleteDatasetShardRequest) GetName() string { _ = "STUB: not implemented"; return "" }
 
 type DeleteDatasetShardResponse struct {
 	Error string `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
 }
 
-func (m *DeleteDatasetShardResponse) Reset()                    { *m = DeleteDatasetShardResponse{} }
-func (m *DeleteDatasetShardResponse) String() string            { return proto.CompactTextString(m) }
-func (*DeleteDatasetShardResponse) ProtoMessage()               {}
-func (*DeleteDatasetShardResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
-
-func (m *DeleteDatasetShardResponse) GetError() string {
-	if m != nil {
-		return m.Error
-	}
-	return ""
+func (m *DeleteDatasetShardResponse) Reset()         { _ = "STUB: not implemented"; return }
+func (m *DeleteDatasetShardResponse) String() string { _ = "STUB: not implemented"; return "" }
+func (*DeleteDatasetShardResponse) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*DeleteDatasetShardResponse) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+func (m *DeleteDatasetShardResponse) GetError() string { _ = "STUB: not implemented"; return "" }
 
 type CleanupRequest struct {
 	FlowHashCode uint32 `protobuf:"varint,1,opt,name=flowHashCode" json:"flowHashCode,omitempty"`
 }
 
-func (m *CleanupRequest) Reset()                    { *m = CleanupRequest{} }
-func (m *CleanupRequest) String() string            { return proto.CompactTextString(m) }
-func (*CleanupRequest) ProtoMessage()               {}
-func (*CleanupRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{19} }
+func (m *CleanupRequest) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *CleanupRequest) String() string            { _ = "STUB: not implemented"; return "" }
+func (*CleanupRequest) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*CleanupRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *CleanupRequest) GetFlowHashCode() uint32 {
-	if m != nil {
-		return m.FlowHashCode
-	}
-	return 0
-}
+func (m *CleanupRequest) GetFlowHashCode() uint32 { _ = "STUB: not implemented"; return 0 }
 
 type CleanupResponse struct {
 	Error string `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
 }
 
-func (m *CleanupResponse) Reset()                    { *m = CleanupResponse{} }
-func (m *CleanupResponse) String() string            { return proto.CompactTextString(m) }
-func (*CleanupResponse) ProtoMessage()               {}
-func (*CleanupResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{20} }
+func (m *CleanupResponse) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *CleanupResponse) String() string            { _ = "STUB: not implemented"; return "" }
+func (*CleanupResponse) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*CleanupResponse) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *CleanupResponse) GetError() string {
-	if m != nil {
-		return m.Error
-	}
-	return ""
-}
+func (m *CleanupResponse) GetError() string { _ = "STUB: not implemented"; return "" }
 
 type WriteRequest struct {
 	ChannelName string `protobuf:"bytes,1,opt,name=channelName" json:"channelName,omitempty"`
@@ -1098,55 +722,30 @@ type WriteRequest struct {
 	ReaderCount int32  `protobuf:"varint,3,opt,name=readerCount" json:"readerCount,omitempty"`
 }
 
-func (m *WriteRequest) Reset()                    { *m = WriteRequest{} }
-func (m *WriteRequest) String() string            { return proto.CompactTextString(m) }
-func (*WriteRequest) ProtoMessage()               {}
-func (*WriteRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
+func (m *WriteRequest) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *WriteRequest) String() string            { _ = "STUB: not implemented"; return "" }
+func (*WriteRequest) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*WriteRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *WriteRequest) GetChannelName() string {
-	if m != nil {
-		return m.ChannelName
-	}
-	return ""
-}
+func (m *WriteRequest) GetChannelName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *WriteRequest) GetWriterName() string {
-	if m != nil {
-		return m.WriterName
-	}
-	return ""
-}
+func (m *WriteRequest) GetWriterName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *WriteRequest) GetReaderCount() int32 {
-	if m != nil {
-		return m.ReaderCount
-	}
-	return 0
-}
+func (m *WriteRequest) GetReaderCount() int32 { _ = "STUB: not implemented"; return 0 }
 
 type ReadRequest struct {
 	ChannelName string `protobuf:"bytes,1,opt,name=channelName" json:"channelName,omitempty"`
 	ReaderName  string `protobuf:"bytes,2,opt,name=readerName" json:"readerName,omitempty"`
 }
 
-func (m *ReadRequest) Reset()                    { *m = ReadRequest{} }
-func (m *ReadRequest) String() string            { return proto.CompactTextString(m) }
-func (*ReadRequest) ProtoMessage()               {}
-func (*ReadRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
+func (m *ReadRequest) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *ReadRequest) String() string            { _ = "STUB: not implemented"; return "" }
+func (*ReadRequest) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*ReadRequest) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *ReadRequest) GetChannelName() string {
-	if m != nil {
-		return m.ChannelName
-	}
-	return ""
-}
+func (m *ReadRequest) GetChannelName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *ReadRequest) GetReaderName() string {
-	if m != nil {
-		return m.ReaderName
-	}
-	return ""
-}
+func (m *ReadRequest) GetReaderName() string { _ = "STUB: not implemented"; return "" }
 
 type InstructionSet struct {
 	Instructions []*Instruction `protobuf:"bytes,1,rep,name=instructions" json:"instructions,omitempty"`
@@ -1157,52 +756,22 @@ type InstructionSet struct {
 	Name         string         `protobuf:"bytes,6,opt,name=name" json:"name,omitempty"`
 }
 
-func (m *InstructionSet) Reset()                    { *m = InstructionSet{} }
-func (m *InstructionSet) String() string            { return proto.CompactTextString(m) }
-func (*InstructionSet) ProtoMessage()               {}
-func (*InstructionSet) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+func (m *InstructionSet) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *InstructionSet) String() string            { _ = "STUB: not implemented"; return "" }
+func (*InstructionSet) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*InstructionSet) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *InstructionSet) GetInstructions() []*Instruction {
-	if m != nil {
-		return m.Instructions
-	}
-	return nil
-}
+func (m *InstructionSet) GetInstructions() []*Instruction { _ = "STUB: not implemented"; return nil }
 
-func (m *InstructionSet) GetReaderCount() int32 {
-	if m != nil {
-		return m.ReaderCount
-	}
-	return 0
-}
+func (m *InstructionSet) GetReaderCount() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *InstructionSet) GetFlowHashCode() uint32 {
-	if m != nil {
-		return m.FlowHashCode
-	}
-	return 0
-}
+func (m *InstructionSet) GetFlowHashCode() uint32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *InstructionSet) GetIsProfiling() bool {
-	if m != nil {
-		return m.IsProfiling
-	}
-	return false
-}
+func (m *InstructionSet) GetIsProfiling() bool { _ = "STUB: not implemented"; return false }
 
-func (m *InstructionSet) GetAgentAddress() string {
-	if m != nil {
-		return m.AgentAddress
-	}
-	return ""
-}
+func (m *InstructionSet) GetAgentAddress() string { _ = "STUB: not implemented"; return "" }
 
-func (m *InstructionSet) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
+func (m *InstructionSet) GetName() string { _ = "STUB: not implemented"; return "" }
 
 type Instruction struct {
 	StepId                   int32                                 `protobuf:"varint,1,opt,name=stepId" json:"stepId,omitempty"`
@@ -1231,202 +800,114 @@ type Instruction struct {
 	Union                    *Instruction_Union                    `protobuf:"bytes,24,opt,name=union" json:"union,omitempty"`
 }
 
-func (m *Instruction) Reset()                    { *m = Instruction{} }
-func (m *Instruction) String() string            { return proto.CompactTextString(m) }
-func (*Instruction) ProtoMessage()               {}
-func (*Instruction) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
+func (m *Instruction) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Instruction) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Instruction) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Instruction) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Instruction) GetStepId() int32 {
-	if m != nil {
-		return m.StepId
-	}
-	return 0
-}
+func (m *Instruction) GetStepId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *Instruction) GetTaskId() int32 {
-	if m != nil {
-		return m.TaskId
-	}
-	return 0
-}
+func (m *Instruction) GetTaskId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *Instruction) GetMemoryInMB() int32 {
-	if m != nil {
-		return m.MemoryInMB
-	}
-	return 0
-}
+func (m *Instruction) GetMemoryInMB() int32 { _ = "STUB: not implemented"; return 0 }
 
 func (m *Instruction) GetInputShardLocations() []*DatasetShardLocation {
-	if m != nil {
-		return m.InputShardLocations
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetOutputShardLocations() []*DatasetShardLocation {
-	if m != nil {
-		return m.OutputShardLocations
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *Instruction) GetSelect() *Instruction_Select {
-	if m != nil {
-		return m.Select
-	}
-	return nil
-}
+func (m *Instruction) GetSelect() *Instruction_Select { _ = "STUB: not implemented"; return nil }
 
 func (m *Instruction) GetJoinPartitionedSorted() *Instruction_JoinPartitionedSorted {
-	if m != nil {
-		return m.JoinPartitionedSorted
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetCoGroupPartitionedSorted() *Instruction_CoGroupPartitionedSorted {
-	if m != nil {
-		return m.CoGroupPartitionedSorted
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetPipeAsArgs() *Instruction_PipeAsArgs {
-	if m != nil {
-		return m.PipeAsArgs
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetScatterPartitions() *Instruction_ScatterPartitions {
-	if m != nil {
-		return m.ScatterPartitions
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetCollectPartitions() *Instruction_CollectPartitions {
-	if m != nil {
-		return m.CollectPartitions
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetInputSplitReader() *Instruction_InputSplitReader {
-	if m != nil {
-		return m.InputSplitReader
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetRoundRobin() *Instruction_RoundRobin {
-	if m != nil {
-		return m.RoundRobin
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *Instruction) GetLocalTop() *Instruction_LocalTop {
-	if m != nil {
-		return m.LocalTop
-	}
-	return nil
-}
+func (m *Instruction) GetLocalTop() *Instruction_LocalTop { _ = "STUB: not implemented"; return nil }
 
-func (m *Instruction) GetBroadcast() *Instruction_Broadcast {
-	if m != nil {
-		return m.Broadcast
-	}
-	return nil
-}
+func (m *Instruction) GetBroadcast() *Instruction_Broadcast { _ = "STUB: not implemented"; return nil }
 
 func (m *Instruction) GetLocalHashAndJoinWith() *Instruction_LocalHashAndJoinWith {
-	if m != nil {
-		return m.LocalHashAndJoinWith
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *Instruction) GetScript() *Instruction_Script {
-	if m != nil {
-		return m.Script
-	}
-	return nil
-}
+func (m *Instruction) GetScript() *Instruction_Script { _ = "STUB: not implemented"; return nil }
 
-func (m *Instruction) GetLocalSort() *Instruction_LocalSort {
-	if m != nil {
-		return m.LocalSort
-	}
-	return nil
-}
+func (m *Instruction) GetLocalSort() *Instruction_LocalSort { _ = "STUB: not implemented"; return nil }
 
 func (m *Instruction) GetMergeSortedTo() *Instruction_MergeSortedTo {
-	if m != nil {
-		return m.MergeSortedTo
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *Instruction) GetMergeTo() *Instruction_MergeTo {
-	if m != nil {
-		return m.MergeTo
-	}
-	return nil
-}
+func (m *Instruction) GetMergeTo() *Instruction_MergeTo { _ = "STUB: not implemented"; return nil }
 
 func (m *Instruction) GetLocalDistinct() *Instruction_LocalDistinct {
-	if m != nil {
-		return m.LocalDistinct
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetLocalLimit() *Instruction_LocalLimit {
-	if m != nil {
-		return m.LocalLimit
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction) GetLocalGroupBySorted() *Instruction_LocalGroupBySorted {
-	if m != nil {
-		return m.LocalGroupBySorted
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (m *Instruction) GetUnion() *Instruction_Union {
-	if m != nil {
-		return m.Union
-	}
-	return nil
-}
+func (m *Instruction) GetUnion() *Instruction_Union { _ = "STUB: not implemented"; return nil }
 
 type Instruction_Select struct {
 	KeyIndexes   []int32 `protobuf:"varint,1,rep,packed,name=keyIndexes" json:"keyIndexes,omitempty"`
 	ValueIndexes []int32 `protobuf:"varint,2,rep,packed,name=valueIndexes" json:"valueIndexes,omitempty"`
 }
 
-func (m *Instruction_Select) Reset()                    { *m = Instruction_Select{} }
-func (m *Instruction_Select) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_Select) ProtoMessage()               {}
-func (*Instruction_Select) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 0} }
+func (m *Instruction_Select) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Instruction_Select) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Instruction_Select) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Instruction_Select) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Instruction_Select) GetKeyIndexes() []int32 {
-	if m != nil {
-		return m.KeyIndexes
-	}
-	return nil
-}
+func (m *Instruction_Select) GetKeyIndexes() []int32 { _ = "STUB: not implemented"; return nil }
 
-func (m *Instruction_Select) GetValueIndexes() []int32 {
-	if m != nil {
-		return m.ValueIndexes
-	}
-	return nil
-}
+func (m *Instruction_Select) GetValueIndexes() []int32 { _ = "STUB: not implemented"; return nil }
 
 type Instruction_JoinPartitionedSorted struct {
 	Indexes          []int32 `protobuf:"varint,1,rep,packed,name=indexes" json:"indexes,omitempty"`
@@ -1434,31 +915,26 @@ type Instruction_JoinPartitionedSorted struct {
 	IsRightOuterJoin bool    `protobuf:"varint,3,opt,name=isRightOuterJoin" json:"isRightOuterJoin,omitempty"`
 }
 
-func (m *Instruction_JoinPartitionedSorted) Reset()         { *m = Instruction_JoinPartitionedSorted{} }
-func (m *Instruction_JoinPartitionedSorted) String() string { return proto.CompactTextString(m) }
-func (*Instruction_JoinPartitionedSorted) ProtoMessage()    {}
+func (m *Instruction_JoinPartitionedSorted) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_JoinPartitionedSorted) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_JoinPartitionedSorted) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*Instruction_JoinPartitionedSorted) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 1}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *Instruction_JoinPartitionedSorted) GetIndexes() []int32 {
-	if m != nil {
-		return m.Indexes
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (m *Instruction_JoinPartitionedSorted) GetIsLeftOuterJoin() bool {
-	if m != nil {
-		return m.IsLeftOuterJoin
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
 func (m *Instruction_JoinPartitionedSorted) GetIsRightOuterJoin() bool {
-	if m != nil {
-		return m.IsRightOuterJoin
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
@@ -1466,17 +942,19 @@ type Instruction_CoGroupPartitionedSorted struct {
 	Indexes []int32 `protobuf:"varint,1,rep,packed,name=indexes" json:"indexes,omitempty"`
 }
 
-func (m *Instruction_CoGroupPartitionedSorted) Reset()         { *m = Instruction_CoGroupPartitionedSorted{} }
-func (m *Instruction_CoGroupPartitionedSorted) String() string { return proto.CompactTextString(m) }
-func (*Instruction_CoGroupPartitionedSorted) ProtoMessage()    {}
+func (m *Instruction_CoGroupPartitionedSorted) Reset() { _ = "STUB: not implemented"; return }
+func (m *Instruction_CoGroupPartitionedSorted) String() string {
+	_ = "STUB: not implemented"
+	return ""
+}
+func (*Instruction_CoGroupPartitionedSorted) ProtoMessage() { _ = "STUB: not implemented"; return }
 func (*Instruction_CoGroupPartitionedSorted) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 2}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *Instruction_CoGroupPartitionedSorted) GetIndexes() []int32 {
-	if m != nil {
-		return m.Indexes
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -1484,119 +962,108 @@ type Instruction_PipeAsArgs struct {
 	Code string `protobuf:"bytes,1,opt,name=code" json:"code,omitempty"`
 }
 
-func (m *Instruction_PipeAsArgs) Reset()                    { *m = Instruction_PipeAsArgs{} }
-func (m *Instruction_PipeAsArgs) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_PipeAsArgs) ProtoMessage()               {}
-func (*Instruction_PipeAsArgs) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 3} }
-
-func (m *Instruction_PipeAsArgs) GetCode() string {
-	if m != nil {
-		return m.Code
-	}
-	return ""
+func (m *Instruction_PipeAsArgs) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_PipeAsArgs) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_PipeAsArgs) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_PipeAsArgs) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+func (m *Instruction_PipeAsArgs) GetCode() string { _ = "STUB: not implemented"; return "" }
 
 type Instruction_ScatterPartitions struct {
 	Indexes []int32 `protobuf:"varint,1,rep,packed,name=indexes" json:"indexes,omitempty"`
 }
 
-func (m *Instruction_ScatterPartitions) Reset()         { *m = Instruction_ScatterPartitions{} }
-func (m *Instruction_ScatterPartitions) String() string { return proto.CompactTextString(m) }
-func (*Instruction_ScatterPartitions) ProtoMessage()    {}
+func (m *Instruction_ScatterPartitions) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_ScatterPartitions) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_ScatterPartitions) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*Instruction_ScatterPartitions) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 4}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *Instruction_ScatterPartitions) GetIndexes() []int32 {
-	if m != nil {
-		return m.Indexes
-	}
-	return nil
-}
+func (m *Instruction_ScatterPartitions) GetIndexes() []int32 { _ = "STUB: not implemented"; return nil }
 
 type Instruction_CollectPartitions struct {
 }
 
-func (m *Instruction_CollectPartitions) Reset()         { *m = Instruction_CollectPartitions{} }
-func (m *Instruction_CollectPartitions) String() string { return proto.CompactTextString(m) }
-func (*Instruction_CollectPartitions) ProtoMessage()    {}
+func (m *Instruction_CollectPartitions) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_CollectPartitions) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_CollectPartitions) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*Instruction_CollectPartitions) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 5}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type Instruction_InputSplitReader struct {
 	InputType string `protobuf:"bytes,1,opt,name=inputType" json:"inputType,omitempty"`
 }
 
-func (m *Instruction_InputSplitReader) Reset()         { *m = Instruction_InputSplitReader{} }
-func (m *Instruction_InputSplitReader) String() string { return proto.CompactTextString(m) }
-func (*Instruction_InputSplitReader) ProtoMessage()    {}
+func (m *Instruction_InputSplitReader) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_InputSplitReader) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_InputSplitReader) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*Instruction_InputSplitReader) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 6}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *Instruction_InputSplitReader) GetInputType() string {
-	if m != nil {
-		return m.InputType
-	}
-	return ""
-}
+func (m *Instruction_InputSplitReader) GetInputType() string { _ = "STUB: not implemented"; return "" }
 
 type Instruction_RoundRobin struct {
 }
 
-func (m *Instruction_RoundRobin) Reset()                    { *m = Instruction_RoundRobin{} }
-func (m *Instruction_RoundRobin) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_RoundRobin) ProtoMessage()               {}
-func (*Instruction_RoundRobin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 7} }
+func (m *Instruction_RoundRobin) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_RoundRobin) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_RoundRobin) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_RoundRobin) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
 
 type Instruction_LocalTop struct {
 	N        int32      `protobuf:"varint,1,opt,name=n" json:"n,omitempty"`
 	OrderBys []*OrderBy `protobuf:"bytes,2,rep,name=orderBys" json:"orderBys,omitempty"`
 }
 
-func (m *Instruction_LocalTop) Reset()                    { *m = Instruction_LocalTop{} }
-func (m *Instruction_LocalTop) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_LocalTop) ProtoMessage()               {}
-func (*Instruction_LocalTop) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 8} }
-
-func (m *Instruction_LocalTop) GetN() int32 {
-	if m != nil {
-		return m.N
-	}
-	return 0
+func (m *Instruction_LocalTop) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_LocalTop) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_LocalTop) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_LocalTop) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *Instruction_LocalTop) GetOrderBys() []*OrderBy {
-	if m != nil {
-		return m.OrderBys
-	}
-	return nil
-}
+func (m *Instruction_LocalTop) GetN() int32 { _ = "STUB: not implemented"; return 0 }
+
+func (m *Instruction_LocalTop) GetOrderBys() []*OrderBy { _ = "STUB: not implemented"; return nil }
 
 type Instruction_Broadcast struct {
 }
 
-func (m *Instruction_Broadcast) Reset()                    { *m = Instruction_Broadcast{} }
-func (m *Instruction_Broadcast) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_Broadcast) ProtoMessage()               {}
-func (*Instruction_Broadcast) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 9} }
+func (m *Instruction_Broadcast) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_Broadcast) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_Broadcast) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_Broadcast) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
 
 type Instruction_LocalHashAndJoinWith struct {
 	Indexes []int32 `protobuf:"varint,1,rep,packed,name=indexes" json:"indexes,omitempty"`
 }
 
-func (m *Instruction_LocalHashAndJoinWith) Reset()         { *m = Instruction_LocalHashAndJoinWith{} }
-func (m *Instruction_LocalHashAndJoinWith) String() string { return proto.CompactTextString(m) }
-func (*Instruction_LocalHashAndJoinWith) ProtoMessage()    {}
+func (m *Instruction_LocalHashAndJoinWith) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_LocalHashAndJoinWith) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_LocalHashAndJoinWith) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*Instruction_LocalHashAndJoinWith) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 10}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *Instruction_LocalHashAndJoinWith) GetIndexes() []int32 {
-	if m != nil {
-		return m.Indexes
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -1607,134 +1074,103 @@ type Instruction_Script struct {
 	Env    []string `protobuf:"bytes,4,rep,name=env" json:"env,omitempty"`
 }
 
-func (m *Instruction_Script) Reset()                    { *m = Instruction_Script{} }
-func (m *Instruction_Script) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_Script) ProtoMessage()               {}
-func (*Instruction_Script) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 11} }
+func (m *Instruction_Script) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Instruction_Script) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Instruction_Script) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Instruction_Script) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Instruction_Script) GetIsPipe() bool {
-	if m != nil {
-		return m.IsPipe
-	}
-	return false
-}
+func (m *Instruction_Script) GetIsPipe() bool { _ = "STUB: not implemented"; return false }
 
-func (m *Instruction_Script) GetPath() string {
-	if m != nil {
-		return m.Path
-	}
-	return ""
-}
+func (m *Instruction_Script) GetPath() string { _ = "STUB: not implemented"; return "" }
 
-func (m *Instruction_Script) GetArgs() []string {
-	if m != nil {
-		return m.Args
-	}
-	return nil
-}
+func (m *Instruction_Script) GetArgs() []string { _ = "STUB: not implemented"; return nil }
 
-func (m *Instruction_Script) GetEnv() []string {
-	if m != nil {
-		return m.Env
-	}
-	return nil
-}
+func (m *Instruction_Script) GetEnv() []string { _ = "STUB: not implemented"; return nil }
 
 type Instruction_LocalSort struct {
 	OrderBys []*OrderBy `protobuf:"bytes,1,rep,name=orderBys" json:"orderBys,omitempty"`
 }
 
-func (m *Instruction_LocalSort) Reset()                    { *m = Instruction_LocalSort{} }
-func (m *Instruction_LocalSort) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_LocalSort) ProtoMessage()               {}
-func (*Instruction_LocalSort) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 12} }
-
-func (m *Instruction_LocalSort) GetOrderBys() []*OrderBy {
-	if m != nil {
-		return m.OrderBys
-	}
-	return nil
+func (m *Instruction_LocalSort) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_LocalSort) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_LocalSort) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_LocalSort) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+func (m *Instruction_LocalSort) GetOrderBys() []*OrderBy { _ = "STUB: not implemented"; return nil }
 
 type Instruction_MergeSortedTo struct {
 	OrderBys []*OrderBy `protobuf:"bytes,1,rep,name=orderBys" json:"orderBys,omitempty"`
 }
 
-func (m *Instruction_MergeSortedTo) Reset()                    { *m = Instruction_MergeSortedTo{} }
-func (m *Instruction_MergeSortedTo) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_MergeSortedTo) ProtoMessage()               {}
-func (*Instruction_MergeSortedTo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 13} }
-
-func (m *Instruction_MergeSortedTo) GetOrderBys() []*OrderBy {
-	if m != nil {
-		return m.OrderBys
-	}
-	return nil
+func (m *Instruction_MergeSortedTo) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_MergeSortedTo) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_MergeSortedTo) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_MergeSortedTo) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+func (m *Instruction_MergeSortedTo) GetOrderBys() []*OrderBy { _ = "STUB: not implemented"; return nil }
 
 type Instruction_MergeTo struct {
 }
 
-func (m *Instruction_MergeTo) Reset()                    { *m = Instruction_MergeTo{} }
-func (m *Instruction_MergeTo) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_MergeTo) ProtoMessage()               {}
-func (*Instruction_MergeTo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 14} }
+func (m *Instruction_MergeTo) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_MergeTo) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_MergeTo) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_MergeTo) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
+}
 
 type Instruction_LocalDistinct struct {
 	OrderBys []*OrderBy `protobuf:"bytes,1,rep,name=orderBys" json:"orderBys,omitempty"`
 }
 
-func (m *Instruction_LocalDistinct) Reset()                    { *m = Instruction_LocalDistinct{} }
-func (m *Instruction_LocalDistinct) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_LocalDistinct) ProtoMessage()               {}
-func (*Instruction_LocalDistinct) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 15} }
-
-func (m *Instruction_LocalDistinct) GetOrderBys() []*OrderBy {
-	if m != nil {
-		return m.OrderBys
-	}
-	return nil
+func (m *Instruction_LocalDistinct) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_LocalDistinct) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_LocalDistinct) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_LocalDistinct) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+func (m *Instruction_LocalDistinct) GetOrderBys() []*OrderBy { _ = "STUB: not implemented"; return nil }
 
 type Instruction_LocalLimit struct {
 	N      int32 `protobuf:"varint,1,opt,name=n" json:"n,omitempty"`
 	Offset int32 `protobuf:"varint,2,opt,name=offset" json:"offset,omitempty"`
 }
 
-func (m *Instruction_LocalLimit) Reset()                    { *m = Instruction_LocalLimit{} }
-func (m *Instruction_LocalLimit) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_LocalLimit) ProtoMessage()               {}
-func (*Instruction_LocalLimit) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 16} }
-
-func (m *Instruction_LocalLimit) GetN() int32 {
-	if m != nil {
-		return m.N
-	}
-	return 0
+func (m *Instruction_LocalLimit) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_LocalLimit) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_LocalLimit) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*Instruction_LocalLimit) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *Instruction_LocalLimit) GetOffset() int32 {
-	if m != nil {
-		return m.Offset
-	}
-	return 0
-}
+func (m *Instruction_LocalLimit) GetN() int32 { _ = "STUB: not implemented"; return 0 }
+
+func (m *Instruction_LocalLimit) GetOffset() int32 { _ = "STUB: not implemented"; return 0 }
 
 type Instruction_LocalGroupBySorted struct {
 	Indexes []int32 `protobuf:"varint,1,rep,packed,name=indexes" json:"indexes,omitempty"`
 }
 
-func (m *Instruction_LocalGroupBySorted) Reset()         { *m = Instruction_LocalGroupBySorted{} }
-func (m *Instruction_LocalGroupBySorted) String() string { return proto.CompactTextString(m) }
-func (*Instruction_LocalGroupBySorted) ProtoMessage()    {}
+func (m *Instruction_LocalGroupBySorted) Reset()         { _ = "STUB: not implemented"; return }
+func (m *Instruction_LocalGroupBySorted) String() string { _ = "STUB: not implemented"; return "" }
+func (*Instruction_LocalGroupBySorted) ProtoMessage()    { _ = "STUB: not implemented"; return }
 func (*Instruction_LocalGroupBySorted) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{24, 17}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *Instruction_LocalGroupBySorted) GetIndexes() []int32 {
-	if m != nil {
-		return m.Indexes
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -1742,41 +1178,26 @@ type Instruction_Union struct {
 	IsParallel bool `protobuf:"varint,1,opt,name=isParallel" json:"isParallel,omitempty"`
 }
 
-func (m *Instruction_Union) Reset()                    { *m = Instruction_Union{} }
-func (m *Instruction_Union) String() string            { return proto.CompactTextString(m) }
-func (*Instruction_Union) ProtoMessage()               {}
-func (*Instruction_Union) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 18} }
+func (m *Instruction_Union) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *Instruction_Union) String() string            { _ = "STUB: not implemented"; return "" }
+func (*Instruction_Union) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*Instruction_Union) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *Instruction_Union) GetIsParallel() bool {
-	if m != nil {
-		return m.IsParallel
-	}
-	return false
-}
+func (m *Instruction_Union) GetIsParallel() bool { _ = "STUB: not implemented"; return false }
 
 type OrderBy struct {
 	Index int32 `protobuf:"varint,1,opt,name=index" json:"index,omitempty"`
 	Order int32 `protobuf:"varint,2,opt,name=order" json:"order,omitempty"`
 }
 
-func (m *OrderBy) Reset()                    { *m = OrderBy{} }
-func (m *OrderBy) String() string            { return proto.CompactTextString(m) }
-func (*OrderBy) ProtoMessage()               {}
-func (*OrderBy) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
+func (m *OrderBy) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *OrderBy) String() string            { _ = "STUB: not implemented"; return "" }
+func (*OrderBy) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*OrderBy) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *OrderBy) GetIndex() int32 {
-	if m != nil {
-		return m.Index
-	}
-	return 0
-}
+func (m *OrderBy) GetIndex() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *OrderBy) GetOrder() int32 {
-	if m != nil {
-		return m.Order
-	}
-	return 0
-}
+func (m *OrderBy) GetOrder() int32 { _ = "STUB: not implemented"; return 0 }
 
 type DatasetShard struct {
 	FlowName       string `protobuf:"bytes,1,opt,name=FlowName" json:"FlowName,omitempty"`
@@ -1785,38 +1206,18 @@ type DatasetShard struct {
 	FlowHashCode   uint32 `protobuf:"varint,4,opt,name=FlowHashCode" json:"FlowHashCode,omitempty"`
 }
 
-func (m *DatasetShard) Reset()                    { *m = DatasetShard{} }
-func (m *DatasetShard) String() string            { return proto.CompactTextString(m) }
-func (*DatasetShard) ProtoMessage()               {}
-func (*DatasetShard) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
+func (m *DatasetShard) Reset()                    { _ = "STUB: not implemented"; return }
+func (m *DatasetShard) String() string            { _ = "STUB: not implemented"; return "" }
+func (*DatasetShard) ProtoMessage()               { _ = "STUB: not implemented"; return }
+func (*DatasetShard) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (m *DatasetShard) GetFlowName() string {
-	if m != nil {
-		return m.FlowName
-	}
-	return ""
-}
+func (m *DatasetShard) GetFlowName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *DatasetShard) GetDatasetId() int32 {
-	if m != nil {
-		return m.DatasetId
-	}
-	return 0
-}
+func (m *DatasetShard) GetDatasetId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *DatasetShard) GetDatasetShardId() int32 {
-	if m != nil {
-		return m.DatasetShardId
-	}
-	return 0
-}
+func (m *DatasetShard) GetDatasetShardId() int32 { _ = "STUB: not implemented"; return 0 }
 
-func (m *DatasetShard) GetFlowHashCode() uint32 {
-	if m != nil {
-		return m.FlowHashCode
-	}
-	return 0
-}
+func (m *DatasetShard) GetFlowHashCode() uint32 { _ = "STUB: not implemented"; return 0 }
 
 type DatasetShardLocation struct {
 	Name   string `protobuf:"bytes,1,opt,name=Name" json:"Name,omitempty"`
@@ -1825,38 +1226,21 @@ type DatasetShardLocation struct {
 	OnDisk bool   `protobuf:"varint,4,opt,name=onDisk" json:"onDisk,omitempty"`
 }
 
-func (m *DatasetShardLocation) Reset()                    { *m = DatasetShardLocation{} }
-func (m *DatasetShardLocation) String() string            { return proto.CompactTextString(m) }
-func (*DatasetShardLocation) ProtoMessage()               {}
-func (*DatasetShardLocation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{27} }
-
-func (m *DatasetShardLocation) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
+func (m *DatasetShardLocation) Reset()         { _ = "STUB: not implemented"; return }
+func (m *DatasetShardLocation) String() string { _ = "STUB: not implemented"; return "" }
+func (*DatasetShardLocation) ProtoMessage()    { _ = "STUB: not implemented"; return }
+func (*DatasetShardLocation) Descriptor() ([]byte, []int) {
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *DatasetShardLocation) GetHost() string {
-	if m != nil {
-		return m.Host
-	}
-	return ""
-}
+func (m *DatasetShardLocation) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (m *DatasetShardLocation) GetPort() int32 {
-	if m != nil {
-		return m.Port
-	}
-	return 0
-}
+func (m *DatasetShardLocation) GetHost() string { _ = "STUB: not implemented"; return "" }
 
-func (m *DatasetShardLocation) GetOnDisk() bool {
-	if m != nil {
-		return m.OnDisk
-	}
-	return false
-}
+func (m *DatasetShardLocation) GetPort() int32 { _ = "STUB: not implemented"; return 0 }
+
+func (m *DatasetShardLocation) GetOnDisk() bool { _ = "STUB: not implemented"; return false }
 
 func init() {
 	proto.RegisterType((*ComputeRequest)(nil), "pb.ComputeRequest")
@@ -1937,25 +1321,18 @@ type gleamMasterClient struct {
 }
 
 func NewGleamMasterClient(cc *grpc.ClientConn) GleamMasterClient {
-	return &gleamMasterClient{cc}
+	_ = "STUB: not implemented"
+	return *new(GleamMasterClient)
 }
 
 func (c *gleamMasterClient) GetResources(ctx context.Context, in *ComputeRequest, opts ...grpc.CallOption) (*AllocationResult, error) {
-	out := new(AllocationResult)
-	err := grpc.Invoke(ctx, "/pb.GleamMaster/GetResources", in, out, c.cc, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *gleamMasterClient) SendHeartbeat(ctx context.Context, opts ...grpc.CallOption) (GleamMaster_SendHeartbeatClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_GleamMaster_serviceDesc.Streams[0], c.cc, "/pb.GleamMaster/SendHeartbeat", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &gleamMasterSendHeartbeatClient{stream}
-	return x, nil
+	_ = "STUB: not implemented"
+	return *new(GleamMaster_SendHeartbeatClient), nil
 }
 
 type GleamMaster_SendHeartbeatClient interface {
@@ -1969,27 +1346,18 @@ type gleamMasterSendHeartbeatClient struct {
 }
 
 func (x *gleamMasterSendHeartbeatClient) Send(m *Heartbeat) error {
-	return x.ClientStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamMasterSendHeartbeatClient) CloseAndRecv() (*Empty, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(Empty)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *gleamMasterClient) SendFlowExecutionStatus(ctx context.Context, opts ...grpc.CallOption) (GleamMaster_SendFlowExecutionStatusClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_GleamMaster_serviceDesc.Streams[1], c.cc, "/pb.GleamMaster/SendFlowExecutionStatus", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &gleamMasterSendFlowExecutionStatusClient{stream}
-	return x, nil
+	_ = "STUB: not implemented"
+	return *new(GleamMaster_SendFlowExecutionStatusClient), nil
 }
 
 type GleamMaster_SendFlowExecutionStatusClient interface {
@@ -2003,18 +1371,13 @@ type gleamMasterSendFlowExecutionStatusClient struct {
 }
 
 func (x *gleamMasterSendFlowExecutionStatusClient) Send(m *FlowExecutionStatus) error {
-	return x.ClientStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamMasterSendFlowExecutionStatusClient) CloseAndRecv() (*Empty, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(Empty)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Server API for GleamMaster service
@@ -2026,29 +1389,18 @@ type GleamMasterServer interface {
 }
 
 func RegisterGleamMasterServer(s *grpc.Server, srv GleamMasterServer) {
-	s.RegisterService(&_GleamMaster_serviceDesc, srv)
+	_ = "STUB: not implemented"
+	return
 }
 
 func _GleamMaster_GetResources_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ComputeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GleamMasterServer).GetResources(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.GleamMaster/GetResources",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GleamMasterServer).GetResources(ctx, req.(*ComputeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _GleamMaster_SendHeartbeat_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GleamMasterServer).SendHeartbeat(&gleamMasterSendHeartbeatServer{stream})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GleamMaster_SendHeartbeatServer interface {
@@ -2062,19 +1414,18 @@ type gleamMasterSendHeartbeatServer struct {
 }
 
 func (x *gleamMasterSendHeartbeatServer) SendAndClose(m *Empty) error {
-	return x.ServerStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamMasterSendHeartbeatServer) Recv() (*Heartbeat, error) {
-	m := new(Heartbeat)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _GleamMaster_SendFlowExecutionStatus_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GleamMasterServer).SendFlowExecutionStatus(&gleamMasterSendFlowExecutionStatusServer{stream})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GleamMaster_SendFlowExecutionStatusServer interface {
@@ -2088,15 +1439,13 @@ type gleamMasterSendFlowExecutionStatusServer struct {
 }
 
 func (x *gleamMasterSendFlowExecutionStatusServer) SendAndClose(m *Empty) error {
-	return x.ServerStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamMasterSendFlowExecutionStatusServer) Recv() (*FlowExecutionStatus, error) {
-	m := new(FlowExecutionStatus)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 var _GleamMaster_serviceDesc = grpc.ServiceDesc{
@@ -2134,16 +1483,13 @@ type gleamExecutorClient struct {
 }
 
 func NewGleamExecutorClient(cc *grpc.ClientConn) GleamExecutorClient {
-	return &gleamExecutorClient{cc}
+	_ = "STUB: not implemented"
+	return *new(GleamExecutorClient)
 }
 
 func (c *gleamExecutorClient) CollectExecutionStatistics(ctx context.Context, opts ...grpc.CallOption) (GleamExecutor_CollectExecutionStatisticsClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_GleamExecutor_serviceDesc.Streams[0], c.cc, "/pb.GleamExecutor/CollectExecutionStatistics", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &gleamExecutorCollectExecutionStatisticsClient{stream}
-	return x, nil
+	_ = "STUB: not implemented"
+	return *new(GleamExecutor_CollectExecutionStatisticsClient), nil
 }
 
 type GleamExecutor_CollectExecutionStatisticsClient interface {
@@ -2157,18 +1503,13 @@ type gleamExecutorCollectExecutionStatisticsClient struct {
 }
 
 func (x *gleamExecutorCollectExecutionStatisticsClient) Send(m *ExecutionStat) error {
-	return x.ClientStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamExecutorCollectExecutionStatisticsClient) CloseAndRecv() (*Empty, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(Empty)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Server API for GleamExecutor service
@@ -2178,11 +1519,13 @@ type GleamExecutorServer interface {
 }
 
 func RegisterGleamExecutorServer(s *grpc.Server, srv GleamExecutorServer) {
-	s.RegisterService(&_GleamExecutor_serviceDesc, srv)
+	_ = "STUB: not implemented"
+	return
 }
 
 func _GleamExecutor_CollectExecutionStatistics_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GleamExecutorServer).CollectExecutionStatistics(&gleamExecutorCollectExecutionStatisticsServer{stream})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GleamExecutor_CollectExecutionStatisticsServer interface {
@@ -2196,15 +1539,13 @@ type gleamExecutorCollectExecutionStatisticsServer struct {
 }
 
 func (x *gleamExecutorCollectExecutionStatisticsServer) SendAndClose(m *Empty) error {
-	return x.ServerStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamExecutorCollectExecutionStatisticsServer) Recv() (*ExecutionStat, error) {
-	m := new(ExecutionStat)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 var _GleamExecutor_serviceDesc = grpc.ServiceDesc{
@@ -2237,16 +1578,13 @@ type gleamAgentClient struct {
 }
 
 func NewGleamAgentClient(cc *grpc.ClientConn) GleamAgentClient {
-	return &gleamAgentClient{cc}
+	_ = "STUB: not implemented"
+	return *new(GleamAgentClient)
 }
 
 func (c *gleamAgentClient) SendFileResource(ctx context.Context, opts ...grpc.CallOption) (GleamAgent_SendFileResourceClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_GleamAgent_serviceDesc.Streams[0], c.cc, "/pb.GleamAgent/SendFileResource", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &gleamAgentSendFileResourceClient{stream}
-	return x, nil
+	_ = "STUB: not implemented"
+	return *new(GleamAgent_SendFileResourceClient), nil
 }
 
 type GleamAgent_SendFileResourceClient interface {
@@ -2260,30 +1598,18 @@ type gleamAgentSendFileResourceClient struct {
 }
 
 func (x *gleamAgentSendFileResourceClient) Send(m *FileResourceRequest) error {
-	return x.ClientStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamAgentSendFileResourceClient) Recv() (*FileResourceResponse, error) {
-	m := new(FileResourceResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *gleamAgentClient) Execute(ctx context.Context, in *ExecutionRequest, opts ...grpc.CallOption) (GleamAgent_ExecuteClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_GleamAgent_serviceDesc.Streams[1], c.cc, "/pb.GleamAgent/Execute", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &gleamAgentExecuteClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	_ = "STUB: not implemented"
+	return *new(GleamAgent_ExecuteClient), nil
 }
 
 type GleamAgent_ExecuteClient interface {
@@ -2296,20 +1622,13 @@ type gleamAgentExecuteClient struct {
 }
 
 func (x *gleamAgentExecuteClient) Recv() (*ExecutionResponse, error) {
-	m := new(ExecutionResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *gleamAgentClient) CollectExecutionStatistics(ctx context.Context, opts ...grpc.CallOption) (GleamAgent_CollectExecutionStatisticsClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_GleamAgent_serviceDesc.Streams[2], c.cc, "/pb.GleamAgent/CollectExecutionStatistics", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &gleamAgentCollectExecutionStatisticsClient{stream}
-	return x, nil
+	_ = "STUB: not implemented"
+	return *new(GleamAgent_CollectExecutionStatisticsClient), nil
 }
 
 type GleamAgent_CollectExecutionStatisticsClient interface {
@@ -2323,36 +1642,23 @@ type gleamAgentCollectExecutionStatisticsClient struct {
 }
 
 func (x *gleamAgentCollectExecutionStatisticsClient) Send(m *ExecutionStat) error {
-	return x.ClientStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamAgentCollectExecutionStatisticsClient) CloseAndRecv() (*Empty, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(Empty)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *gleamAgentClient) Delete(ctx context.Context, in *DeleteDatasetShardRequest, opts ...grpc.CallOption) (*DeleteDatasetShardResponse, error) {
-	out := new(DeleteDatasetShardResponse)
-	err := grpc.Invoke(ctx, "/pb.GleamAgent/Delete", in, out, c.cc, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (c *gleamAgentClient) Cleanup(ctx context.Context, in *CleanupRequest, opts ...grpc.CallOption) (*CleanupResponse, error) {
-	out := new(CleanupResponse)
-	err := grpc.Invoke(ctx, "/pb.GleamAgent/Cleanup", in, out, c.cc, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Server API for GleamAgent service
@@ -2367,11 +1673,13 @@ type GleamAgentServer interface {
 }
 
 func RegisterGleamAgentServer(s *grpc.Server, srv GleamAgentServer) {
-	s.RegisterService(&_GleamAgent_serviceDesc, srv)
+	_ = "STUB: not implemented"
+	return
 }
 
 func _GleamAgent_SendFileResource_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GleamAgentServer).SendFileResource(&gleamAgentSendFileResourceServer{stream})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GleamAgent_SendFileResourceServer interface {
@@ -2385,23 +1693,18 @@ type gleamAgentSendFileResourceServer struct {
 }
 
 func (x *gleamAgentSendFileResourceServer) Send(m *FileResourceResponse) error {
-	return x.ServerStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamAgentSendFileResourceServer) Recv() (*FileResourceRequest, error) {
-	m := new(FileResourceRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _GleamAgent_Execute_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ExecutionRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(GleamAgentServer).Execute(m, &gleamAgentExecuteServer{stream})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GleamAgent_ExecuteServer interface {
@@ -2414,11 +1717,13 @@ type gleamAgentExecuteServer struct {
 }
 
 func (x *gleamAgentExecuteServer) Send(m *ExecutionResponse) error {
-	return x.ServerStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func _GleamAgent_CollectExecutionStatistics_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GleamAgentServer).CollectExecutionStatistics(&gleamAgentCollectExecutionStatisticsServer{stream})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type GleamAgent_CollectExecutionStatisticsServer interface {
@@ -2432,51 +1737,23 @@ type gleamAgentCollectExecutionStatisticsServer struct {
 }
 
 func (x *gleamAgentCollectExecutionStatisticsServer) SendAndClose(m *Empty) error {
-	return x.ServerStream.SendMsg(m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (x *gleamAgentCollectExecutionStatisticsServer) Recv() (*ExecutionStat, error) {
-	m := new(ExecutionStat)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _GleamAgent_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteDatasetShardRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GleamAgentServer).Delete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.GleamAgent/Delete",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GleamAgentServer).Delete(ctx, req.(*DeleteDatasetShardRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func _GleamAgent_Cleanup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CleanupRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GleamAgentServer).Cleanup(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.GleamAgent/Cleanup",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GleamAgentServer).Cleanup(ctx, req.(*CleanupRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 var _GleamAgent_serviceDesc = grpc.ServiceDesc{

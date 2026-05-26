@@ -14,8 +14,6 @@
 package ast
 
 import (
-	"fmt"
-
 	"github.com/chrislusf/gleam/sql/context"
 	"github.com/chrislusf/gleam/sql/model"
 	"github.com/chrislusf/gleam/sql/mysql"
@@ -78,17 +76,8 @@ type ExplainStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *ExplainStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ExplainStmt)
-	node, ok := n.Stmt.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Stmt = node.(DMLNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // PrepareStmt is a statement to prepares a SQL statement which contains placeholders,
@@ -104,19 +93,8 @@ type PrepareStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *PrepareStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*PrepareStmt)
-	if n.SQLVar != nil {
-		node, ok := n.SQLVar.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.SQLVar = node.(*VariableExpr)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DeallocateStmt is a statement to release PreparedStmt.
@@ -129,12 +107,8 @@ type DeallocateStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *DeallocateStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DeallocateStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ExecuteStmt is a statement to execute PreparedStmt.
@@ -148,19 +122,8 @@ type ExecuteStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *ExecuteStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ExecuteStmt)
-	for i, val := range n.UsingVars {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.UsingVars[i] = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // BeginStmt is a statement to start a new transaction.
@@ -171,12 +134,8 @@ type BeginStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *BeginStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*BeginStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // BinlogStmt is an internal-use statement.
@@ -189,12 +148,8 @@ type BinlogStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *BinlogStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*BinlogStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // CommitStmt is a statement to commit the current transaction.
@@ -205,12 +160,8 @@ type CommitStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *CommitStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*CommitStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // RollbackStmt is a statement to roll back the current transaction.
@@ -221,12 +172,8 @@ type RollbackStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *RollbackStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*RollbackStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // UseStmt is a statement to use the DBName database as the current database.
@@ -239,12 +186,8 @@ type UseStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *UseStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*UseStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 const (
@@ -269,17 +212,8 @@ type VariableAssignment struct {
 
 // Accept implements Node interface.
 func (n *VariableAssignment) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*VariableAssignment)
-	node, ok := n.Value.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Value = node.(ExprNode)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // FlushTableStmt is the statement to flush table.
@@ -294,12 +228,8 @@ type FlushTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *FlushTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*FlushTableStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // SetStmt is the statement to set variables.
@@ -311,19 +241,8 @@ type SetStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *SetStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*SetStmt)
-	for i, val := range n.Variables {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Variables[i] = node.(*VariableAssignment)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 /*
@@ -358,12 +277,8 @@ type SetPwdStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *SetPwdStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*SetPwdStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // UserSpec is used for parsing create user statement.
@@ -383,12 +298,8 @@ type CreateUserStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *CreateUserStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*CreateUserStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // AlterUserStmt modifies user account.
@@ -403,12 +314,8 @@ type AlterUserStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *AlterUserStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*AlterUserStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DropUserStmt creates user account.
@@ -422,12 +329,8 @@ type DropUserStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *DropUserStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DropUserStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DoStmt is the struct for DO statement.
@@ -439,19 +342,8 @@ type DoStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *DoStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DoStmt)
-	for i, val := range n.Exprs {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Exprs[i] = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // AdminStmtType is the type for admin statement.
@@ -473,21 +365,8 @@ type AdminStmt struct {
 
 // Accept implements Node Accpet interface.
 func (n *AdminStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-
-	n = newNode.(*AdminStmt)
-	for i, val := range n.Tables {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Tables[i] = node.(*TableName)
-	}
-
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // PrivElem is the privilege type and optional column list.
@@ -500,19 +379,8 @@ type PrivElem struct {
 
 // Accept implements Node Accept interface.
 func (n *PrivElem) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*PrivElem)
-	for i, val := range n.Cols {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Cols[i] = node.(*ColumnName)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ObjectTypeType is the type for object type.
@@ -558,19 +426,8 @@ type GrantStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *GrantStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*GrantStmt)
-	for i, val := range n.Privs {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Privs[i] = node.(*PrivElem)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // Ident is the table identifier composed of schema name and table name.
@@ -581,22 +438,12 @@ type Ident struct {
 
 // Full returns an Ident which set schema to the current schema if it is empty.
 func (i Ident) Full(ctx context.Context) (full Ident) {
-	full.Name = i.Name
-	if i.Schema.O != "" {
-		full.Schema = i.Schema
-	} else {
-		full.Schema = model.NewCIStr(ctx.GetSessionVars().CurrentDB)
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(Ident)
 }
 
 // String implements fmt.Stringer interface
-func (i Ident) String() string {
-	if i.Schema.O == "" {
-		return i.Name.O
-	}
-	return fmt.Sprintf("%s.%s", i.Schema, i.Name)
-}
+func (i Ident) String() string { _ = "STUB: not implemented"; return "" }
 
 // AnalyzeTableStmt is used to create table statistics.
 type AnalyzeTableStmt struct {
@@ -607,17 +454,6 @@ type AnalyzeTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *AnalyzeTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*AnalyzeTableStmt)
-	for i, val := range n.TableNames {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.TableNames[i] = node.(*TableName)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }

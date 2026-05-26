@@ -1,8 +1,6 @@
 package plan
 
 import (
-	"fmt"
-	"strings"
 	"sync"
 	"time"
 
@@ -31,80 +29,28 @@ type StepGroup struct {
 }
 
 func GroupTasks(fc *flow.Flow) ([]*StepGroup, []*TaskGroup) {
-	stepGroups := translateToStepGroups(fc)
-	return stepGroups, translateToTaskGroups(stepGroups)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func NewStepGroup() *StepGroup {
-	sg := &StepGroup{}
-	sg.waitForAllTasks = sync.NewCond(sg)
-	return sg
-}
+func NewStepGroup() *StepGroup { _ = "STUB: not implemented"; return nil }
 
-func (s *StepGroup) AddStep(Step *flow.Step) *StepGroup {
-	s.Steps = append(s.Steps, Step)
-	return s
-}
+func (s *StepGroup) AddStep(Step *flow.Step) *StepGroup { _ = "STUB: not implemented"; return nil }
 
-func (s *StepGroup) AddParent(parent *StepGroup) *StepGroup {
-	s.Parents = append(s.Parents, parent)
-	return s
-}
+func (s *StepGroup) AddParent(parent *StepGroup) *StepGroup { _ = "STUB: not implemented"; return nil }
 
-func NewTaskGroup() *TaskGroup {
-	return &TaskGroup{}
-}
+func NewTaskGroup() *TaskGroup { _ = "STUB: not implemented"; return nil }
 
-func (t *TaskGroup) AddTask(task *flow.Task) *TaskGroup {
-	t.Tasks = append(t.Tasks, task)
-	return t
-}
+func (t *TaskGroup) AddTask(task *flow.Task) *TaskGroup { _ = "STUB: not implemented"; return nil }
 
-func (t *TaskGroup) AddParent(parent *TaskGroup) *TaskGroup {
-	t.Parents = append(t.Parents, parent)
-	return t
-}
+func (t *TaskGroup) AddParent(parent *TaskGroup) *TaskGroup { _ = "STUB: not implemented"; return nil }
 
-func (t *TaskGroup) String() string {
-	var steps []string
-	for _, task := range t.Tasks {
-		steps = append(steps, fmt.Sprintf("%d:%d", task.Step.Id, task.Id))
-	}
-	return strings.Join(steps, "-")
-}
+func (t *TaskGroup) String() string { _ = "STUB: not implemented"; return "" }
 
-func (t *TaskGroup) RequiredResources() *pb.ComputeResource {
+func (t *TaskGroup) RequiredResources() *pb.ComputeResource { _ = "STUB: not implemented"; return nil }
 
-	resource := &pb.ComputeResource{
-		CpuCount: 1,
-		CpuLevel: 1,
-	}
+// log.Printf("  %s : %s (%d MB)\n", t.String(), task.Step.Name, taskMemSize)
 
-	for _, task := range t.Tasks {
-		inst := task.Step.Instruction
-		if inst != nil && task.Step.OutputDataset != nil {
-			taskMemSize := inst.GetMemoryCostInMB(task.Step.OutputDataset.GetPartitionSize())
-			resource.MemoryMb += taskMemSize
-			// log.Printf("  %s : %s (%d MB)\n", t.String(), task.Step.Name, taskMemSize)
-		}
-	}
+func (t *TaskGroup) MarkStop(err error) { _ = "STUB: not implemented"; return }
 
-	return resource
-}
-
-func (t *TaskGroup) MarkStop(err error) {
-	t.StopAt = time.Now()
-	t.Error = err
-	t.ParentStepGroup.waitForAllTasks.Broadcast()
-}
-
-func (s *StepGroup) WaitForAllTasksToComplete() {
-	s.Lock()
-	defer s.Unlock()
-
-	for _, taskGroup := range s.TaskGroups {
-		for taskGroup.StopAt.IsZero() || taskGroup.Error != nil {
-			s.waitForAllTasks.Wait()
-		}
-	}
-}
+func (s *StepGroup) WaitForAllTasksToComplete() { _ = "STUB: not implemented"; return }

@@ -18,21 +18,15 @@
 package sql
 
 import (
-	"encoding/json"
 	"fmt"
 	"sync"
-	"time"
 
 	"github.com/chrislusf/gleam/sql/ast"
 	"github.com/chrislusf/gleam/sql/context"
 	"github.com/chrislusf/gleam/sql/infoschema"
-	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/parser"
 	"github.com/chrislusf/gleam/sql/plan"
-	"github.com/chrislusf/gleam/sql/resolver"
 	"github.com/chrislusf/gleam/sql/sessionctx/variable"
-	"github.com/chrislusf/gleam/sql/util/types"
-	"github.com/juju/errors"
 )
 
 // Session context
@@ -59,12 +53,8 @@ type stmtHistory struct {
 }
 
 func (h *stmtHistory) add(stmtID uint32, st ast.Statement, params ...interface{}) {
-	s := &stmtRecord{
-		stmtID: stmtID,
-		st:     st,
-		params: append(([]interface{})(nil), params...),
-	}
-	h.history = append(h.history, s)
+	_ = "STUB: not implemented"
+	return
 }
 
 type session struct {
@@ -73,95 +63,39 @@ type session struct {
 	sessionVars *variable.SessionVars
 }
 
-func (s *session) Status() uint16 {
-	return s.sessionVars.Status
-}
+func (s *session) Status() uint16 { _ = "STUB: not implemented"; return 0 }
 
 func (s *session) String() string {
+	_ = "STUB: not implemented"
 	// TODO: how to print binded context in values appropriately?
-	sessVars := s.sessionVars
-	data := map[string]interface{}{
-		"user":       sessVars.User,
-		"currDBName": sessVars.CurrentDB,
-		"stauts":     sessVars.Status,
-		"strictMode": sessVars.StrictSQLMode,
-	}
-	b, _ := json.MarshalIndent(data, "", "  ")
-	return string(b)
+	return ""
 }
 
 func (s *session) ParseSQL(sql, charset, collation string) ([]ast.StmtNode, error) {
-	return s.parser.Parse(sql, charset, collation)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // checkArgs makes sure all the arguments' types are known and can be handled.
 // integer types are converted to int64 and uint64, time.Time is converted to types.Time.
 // time.Duration is converted to types.Duration, other known types are leaved as it is.
-func checkArgs(args ...interface{}) error {
-	for i, v := range args {
-		switch x := v.(type) {
-		case bool:
-			if x {
-				args[i] = int64(1)
-			} else {
-				args[i] = int64(0)
-			}
-		case int8:
-			args[i] = int64(x)
-		case int16:
-			args[i] = int64(x)
-		case int32:
-			args[i] = int64(x)
-		case int:
-			args[i] = int64(x)
-		case uint8:
-			args[i] = uint64(x)
-		case uint16:
-			args[i] = uint64(x)
-		case uint32:
-			args[i] = uint64(x)
-		case uint:
-			args[i] = uint64(x)
-		case int64:
-		case uint64:
-		case float32:
-		case float64:
-		case string:
-		case []byte:
-		case time.Duration:
-			args[i] = types.Duration{Duration: x}
-		case time.Time:
-			args[i] = types.Time{Time: types.FromGoTime(x), Type: mysql.TypeDatetime}
-		case nil:
-		default:
-			return errors.Errorf("cannot use arg[%d] (type %T):unsupported type", i, v)
-		}
-	}
-	return nil
-}
+func checkArgs(args ...interface{}) error { _ = "STUB: not implemented"; return nil }
 
-func (s *session) SetValue(key fmt.Stringer, value interface{}) {
-	s.values[key] = value
-}
+func (s *session) SetValue(key fmt.Stringer, value interface{}) { _ = "STUB: not implemented"; return }
 
-func (s *session) Value(key fmt.Stringer) interface{} {
-	value := s.values[key]
-	return value
-}
+func (s *session) Value(key fmt.Stringer) interface{} { _ = "STUB: not implemented"; return nil }
 
-func (s *session) ClearValue(key fmt.Stringer) {
-	delete(s.values, key)
-}
+func (s *session) ClearValue(key fmt.Stringer) { _ = "STUB: not implemented"; return }
 
 // Close function does some clean work when session end.
 func (s *session) Close() error {
+	_ = "STUB: not implemented"
+
+	// GetSessionVars implements the context.Context interface.
 	return nil
 }
 
-// GetSessionVars implements the context.Context interface.
-func (s *session) GetSessionVars() *variable.SessionVars {
-	return s.sessionVars
-}
+func (s *session) GetSessionVars() *variable.SessionVars { _ = "STUB: not implemented"; return nil }
 
 // Some vars name for debug.
 const (
@@ -170,45 +104,23 @@ const (
 
 // CreateSession creates a new session environment.
 func CreateSession(info infoschema.InfoSchema) (Session, error) {
-	s, err := createSession(info)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-
-	return s, nil
+	_ = "STUB: not implemented"
+	return *new(Session), nil
 }
 
 func createSession(info infoschema.InfoSchema) (*session, error) {
-	s := &session{
-		values:      make(map[fmt.Stringer]interface{}),
-		parser:      parser.New(),
-		sessionVars: variable.NewSessionVars(),
-	}
-	s.sessionVars.TxnCtx.InfoSchema = info
-
-	return s, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Compile is safe for concurrent use by multiple goroutines.
 func Compile(ctx context.Context, rawStmt ast.StmtNode) (plan.Plan, error) {
-	info := ctx.GetSessionVars().TxnCtx.InfoSchema.(infoschema.InfoSchema)
-
-	node := rawStmt
-	err := resolver.ResolveName(node, info, ctx)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	p, err := plan.Optimize(ctx, node, info)
-	if err != nil {
-		return nil, errors.Trace(err)
-	}
-	return p, nil
+	_ = "STUB: not implemented"
+	return *new(plan.Plan), nil
 }
 
 // runStmt executes the ast.Statement and commit or rollback the current transaction.
 func runStmt(ctx context.Context, s ast.Statement) (ast.RecordSet, error) {
-	var err error
-	var rs ast.RecordSet
-	rs, err = s.Exec(ctx)
-	return rs, errors.Trace(err)
+	_ = "STUB: not implemented"
+	return *new(ast.RecordSet), nil
 }

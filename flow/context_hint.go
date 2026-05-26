@@ -7,36 +7,17 @@ type FlowConfig struct {
 }
 
 // Hint adds hints to the flow.
-func (d *Flow) Hint(options ...FlowHintOption) {
-	var config FlowConfig
-	for _, option := range options {
-		option(&config)
-	}
-}
+func (d *Flow) Hint(options ...FlowHintOption) { _ = "STUB: not implemented"; return }
 
 // GetTotalSize returns the total size in MB for the dataset.
 // This is based on the given hint.
-func (d *Dataset) GetTotalSize() int64 {
-	if d.Meta.TotalSize >= 0 {
-		return d.Meta.TotalSize
-	}
-	var currentDatasetTotalSize int64
-	for _, ds := range d.Step.InputDatasets {
-		currentDatasetTotalSize += ds.GetTotalSize()
-	}
-	d.Meta.TotalSize = currentDatasetTotalSize
-	return currentDatasetTotalSize
-}
+func (d *Dataset) GetTotalSize() int64 { _ = "STUB: not implemented"; return 0 }
 
 // GetPartitionSize returns the size in MB for each partition of
 // the dataset. This is based on the hinted total size divided by
 // the number of partitions.
-func (d *Dataset) GetPartitionSize() int64 {
-	return d.GetTotalSize() / int64(len(d.Shards))
-}
+func (d *Dataset) GetPartitionSize() int64 { _ = "STUB: not implemented"; return 0 }
 
 // GetIsOnDiskIO returns true if the dataset is persisted
 // to disk in distributed mode.
-func (d *Dataset) GetIsOnDiskIO() bool {
-	return d.Meta.OnDisk == ModeOnDisk
-}
+func (d *Dataset) GetIsOnDiskIO() bool { _ = "STUB: not implemented"; return false }

@@ -72,12 +72,8 @@ type CreateDatabaseStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *CreateDatabaseStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*CreateDatabaseStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DropDatabaseStmt is a statement to drop a database and all tables in the database.
@@ -91,12 +87,8 @@ type DropDatabaseStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *DropDatabaseStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DropDatabaseStmt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // IndexColName is used for parsing index column name from SQL.
@@ -109,17 +101,8 @@ type IndexColName struct {
 
 // Accept implements Node Accept interface.
 func (n *IndexColName) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*IndexColName)
-	node, ok := n.Column.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Column = node.(*ColumnName)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ReferenceDef is used for parsing foreign key reference option from SQL.
@@ -135,34 +118,8 @@ type ReferenceDef struct {
 
 // Accept implements Node Accept interface.
 func (n *ReferenceDef) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ReferenceDef)
-	node, ok := n.Table.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Table = node.(*TableName)
-	for i, val := range n.IndexColNames {
-		node, ok = val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.IndexColNames[i] = node.(*IndexColName)
-	}
-	onDelete, ok := n.OnDelete.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.OnDelete = onDelete.(*OnDeleteOpt)
-	onUpdate, ok := n.OnUpdate.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.OnUpdate = onUpdate.(*OnUpdateOpt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ReferOptionType is the type for refer options.
@@ -178,19 +135,7 @@ const (
 )
 
 // String implements fmt.Stringer interface.
-func (r ReferOptionType) String() string {
-	switch r {
-	case ReferOptionRestrict:
-		return "RESTRICT"
-	case ReferOptionCascade:
-		return "CASCADE"
-	case ReferOptionSetNull:
-		return "SET NULL"
-	case ReferOptionNoAction:
-		return "NO ACTION"
-	}
-	return ""
-}
+func (r ReferOptionType) String() string { _ = "STUB: not implemented"; return "" }
 
 // OnDeleteOpt is used for optional on delete clause.
 type OnDeleteOpt struct {
@@ -200,12 +145,8 @@ type OnDeleteOpt struct {
 
 // Accept implements Node Accept interface.
 func (n *OnDeleteOpt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*OnDeleteOpt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // OnUpdateOpt is used for optional on update clause.
@@ -216,12 +157,8 @@ type OnUpdateOpt struct {
 
 // Accept implements Node Accept interface.
 func (n *OnUpdateOpt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*OnUpdateOpt)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ColumnOptionType is the type for ColumnOption.
@@ -256,26 +193,17 @@ type ColumnOption struct {
 
 // Accept implements Node Accept interface.
 func (n *ColumnOption) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ColumnOption)
-	if n.Expr != nil {
-		node, ok := n.Expr.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Expr = node.(ExprNode)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // IndexOption is the index options.
-//    KEY_BLOCK_SIZE [=] value
-//  | index_type
-//  | WITH PARSER parser_name
-//  | COMMENT 'string'
+//
+//	  KEY_BLOCK_SIZE [=] value
+//	| index_type
+//	| WITH PARSER parser_name
+//	| COMMENT 'string'
+//
 // See http://dev.mysql.com/doc/refman/5.7/en/create-table.html
 type IndexOption struct {
 	node
@@ -287,12 +215,8 @@ type IndexOption struct {
 
 // Accept implements Node Accept interface.
 func (n *IndexOption) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*IndexOption)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ConstraintType is the type for Constraint.
@@ -330,33 +254,8 @@ type Constraint struct {
 
 // Accept implements Node Accept interface.
 func (n *Constraint) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*Constraint)
-	for i, val := range n.Keys {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Keys[i] = node.(*IndexColName)
-	}
-	if n.Refer != nil {
-		node, ok := n.Refer.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Refer = node.(*ReferenceDef)
-	}
-	if n.Option != nil {
-		node, ok := n.Option.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Option = node.(*IndexOption)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // ColumnDef is used for parsing column definition from SQL.
@@ -370,24 +269,8 @@ type ColumnDef struct {
 
 // Accept implements Node Accept interface.
 func (n *ColumnDef) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ColumnDef)
-	node, ok := n.Name.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Name = node.(*ColumnName)
-	for i, val := range n.Options {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Options[i] = node.(*ColumnOption)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // CreateTableStmt is a statement to create a table.
@@ -404,31 +287,8 @@ type CreateTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *CreateTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*CreateTableStmt)
-	node, ok := n.Table.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Table = node.(*TableName)
-	for i, val := range n.Cols {
-		node, ok = val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Cols[i] = node.(*ColumnDef)
-	}
-	for i, val := range n.Constraints {
-		node, ok = val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Constraints[i] = node.(*Constraint)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DropTableStmt is a statement to drop one or more tables.
@@ -442,19 +302,8 @@ type DropTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *DropTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DropTableStmt)
-	for i, val := range n.Tables {
-		node, ok := val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Tables[i] = node.(*TableName)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // RenameTableStmt is a statement to rename a table.
@@ -468,22 +317,8 @@ type RenameTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *RenameTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*RenameTableStmt)
-	node, ok := n.OldTable.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.OldTable = node.(*TableName)
-	node, ok = n.NewTable.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.NewTable = node.(*TableName)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // CreateIndexStmt is a statement to create an index.
@@ -499,24 +334,8 @@ type CreateIndexStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *CreateIndexStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*CreateIndexStmt)
-	node, ok := n.Table.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Table = node.(*TableName)
-	for i, val := range n.IndexColNames {
-		node, ok = val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.IndexColNames[i] = node.(*IndexColName)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // DropIndexStmt is a statement to drop the index.
@@ -531,17 +350,8 @@ type DropIndexStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *DropIndexStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*DropIndexStmt)
-	node, ok := n.Table.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Table = node.(*TableName)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // TableOptionType is the type for TableOption
@@ -606,19 +416,8 @@ type ColumnPosition struct {
 
 // Accept implements Node Accept interface.
 func (n *ColumnPosition) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*ColumnPosition)
-	if n.RelativeColumn != nil {
-		node, ok := n.RelativeColumn.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.RelativeColumn = node.(*ColumnName)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // AlterTableType is the type for AlterTableSpec.
@@ -656,47 +455,8 @@ type AlterTableSpec struct {
 
 // Accept implements Node Accept interface.
 func (n *AlterTableSpec) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*AlterTableSpec)
-	if n.Constraint != nil {
-		node, ok := n.Constraint.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Constraint = node.(*Constraint)
-	}
-	if n.NewTable != nil {
-		node, ok := n.NewTable.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.NewTable = node.(*TableName)
-	}
-	if n.NewColumn != nil {
-		node, ok := n.NewColumn.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.NewColumn = node.(*ColumnDef)
-	}
-	if n.OldColumnName != nil {
-		node, ok := n.OldColumnName.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.OldColumnName = node.(*ColumnName)
-	}
-	if n.Position != nil {
-		node, ok := n.Position.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Position = node.(*ColumnPosition)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // AlterTableStmt is a statement to change the structure of a table.
@@ -710,24 +470,8 @@ type AlterTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *AlterTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*AlterTableStmt)
-	node, ok := n.Table.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Table = node.(*TableName)
-	for i, val := range n.Specs {
-		node, ok = val.Accept(v)
-		if !ok {
-			return n, false
-		}
-		n.Specs[i] = node.(*AlterTableSpec)
-	}
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }
 
 // TruncateTableStmt is a statement to empty a table completely.
@@ -740,15 +484,6 @@ type TruncateTableStmt struct {
 
 // Accept implements Node Accept interface.
 func (n *TruncateTableStmt) Accept(v Visitor) (Node, bool) {
-	newNode, skipChildren := v.Enter(n)
-	if skipChildren {
-		return v.Leave(newNode)
-	}
-	n = newNode.(*TruncateTableStmt)
-	node, ok := n.Table.Accept(v)
-	if !ok {
-		return n, false
-	}
-	n.Table = node.(*TableName)
-	return v.Leave(n)
+	_ = "STUB: not implemented"
+	return *new(Node), false
 }

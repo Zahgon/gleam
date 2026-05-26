@@ -13,15 +13,6 @@
 
 package types
 
-import (
-	"encoding/hex"
-	"fmt"
-	"strconv"
-	"strings"
-
-	"github.com/juju/errors"
-)
-
 // Hex is for mysql hexadecimal literal type.
 type Hex struct {
 	// Value holds numeric value for hexadecimal literal.
@@ -29,80 +20,28 @@ type Hex struct {
 }
 
 // String implements fmt.Stringer interface.
-func (h Hex) String() string {
-	s := fmt.Sprintf("%X", h.Value)
-	if len(s)%2 != 0 {
-		return "0x0" + s
-	}
-
-	return "0x" + s
-}
+func (h Hex) String() string { _ = "STUB: not implemented"; return "" }
 
 // ToNumber changes hexadecimal type to float64 for numeric operation.
 // MySQL treats hexadecimal literal as double type.
-func (h Hex) ToNumber() float64 {
-	return float64(h.Value)
-}
+func (h Hex) ToNumber() float64 { _ = "STUB: not implemented"; return 0 }
 
 // ToString returns the string representation for hexadecimal literal.
-func (h Hex) ToString() string {
-	s := fmt.Sprintf("%x", h.Value)
-	if len(s)%2 != 0 {
-		s = "0" + s
-	}
+func (h Hex) ToString() string { _ = "STUB: not implemented"; return "" }
 
-	// should never error.
-	b, _ := hex.DecodeString(s)
-	return string(b)
-}
+// should never error.
 
-func uniformHexStrLit(s string) (string, error) {
-	if len(s) == 0 {
-		return "", errors.Errorf("invalid empty string for parsing hexadecimal literal")
-	}
+func uniformHexStrLit(s string) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	if s[0] == 'x' || s[0] == 'X' {
-		// format is x'val' or X'val'
-		s = strings.Trim(s[1:], "'")
-		if len(s)%2 != 0 {
-			return "", errors.Errorf("invalid hexadecimal format, must even numbers, but %d", len(s))
-		}
-		s = "0x" + s
-	} else if !strings.HasPrefix(s, "0x") {
-		// here means format is not x'val', X'val' or 0xval.
-		return "", errors.Errorf("invalid hexadecimal format %s", s)
-	}
-	return s, nil
-}
+// format is x'val' or X'val'
+
+// here means format is not x'val', X'val' or 0xval.
 
 // ParseHex parses hexadecimal literal string.
 // The string format can be X'val', x'val' or 0xval.
 // val must in (0...9, a...f, A...F).
-func ParseHex(s string) (Hex, error) {
-	var err error
-	s, err = uniformHexStrLit(s)
-	if err != nil {
-		return Hex{}, errors.Trace(err)
-	}
-	n, err := strconv.ParseInt(s, 0, 64)
-	if err != nil {
-		return Hex{}, errors.Trace(err)
-	}
-
-	return Hex{Value: n}, nil
-}
+func ParseHex(s string) (Hex, error) { _ = "STUB: not implemented"; return *new(Hex), nil }
 
 // ParseHexStr parses hexadecimal literal as string.
 // See https://dev.mysql.com/doc/refman/5.7/en/hexadecimal-literals.html
-func ParseHexStr(s string) (string, error) {
-	var err error
-	s, err = uniformHexStrLit(s)
-	if err != nil {
-		return "", errors.Trace(err)
-	}
-	bs, err := hex.DecodeString(s[2:])
-	if err != nil {
-		return "", errors.Trace(err)
-	}
-	return string(bs), nil
-}
+func ParseHexStr(s string) (string, error) { _ = "STUB: not implemented"; return "", nil }

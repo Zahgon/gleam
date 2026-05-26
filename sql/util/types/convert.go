@@ -19,20 +19,12 @@ package types
 
 import (
 	"math"
-	"strconv"
-	"strings"
 
-	"github.com/juju/errors"
 	"github.com/chrislusf/gleam/sql/mysql"
 	"github.com/chrislusf/gleam/sql/sessionctx/variable"
 )
 
-func truncateStr(str string, flen int) string {
-	if flen != UnspecifiedLength && len(str) > flen {
-		str = str[:flen]
-	}
-	return str
-}
+func truncateStr(str string, flen int) string { _ = "STUB: not implemented"; return "" }
 
 var unsignedUpperBound = map[byte]uint64{
 	mysql.TypeTiny:     math.MaxUint8,
@@ -62,266 +54,85 @@ var signedLowerBound = map[byte]int64{
 }
 
 func convertFloatToInt(sc *variable.StatementContext, fval float64, lowerBound, upperBound int64, tp byte) (int64, error) {
-	val := RoundFloat(fval)
-	if val < float64(lowerBound) {
-		return lowerBound, overflow(val, tp)
-	}
-
-	if val > float64(upperBound) {
-		return upperBound, overflow(val, tp)
-	}
-	return int64(val), nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func convertIntToInt(val int64, lowerBound int64, upperBound int64, tp byte) (int64, error) {
-	if val < lowerBound {
-		return lowerBound, overflow(val, tp)
-	}
-
-	if val > upperBound {
-		return upperBound, overflow(val, tp)
-	}
-
-	return val, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func convertUintToInt(val uint64, upperBound int64, tp byte) (int64, error) {
-	if val > uint64(upperBound) {
-		return upperBound, overflow(val, tp)
-	}
-
-	return int64(val), nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func convertIntToUint(val int64, upperBound uint64, tp byte) (uint64, error) {
-	if val < 0 {
-		return 0, overflow(val, tp)
-	}
-
-	if uint64(val) > upperBound {
-		return upperBound, overflow(val, tp)
-	}
-
-	return uint64(val), nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func convertUintToUint(val uint64, upperBound uint64, tp byte) (uint64, error) {
-	if val > upperBound {
-		return upperBound, overflow(val, tp)
-	}
-
-	return val, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func convertFloatToUint(sc *variable.StatementContext, fval float64, upperBound uint64, tp byte) (uint64, error) {
-	val := RoundFloat(fval)
-	if val < 0 {
-		return uint64(int64(val)), overflow(val, tp)
-	}
-
-	if val > float64(upperBound) {
-		return upperBound, overflow(val, tp)
-	}
-	return uint64(val), nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
-func isCastType(tp byte) bool {
-	switch tp {
-	case mysql.TypeString, mysql.TypeDuration, mysql.TypeDatetime,
-		mysql.TypeDate, mysql.TypeLonglong, mysql.TypeNewDecimal:
-		return true
-	}
-	return false
-}
+func isCastType(tp byte) bool { _ = "STUB: not implemented"; return false }
 
 // StrToInt converts a string to an integer at the best-effort.
 func StrToInt(sc *variable.StatementContext, str string) (int64, error) {
-	str = strings.TrimSpace(str)
-	validPrefix, err := getValidIntPrefix(sc, str)
-	iVal, err1 := strconv.ParseInt(validPrefix, 10, 64)
-	if err1 != nil {
-		return iVal, errors.Trace(ErrOverflow)
-	}
-	return iVal, errors.Trace(err)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // StrToUint converts a string to an unsigned interger at the best-effortt.
 func StrToUint(sc *variable.StatementContext, str string) (uint64, error) {
-	str = strings.TrimSpace(str)
-	validPrefix, err := getValidIntPrefix(sc, str)
-	if validPrefix[0] == '+' {
-		validPrefix = validPrefix[1:]
-	}
-	uVal, err1 := strconv.ParseUint(validPrefix, 10, 64)
-	if err1 != nil {
-		return uVal, errors.Trace(ErrOverflow)
-	}
-	return uVal, errors.Trace(err)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // getValidIntPrefix gets prefix of the string which can be successfully parsed as int.
 func getValidIntPrefix(sc *variable.StatementContext, str string) (string, error) {
-	floatPrefix, err := getValidFloatPrefix(sc, str)
-	if err != nil {
-		return floatPrefix, errors.Trace(err)
-	}
-	return floatStrToIntStr(floatPrefix)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // floatStrToIntStr converts a valid float string into valid integer string which can be parsed by
 // strconv.ParseInt, we can't parse float first then convert it to string because precision will
 // be lost.
-func floatStrToIntStr(validFloat string) (string, error) {
-	var dotIdx = -1
-	var eIdx = -1
-	for i := 0; i < len(validFloat); i++ {
-		switch validFloat[i] {
-		case '.':
-			dotIdx = i
-		case 'e', 'E':
-			eIdx = i
-		}
-	}
-	if eIdx == -1 {
-		if dotIdx == -1 {
-			return validFloat, nil
-		}
-		return validFloat[:dotIdx], nil
-	}
-	var intCnt int
-	digits := make([]byte, 0, len(validFloat))
-	if dotIdx == -1 {
-		digits = append(digits, validFloat[:eIdx]...)
-		intCnt = len(digits)
-	} else {
-		digits = append(digits, validFloat[:dotIdx]...)
-		intCnt = len(digits)
-		digits = append(digits, validFloat[dotIdx+1:eIdx]...)
-	}
-	exp, err := strconv.Atoi(validFloat[eIdx+1:])
-	if err != nil {
-		return validFloat, errors.Trace(err)
-	}
-	if exp > 0 && intCnt > (math.MaxInt64-exp) {
-		// (exp + incCnt) overflows MaxInt64.
-		return validFloat, errors.Trace(ErrOverflow)
-	}
-	intCnt += exp
-	if intCnt <= 0 {
-		return "0", nil
-	}
-	if intCnt == 1 && (digits[0] == '-' || digits[0] == '+') {
-		return "0", nil
-	}
-	var validInt string
-	if intCnt <= len(digits) {
-		validInt = string(digits[:intCnt])
-	} else {
-		extraZeroCount := intCnt - len(digits)
-		if extraZeroCount > 20 {
-			// Return overflow to avoid allocating too much memory.
-			return validFloat, errors.Trace(ErrOverflow)
-		}
-		validInt = string(digits) + strings.Repeat("0", extraZeroCount)
-	}
-	return validInt, nil
-}
+func floatStrToIntStr(validFloat string) (string, error) { _ = "STUB: not implemented"; return "", nil }
+
+// (exp + incCnt) overflows MaxInt64.
+
+// Return overflow to avoid allocating too much memory.
 
 // StrToFloat converts a string to a float64 at the best-effort.
 func StrToFloat(sc *variable.StatementContext, str string) (float64, error) {
-	str = strings.TrimSpace(str)
-	validStr, err := getValidFloatPrefix(sc, str)
-	f, err1 := strconv.ParseFloat(validStr, 64)
-	if err1 != nil {
-		return f, errors.Trace(err1)
-	}
-	return f, errors.Trace(err)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // getValidFloatPrefix gets prefix of string which can be successfully parsed as float.
 func getValidFloatPrefix(sc *variable.StatementContext, s string) (valid string, err error) {
-	var (
-		sawDot   bool
-		sawDigit bool
-		validLen int
-		eIdx     int
-	)
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if c == '+' || c == '-' {
-			if i != 0 && i != eIdx+1 { // "1e+1" is valid.
-				break
-			}
-		} else if c == '.' {
-			if sawDot || eIdx > 0 { // "1.1." or "1e1.1"
-				break
-			}
-			sawDot = true
-			if sawDigit { // "123." is valid.
-				validLen = i + 1
-			}
-		} else if c == 'e' || c == 'E' {
-			if !sawDigit { // "+.e"
-				break
-			}
-			if eIdx != 0 { // "1e5e"
-				break
-			}
-			eIdx = i
-		} else if c < '0' || c > '9' {
-			break
-		} else {
-			sawDigit = true
-			validLen = i + 1
-		}
-	}
-	valid = s[:validLen]
-	if valid == "" {
-		valid = "0"
-	}
-	if validLen == 0 || validLen != len(s) {
-		err = errors.Trace(handleTruncateError(sc))
-	}
-	return valid, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
+// "1e+1" is valid.
+
+// "1.1." or "1e1.1"
+
+// "123." is valid.
+
+// "+.e"
+
+// "1e5e"
+
 // ToString converts an interface to a string.
-func ToString(value interface{}) (string, error) {
-	switch v := value.(type) {
-	case bool:
-		if v {
-			return "1", nil
-		}
-		return "0", nil
-	case int:
-		return strconv.FormatInt(int64(v), 10), nil
-	case int64:
-		return strconv.FormatInt(int64(v), 10), nil
-	case uint64:
-		return strconv.FormatUint(uint64(v), 10), nil
-	case float32:
-		return strconv.FormatFloat(float64(v), 'f', -1, 32), nil
-	case float64:
-		return strconv.FormatFloat(float64(v), 'f', -1, 64), nil
-	case string:
-		return v, nil
-	case []byte:
-		return string(v), nil
-	case Time:
-		return v.String(), nil
-	case Duration:
-		return v.String(), nil
-	case *MyDecimal:
-		return v.String(), nil
-	case Hex:
-		return v.ToString(), nil
-	case Bit:
-		return v.ToString(), nil
-	case Enum:
-		return v.String(), nil
-	case Set:
-		return v.String(), nil
-	default:
-		return "", errors.Errorf("cannot convert %v(type %T) to string", value, value)
-	}
-}
+func ToString(value interface{}) (string, error) { _ = "STUB: not implemented"; return "", nil }

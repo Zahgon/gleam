@@ -51,9 +51,7 @@ var TypeUnspecified = TypeDecimal
 
 // IsUninitializedType check if a type code is uninitialized.
 // TypeDecimal is the old type code for decimal and not be used in the new mysql version.
-func IsUninitializedType(tp byte) bool {
-	return tp == TypeDecimal
-}
+func IsUninitializedType(tp byte) bool { _ = "STUB: not implemented"; return false }
 
 // Flag informations.
 const (
@@ -87,56 +85,34 @@ const (
 )
 
 // HasNotNullFlag checks if NotNullFlag is set.
-func HasNotNullFlag(flag uint) bool {
-	return (flag & NotNullFlag) > 0
-}
+func HasNotNullFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasNoDefaultValueFlag checks if NoDefaultValueFlag is set.
-func HasNoDefaultValueFlag(flag uint) bool {
-	return (flag & NoDefaultValueFlag) > 0
-}
+func HasNoDefaultValueFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasAutoIncrementFlag checks if AutoIncrementFlag is set.
-func HasAutoIncrementFlag(flag uint) bool {
-	return (flag & AutoIncrementFlag) > 0
-}
+func HasAutoIncrementFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasUnsignedFlag checks if UnsignedFlag is set.
-func HasUnsignedFlag(flag uint) bool {
-	return (flag & UnsignedFlag) > 0
-}
+func HasUnsignedFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasZerofillFlag checks if ZerofillFlag is set.
-func HasZerofillFlag(flag uint) bool {
-	return (flag & ZerofillFlag) > 0
-}
+func HasZerofillFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasBinaryFlag checks if BinaryFlag is set.
-func HasBinaryFlag(flag uint) bool {
-	return (flag & BinaryFlag) > 0
-}
+func HasBinaryFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasPriKeyFlag checks if PriKeyFlag is set.
-func HasPriKeyFlag(flag uint) bool {
-	return (flag & PriKeyFlag) > 0
-}
+func HasPriKeyFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasUniKeyFlag checks if UniqueKeyFlag is set.
-func HasUniKeyFlag(flag uint) bool {
-	return (flag & UniqueKeyFlag) > 0
-}
+func HasUniKeyFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasMultipleKeyFlag checks if MultipleKeyFlag is set.
-func HasMultipleKeyFlag(flag uint) bool {
-	return (flag & MultipleKeyFlag) > 0
-}
+func HasMultipleKeyFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasTimestampFlag checks if HasTimestampFlag is set.
-func HasTimestampFlag(flag uint) bool {
-	return (flag & TimestampFlag) > 0
-}
+func HasTimestampFlag(flag uint) bool { _ = "STUB: not implemented"; return false }
 
 // HasOnUpdateNowFlag checks if OnUpdateNowFlag is set.
-func HasOnUpdateNowFlag(flag uint) bool {
-	return (flag & OnUpdateNowFlag) > 0
-}
+func HasOnUpdateNowFlag(flag uint) bool { _ = "STUB: not implemented"; return false }

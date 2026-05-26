@@ -44,15 +44,10 @@ type SelectTableExec struct {
 
 // Schema implements the Executor Schema interface.
 func (e *SelectTableExec) Schema() expression.Schema {
-	return e.schema
+	_ = "STUB: not implemented"
+
+	// Next implements the Executor Next interface.
+	return *new(expression.Schema)
 }
 
-// Next implements the Executor Next interface.
-func (e *SelectTableExec) Exec() *flow.Dataset {
-
-	t := Tables[e.tableInfo.Name.String()]
-
-	d := t.Dataset
-
-	return d
-}
+func (e *SelectTableExec) Exec() *flow.Dataset { _ = "STUB: not implemented"; return nil }

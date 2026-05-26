@@ -18,13 +18,6 @@
 package expression
 
 import (
-	"hash/crc32"
-	"math"
-	"math/rand"
-	"strconv"
-	"strings"
-
-	"github.com/juju/errors"
 	"github.com/chrislusf/gleam/sql/context"
 	"github.com/chrislusf/gleam/sql/parser/opcode"
 	"github.com/chrislusf/gleam/sql/util/types"
@@ -69,7 +62,8 @@ type absFunctionClass struct {
 }
 
 func (c *absFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinAbsSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinAbsSig struct {
@@ -77,44 +71,26 @@ type builtinAbsSig struct {
 }
 
 func (b *builtinAbsSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinAbs(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_abs
 func builtinAbs(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	d = args[0]
-	switch d.Kind() {
-	case types.KindNull:
-		return d, nil
-	case types.KindUint64:
-		return d, nil
-	case types.KindInt64:
-		iv := d.GetInt64()
-		if iv >= 0 {
-			d.SetInt64(iv)
-			return d, nil
-		}
-		d.SetInt64(-iv)
-		return d, nil
-	default:
-		// we will try to convert other types to float
-		// TODO: if time has no precision, it will be a integer
-		f, err := d.ToFloat64(ctx.GetSessionVars().StmtCtx)
-		d.SetFloat64(math.Abs(f))
-		return d, errors.Trace(err)
-	}
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// we will try to convert other types to float
+// TODO: if time has no precision, it will be a integer
 
 type ceilFunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *ceilFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinCeilSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinCeilSig struct {
@@ -122,26 +98,14 @@ type builtinCeilSig struct {
 }
 
 func (b *builtinCeilSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinCeil(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_ceiling
 func builtinCeil(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() ||
-		args[0].Kind() == types.KindUint64 || args[0].Kind() == types.KindInt64 {
-		return args[0], nil
-	}
-
-	f, err := args[0].ToFloat64(ctx.GetSessionVars().StmtCtx)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	d.SetFloat64(math.Ceil(f))
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type floorFunctionClass struct {
@@ -149,7 +113,8 @@ type floorFunctionClass struct {
 }
 
 func (c *floorFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinFloorSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinFloorSig struct {
@@ -157,41 +122,25 @@ type builtinFloorSig struct {
 }
 
 func (b *builtinFloorSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinFloor(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_floor
 func builtinFloor(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() ||
-		args[0].Kind() == types.KindUint64 || args[0].Kind() == types.KindInt64 {
-		return args[0], nil
-	}
-
-	// have to set IgnoreTruncate to true in order to getValidPrefix
-	sc := ctx.GetSessionVars().StmtCtx
-	tmpIT := sc.IgnoreTruncate
-	sc.IgnoreTruncate = true
-	f, err := args[0].ToFloat64(sc)
-	if err != nil {
-		sc.IgnoreTruncate = tmpIT
-		return d, errors.Trace(err)
-	}
-
-	sc.IgnoreTruncate = tmpIT
-	d.SetFloat64(math.Floor(f))
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// have to set IgnoreTruncate to true in order to getValidPrefix
 
 type logFunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *logFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinLogSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinLogSig struct {
@@ -199,49 +148,14 @@ type builtinLogSig struct {
 }
 
 func (b *builtinLogSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinLog(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_log
 func builtinLog(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	sc := ctx.GetSessionVars().StmtCtx
-
-	switch len(args) {
-	case 1:
-		x, err := args[0].ToFloat64(sc)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-
-		if x <= 0 {
-			return d, nil
-		}
-
-		d.SetFloat64(math.Log(x))
-		return d, nil
-	case 2:
-		b, err := args[0].ToFloat64(sc)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-
-		x, err := args[1].ToFloat64(sc)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-
-		if b <= 1 || x <= 0 {
-			return d, nil
-		}
-
-		d.SetFloat64(math.Log(x) / math.Log(b))
-		return d, nil
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type log2FunctionClass struct {
@@ -249,7 +163,8 @@ type log2FunctionClass struct {
 }
 
 func (c *log2FunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinLog2Sig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinLog2Sig struct {
@@ -257,27 +172,14 @@ type builtinLog2Sig struct {
 }
 
 func (b *builtinLog2Sig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinLog2(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_log2
 func builtinLog2(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	sc := ctx.GetSessionVars().StmtCtx
-	x, err := args[0].ToFloat64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	if x <= 0 {
-		return
-	}
-
-	d.SetFloat64(math.Log2(x))
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type log10FunctionClass struct {
@@ -285,7 +187,8 @@ type log10FunctionClass struct {
 }
 
 func (c *log10FunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinLog10Sig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinLog10Sig struct {
@@ -293,28 +196,14 @@ type builtinLog10Sig struct {
 }
 
 func (b *builtinLog10Sig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinLog10(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_log10
 func builtinLog10(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	sc := ctx.GetSessionVars().StmtCtx
-	x, err := args[0].ToFloat64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	if x <= 0 {
-		return
-	}
-
-	d.SetFloat64(math.Log10(x))
-	return
-
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type randFunctionClass struct {
@@ -322,12 +211,8 @@ type randFunctionClass struct {
 }
 
 func (c *randFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	if err := errors.Trace(c.verifyArgs(args)); err != nil {
-		return nil, errors.Trace(err)
-	}
-	bt := &builtinRandSig{newBaseBuiltinFunc(args, ctx)}
-	bt.deterministic = false
-	return bt, nil
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinRandSig struct {
@@ -335,24 +220,14 @@ type builtinRandSig struct {
 }
 
 func (b *builtinRandSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinRand(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_rand
 func builtinRand(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if len(args) == 1 && !args[0].IsNull() {
-		seed, err := args[0].ToInt64(ctx.GetSessionVars().StmtCtx)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		rand.Seed(seed)
-	}
-	d.SetFloat64(rand.Float64())
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type powFunctionClass struct {
@@ -360,7 +235,8 @@ type powFunctionClass struct {
 }
 
 func (c *powFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinPowSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinPowSig struct {
@@ -368,27 +244,14 @@ type builtinPowSig struct {
 }
 
 func (b *builtinPowSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinPow(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_pow
 func builtinPow(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	sc := ctx.GetSessionVars().StmtCtx
-	x, err := args[0].ToFloat64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	y, err := args[1].ToFloat64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	d.SetFloat64(math.Pow(x, y))
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type roundFunctionClass struct {
@@ -396,7 +259,8 @@ type roundFunctionClass struct {
 }
 
 func (c *roundFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinRoundSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinRoundSig struct {
@@ -404,57 +268,14 @@ type builtinRoundSig struct {
 }
 
 func (b *builtinRoundSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinRound(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_round
 func builtinRound(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() {
-		return
-	}
-	sc := ctx.GetSessionVars().StmtCtx
-
-	frac := 0
-	if len(args) == 2 {
-		frac64, err1 := args[1].ToInt64(sc)
-		if err1 != nil {
-			return d, errors.Trace(err1)
-		}
-		frac = int(frac64)
-	}
-
-	if args[0].Kind() == types.KindMysqlDecimal {
-		var dec types.MyDecimal
-		err = args[0].GetMysqlDecimal().Round(&dec, frac)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		d.SetMysqlDecimal(&dec)
-		return d, nil
-	}
-
-	x, err := args[0].ToFloat64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	val := types.Round(x, frac)
-	switch args[0].Kind() {
-	case types.KindInt64:
-		d.SetInt64(int64(val))
-	case types.KindUint64:
-		d.SetUint64(uint64(val))
-	default:
-		d.SetFloat64(val)
-		if frac > 0 {
-			d.SetFrac(frac)
-		}
-	}
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type convFunctionClass struct {
@@ -462,7 +283,8 @@ type convFunctionClass struct {
 }
 
 func (c *convFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinConvSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinConvSig struct {
@@ -470,99 +292,27 @@ type builtinConvSig struct {
 }
 
 func (b *builtinConvSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinConv(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_conv
 func builtinConv(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	var (
-		signed     bool
-		negative   bool
-		ignoreSign bool
-	)
-	for _, arg := range args {
-		if arg.IsNull() {
-			return d, nil
-		}
-	}
-	n, err := args[0].ToString()
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	sc := ctx.GetSessionVars().StmtCtx
-	fromBase, err := args[1].ToInt64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	toBase, err := args[2].ToInt64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	if fromBase < 0 {
-		fromBase = -fromBase
-		signed = true
-	}
-	if toBase < 0 {
-		ignoreSign = true
-		toBase = -toBase
-	}
-	if fromBase > 36 || fromBase < 2 || toBase > 36 || toBase < 2 {
-		return d, nil
-	}
-	n = getValidPrefix(strings.TrimSpace(n), fromBase)
-	if len(n) == 0 {
-		return d, nil
-	}
-	if n[0] == '-' {
-		negative = true
-		n = n[1:]
-	}
-
-	val, err := strconv.ParseUint(n, int(fromBase), 64)
-	if err != nil {
-		return d, errors.Trace(types.ErrOverflow)
-	}
-	// See https://github.com/mysql/mysql-server/blob/5.7/strings/ctype-simple.c#L598
-	if signed {
-		if negative && val > -math.MinInt64 {
-			val = -math.MinInt64
-		}
-		if !negative && val > math.MaxInt64 {
-			val = math.MaxInt64
-		}
-	}
-	if negative {
-		val = -val
-	}
-	// See https://github.com/mysql/mysql-server/blob/5.7/strings/longlong2str.c#L58
-	if int64(val) < 0 {
-		negative = true
-	} else {
-		negative = false
-	}
-	if ignoreSign && negative {
-		val = 0 - val
-	}
-
-	s := strconv.FormatUint(val, int(toBase))
-	if negative && ignoreSign {
-		s = "-" + s
-	}
-	d.SetString(strings.ToUpper(s))
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// See https://github.com/mysql/mysql-server/blob/5.7/strings/ctype-simple.c#L598
+
+// See https://github.com/mysql/mysql-server/blob/5.7/strings/longlong2str.c#L58
 
 type crc32FunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *crc32FunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinCRC32Sig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinCRC32Sig struct {
@@ -570,25 +320,14 @@ type builtinCRC32Sig struct {
 }
 
 func (b *builtinCRC32Sig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinCRC32(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_crc32
 func builtinCRC32(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() {
-		return d, nil
-	}
-	x, err := args[0].ToString()
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	r := crc32.ChecksumIEEE([]byte(x))
-	d.SetUint64(uint64(r))
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type signFunctionClass struct {
@@ -596,7 +335,8 @@ type signFunctionClass struct {
 }
 
 func (c *signFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinSignSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinSignSig struct {
@@ -604,24 +344,14 @@ type builtinSignSig struct {
 }
 
 func (b *builtinSignSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinSign(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_sign
 func builtinSign(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() {
-		return d, nil
-	}
-	cmp, err := args[0].CompareDatum(ctx.GetSessionVars().StmtCtx, types.NewIntDatum(0))
-	d.SetInt64(int64(cmp))
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-	return d, nil
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 type sqrtFunctionClass struct {
@@ -629,7 +359,8 @@ type sqrtFunctionClass struct {
 }
 
 func (c *sqrtFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinSqrtSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinSqrtSig struct {
@@ -637,35 +368,18 @@ type builtinSqrtSig struct {
 }
 
 func (b *builtinSqrtSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinSqrt(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See http://dev.mysql.com/doc/refman/5.7/en/mathematical-functions.html#function_sqrt
 func builtinSqrt(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	if args[0].IsNull() {
-		return args[0], nil
-	}
-
-	sc := ctx.GetSessionVars().StmtCtx
-	f, err := args[0].ToFloat64(sc)
-	if err != nil {
-		return d, errors.Trace(err)
-	}
-
-	// negative value does not have any square root in rational number
-	// Need return null directly.
-	if f < 0 {
-		d.SetNull()
-		return d, nil
-	}
-
-	d.SetFloat64(math.Sqrt(f))
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// negative value does not have any square root in rational number
+// Need return null directly.
 
 type arithmeticFunctionClass struct {
 	baseFunctionClass
@@ -674,7 +388,8 @@ type arithmeticFunctionClass struct {
 }
 
 func (c *arithmeticFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinArithmeticSig{newBaseBuiltinFunc(args, ctx), c.op}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinArithmeticSig struct {
@@ -684,48 +399,11 @@ type builtinArithmeticSig struct {
 }
 
 func (b *builtinArithmeticSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return arithmeticFuncFactory(b.op)(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 func arithmeticFuncFactory(op opcode.Op) BuiltinFunc {
-	return func(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-		sc := ctx.GetSessionVars().StmtCtx
-		a, err := types.CoerceArithmetic(sc, args[0])
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-
-		b, err := types.CoerceArithmetic(sc, args[1])
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		a, b, err = types.CoerceDatum(sc, a, b)
-		if err != nil {
-			return d, errors.Trace(err)
-		}
-		if a.IsNull() || b.IsNull() {
-			return
-		}
-
-		switch op {
-		case opcode.Plus:
-			return types.ComputePlus(a, b)
-		case opcode.Minus:
-			return types.ComputeMinus(a, b)
-		case opcode.Mul:
-			return types.ComputeMul(a, b)
-		case opcode.Div:
-			return types.ComputeDiv(sc, a, b)
-		case opcode.Mod:
-			return types.ComputeMod(sc, a, b)
-		case opcode.IntDiv:
-			return types.ComputeIntDiv(sc, a, b)
-		default:
-			return d, errInvalidOperation.Gen("invalid op %v in arithmetic operation", op)
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(BuiltinFunc)
 }

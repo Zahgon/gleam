@@ -14,7 +14,6 @@
 package expression
 
 import (
-	"github.com/juju/errors"
 	"github.com/chrislusf/gleam/sql/context"
 	"github.com/chrislusf/gleam/sql/util/types"
 )
@@ -38,7 +37,8 @@ type caseWhenFunctionClass struct {
 }
 
 func (c *caseWhenFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinCaseWhenSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinCaseWhenSig struct {
@@ -46,45 +46,27 @@ type builtinCaseWhenSig struct {
 }
 
 func (b *builtinCaseWhenSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinCaseWhen(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/case.html
 func builtinCaseWhen(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
-	sc := ctx.GetSessionVars().StmtCtx
-	l := len(args)
-	for i := 0; i < l-1; i += 2 {
-		if args[i].IsNull() {
-			continue
-		}
-		b, err1 := args[i].ToBool(sc)
-		if err1 != nil {
-			return d, errors.Trace(err1)
-		}
-		if b == 1 {
-			d = args[i+1]
-			return
-		}
-	}
-	// when clause(condition, result) -> args[i], args[i+1]; (i >= 0 && i+1 < l-1)
-	// else clause -> args[l-1]
-	// If case clause has else clause, l%2 == 1.
-	if l%2 == 1 {
-		d = args[l-1]
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
+
+// when clause(condition, result) -> args[i], args[i+1]; (i >= 0 && i+1 < l-1)
+// else clause -> args[l-1]
+// If case clause has else clause, l%2 == 1.
 
 type ifFunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *ifFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinIfSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinIfSig struct {
@@ -92,45 +74,27 @@ type builtinIfSig struct {
 }
 
 func (b *builtinIfSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinIf(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/control-flow-functions.html#function_if
 func builtinIf(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
+	_ = "STUB: not implemented"
 	// if(expr1, expr2, expr3)
 	// if expr1 is true, return expr2, otherwise, return expr3
-	v1 := args[0]
-	v2 := args[1]
-	v3 := args[2]
-
-	if v1.IsNull() {
-		return v3, nil
-	}
-
-	b, err := v1.ToBool(ctx.GetSessionVars().StmtCtx)
-	if err != nil {
-		d := types.Datum{}
-		return d, errors.Trace(err)
-	}
-
-	// TODO: check return type, must be numeric or string
-	if b == 1 {
-		return v2, nil
-	}
-
-	return v3, nil
+	return *new(types.Datum), nil
 }
+
+// TODO: check return type, must be numeric or string
 
 type ifNullFunctionClass struct {
 	baseFunctionClass
 }
 
 func (c *ifNullFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinIfNullSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinIfNullSig struct {
@@ -138,25 +102,16 @@ type builtinIfNullSig struct {
 }
 
 func (b *builtinIfNullSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinIfNull(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/control-flow-functions.html#function_ifnull
 func builtinIfNull(args []types.Datum, _ context.Context) (d types.Datum, err error) {
+	_ = "STUB: not implemented"
 	// ifnull(expr1, expr2)
 	// if expr1 is not null, return expr1, otherwise, return expr2
-	v1 := args[0]
-	v2 := args[1]
-
-	if !v1.IsNull() {
-		return v1, nil
-	}
-
-	return v2, nil
+	return *new(types.Datum), nil
 }
 
 type nullIfFunctionClass struct {
@@ -164,7 +119,8 @@ type nullIfFunctionClass struct {
 }
 
 func (c *nullIfFunctionClass) getFunction(args []Expression, ctx context.Context) (builtinFunc, error) {
-	return &builtinNullIfSig{newBaseBuiltinFunc(args, ctx)}, errors.Trace(c.verifyArgs(args))
+	_ = "STUB: not implemented"
+	return *new(builtinFunc), nil
 }
 
 type builtinNullIfSig struct {
@@ -172,28 +128,14 @@ type builtinNullIfSig struct {
 }
 
 func (b *builtinNullIfSig) eval(row []types.Datum) (types.Datum, error) {
-	args, err := b.evalArgs(row)
-	if err != nil {
-		return types.Datum{}, errors.Trace(err)
-	}
-	return builtinNullIf(args, b.ctx)
+	_ = "STUB: not implemented"
+	return *new(types.Datum), nil
 }
 
 // See https://dev.mysql.com/doc/refman/5.7/en/control-flow-functions.html#function_nullif
 func builtinNullIf(args []types.Datum, ctx context.Context) (d types.Datum, err error) {
+	_ = "STUB: not implemented"
 	// nullif(expr1, expr2)
 	// returns null if expr1 = expr2 is true, otherwise returns expr1
-	v1 := args[0]
-	v2 := args[1]
-
-	if v1.IsNull() || v2.IsNull() {
-		return v1, nil
-	}
-
-	if n, err1 := v1.CompareDatum(ctx.GetSessionVars().StmtCtx, v2); err1 != nil || n == 0 {
-		d := types.Datum{}
-		return d, errors.Trace(err1)
-	}
-
-	return v1, nil
+	return *new(types.Datum), nil
 }

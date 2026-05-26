@@ -12,30 +12,12 @@ type ShellScript struct {
 	operations []*Operation
 }
 
-func NewShellScript() *ShellScript {
-	return &ShellScript{}
-}
+func NewShellScript() *ShellScript { _ = "STUB: not implemented"; return nil }
 
-func (c *ShellScript) Init(code string) {
-}
+func (c *ShellScript) Init(code string) { _ = "STUB: not implemented"; return }
 
-func (c *ShellScript) Name() string {
-	return "sh"
-}
+func (c *ShellScript) Name() string { _ = "STUB: not implemented"; return "" }
 
-func (c *ShellScript) GetCommand() *Command {
-	code := c.operations[0].Code
-	return &Command{
-		Path: "sh",
-		Args: []string{"-c", code},
-		Env:  c.env,
-	}
-}
+func (c *ShellScript) GetCommand() *Command { _ = "STUB: not implemented"; return nil }
 
-func (c *ShellScript) Pipe(code string) *ShellScript {
-	c.operations = append(c.operations, &Operation{
-		Type: "Pipe",
-		Code: code,
-	})
-	return c
-}
+func (c *ShellScript) Pipe(code string) *ShellScript { _ = "STUB: not implemented"; return nil }

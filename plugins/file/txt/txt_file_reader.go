@@ -11,26 +11,14 @@ type TxtFileReader struct {
 	scanner *bufio.Scanner
 }
 
-func New(reader io.Reader) *TxtFileReader {
-
-	return &TxtFileReader{
-		scanner: bufio.NewScanner(reader),
-	}
-}
+func New(reader io.Reader) *TxtFileReader { _ = "STUB: not implemented"; return nil }
 
 func (r *TxtFileReader) ReadHeader() (fieldNames []string, err error) {
+	_ = "STUB: not implemented"
 	return nil, nil
 }
+
 func (r *TxtFileReader) Read() (row *util.Row, err error) {
-	var data []byte
-	if r.scanner.Scan() {
-		data = r.scanner.Bytes()
-	} else {
-		err = r.scanner.Err()
-		if err == nil {
-			err = io.EOF
-		}
-		return nil, err
-	}
-	return util.NewRow(util.Now(), string(data)), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

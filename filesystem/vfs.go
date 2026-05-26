@@ -3,7 +3,6 @@ package filesystem
 // this file defines the virtual file system to provide consistent file access APIs
 
 import (
-	"fmt"
 	"io"
 )
 
@@ -40,36 +39,13 @@ var (
 	}
 )
 
-func Set(name OptionName, value string) {
-	Option[name] = value
-}
+func Set(name OptionName, value string) { _ = "STUB: not implemented"; return }
 
 func Open(filepath string) (VirtualFile, error) {
-	fileLocation := &FileLocation{filepath}
-	for _, fs := range fileSystems {
-		if fs.Accept(fileLocation) {
-			return fs.Open(fileLocation)
-		}
-	}
-	return nil, fmt.Errorf("Unknown file %s", filepath)
+	_ = "STUB: not implemented"
+	return *new(VirtualFile), nil
 }
 
-func List(filepath string) ([]*FileLocation, error) {
-	fileLocation := &FileLocation{filepath}
-	for _, fs := range fileSystems {
-		if fs.Accept(fileLocation) {
-			return fs.List(fileLocation)
-		}
-	}
-	return nil, fmt.Errorf("Unknown file %s", filepath)
-}
+func List(filepath string) ([]*FileLocation, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func IsDir(filepath string) bool {
-	fileLocation := &FileLocation{filepath}
-	for _, fs := range fileSystems {
-		if fs.Accept(fileLocation) {
-			return fs.IsDir(fileLocation)
-		}
-	}
-	return false
-}
+func IsDir(filepath string) bool { _ = "STUB: not implemented"; return false }
